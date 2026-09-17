@@ -1,0 +1,52 @@
+Start testing: Sep 14 16:31 JST
+----------------------------------------------------------
+1/3 Testing: core_check
+1/3 Test: core_check
+Command: "/Users/kimsanghoon/Documents/Codex/2026-09-10/files-pasted-by-the-user-master/work/build/core_check"
+Directory: /Users/kimsanghoon/Documents/Codex/2026-09-10/files-pasted-by-the-user-master/work/build
+"core_check" start time: Sep 14 16:31 JST
+Output:
+----------------------------------------------------------
+PASS 131 document checks (precision, transactions, history, safe save, hostile files)
+<end of output>
+Test time =   0.05 sec
+----------------------------------------------------------
+Test Passed.
+"core_check" end time: Sep 14 16:31 JST
+"core_check" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/3 Testing: canvas_check
+2/3 Test: canvas_check
+Command: "/Users/kimsanghoon/Documents/Codex/2026-09-10/files-pasted-by-the-user-master/work/build/canvas_check"
+Directory: /Users/kimsanghoon/Documents/Codex/2026-09-10/files-pasted-by-the-user-master/work/build
+"canvas_check" start time: Sep 14 16:31 JST
+Output:
+----------------------------------------------------------
+qt.qpa.fonts: Populating font family aliases took 65 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+PASS 95 canvas checks (real input, geometry, snap, edit, native roundtrip, vector PDF)
+<end of output>
+Test time =   0.39 sec
+----------------------------------------------------------
+Test Passed.
+"canvas_check" end time: Sep 14 16:31 JST
+"canvas_check" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/3 Testing: render_check
+3/3 Test: render_check
+Command: "/Users/kimsanghoon/Documents/Codex/2026-09-10/files-pasted-by-the-user-master/work/build/render_check"
+Directory: /Users/kimsanghoon/Documents/Codex/2026-09-10/files-pasted-by-the-user-master/work/build
+"render_check" start time: Sep 14 16:31 JST
+Output:
+----------------------------------------------------------
+PASS 34 render synchronization checks (line geometry, cache invalidation, precision, stroke width)
+<end of output>
+Test time =   0.16 sec
+----------------------------------------------------------
+Test Passed.
+"render_check" end time: Sep 14 16:31 JST
+"render_check" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Sep 14 16:31 JST

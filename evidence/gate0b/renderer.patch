@@ -1,0 +1,141 @@
+--- a/src/canvas.cpp
++++ b/src/canvas.cpp
+@@ -40,7 +40,7 @@
+     if(e.kind==Kind::Line){segment(v,view.screen(e.a),view.screen(e.b),width);return;}
+     if(e.kind!=Kind::Arc)return;
+     const double pixels=e.radius*view.scale;
+-    // Sagitta <= 0.35 logical px. Subdivision affects rendering only; saved arcs remain analytic.
++    // Target sagitta 0.35 logical px, capped at 16384 segments; saved arcs remain analytic.
+     const double step=pixels>0.35?2*std::acos(std::clamp(1-0.35/pixels,-1.0,1.0)):pi/2;
+     const int n=std::clamp(int(std::ceil(std::abs(e.sweepDegrees)*pi/180/step)),2,16384);
+     const double start=positiveDegrees(e.startDegrees);
+@@ -55,7 +55,7 @@
+ void CadCanvas::refresh(){emit changed();update();}
+ QString CadCanvas::fileName() const {return m_doc.path().isEmpty()?QString():QFileInfo(m_doc.path()).fileName();}
+ QString CadCanvas::coordinates() const {return QString::asprintf("X  %.3f     Y  %.3f   mm",m_cursor.x(),m_cursor.y());}
+-const Entity *CadCanvas::selected() const {for(const auto &e:m_doc.entities())if(e.id==m_selected)return &e;return nullptr;}
++const Entity *CadCanvas::selected() const {if(m_selected.isEmpty())return nullptr;for(const auto &e:m_doc.entities())if(e.id==m_selected)return &e;return nullptr;}
+ QString CadCanvas::selectionInfo() const {
+     const auto *e=selected();if(!e)return {};
+     if(e->kind==Kind::Line)return QString::asprintf("%.3f mm",distance(e->a,e->b));
+@@ -86,11 +86,12 @@
+     auto p=m_view.world(screen);m_snapped=false;
+     if(objectSnap){
+         double best=10/m_view.scale;QPointF nearest=p;
+-        // ponytail: O(n) endpoint scan; replace with a spatial index when measured snap latency exceeds 50 ms.
++        // ponytail: O(n) scan without per-entity allocation; index if measured input latency needs it.
++        auto consider=[&](QPointF q){const double d=distance(p,q);if(d<best){best=d;nearest=q;m_snapped=true;}};
+         for(const auto &e:m_doc.entities())if(m_visible[e.layer]){
+-            QVector<QPointF> points{e.a};if(e.kind==Kind::Line)points<<e.b;
+-            if(e.kind==Kind::Arc)points<<arcPoint(e,positiveDegrees(e.startDegrees))<<arcPoint(e,positiveDegrees(e.startDegrees)+e.sweepDegrees);
+-            for(auto q:points){const double d=distance(p,q);if(d<best){best=d;nearest=q;m_snapped=true;}}
++            consider(e.a);
++            if(e.kind==Kind::Line)consider(e.b);
++            if(e.kind==Kind::Arc){const double start=positiveDegrees(e.startDegrees);consider(arcPoint(e,start));consider(arcPoint(e,start+e.sweepDegrees));}
+         }
+         if(m_snapped)return nearest;
+     }
+@@ -171,34 +172,66 @@
+     for(int i=0;i<n;++i){auto e=newEntity(i%100==0?Kind::Text:i%5==0?Kind::Arc:Kind::Line,i%3);e.a={double(i%400)*30,double(i/400)*30};e.b=e.a+QPointF(22,20);e.radius=12;e.text=QStringLiteral("寸法");e.textHeight=15;list<<e;}
+     commit(list,removals);fit();
+ }
++namespace {
++// Render-thread-only state. Qt owns the root and releases the whole cache on scene invalidation.
++struct CanvasScene final : QSGNode {
++    QSGNode *grid=new QSGNode,*drawing=new QSGNode,*overlay=new QSGNode;
++    View view;
++    quint64 revision=0;
++    int visibleMask=0;
++    QString selection;
++    QVariantMap palette;
++    bool initialized=false;
++    CanvasScene(){appendChildNode(grid);appendChildNode(drawing);appendChildNode(overlay);}
++};
++void clearChildren(QSGNode *node){while(auto *child=node->firstChild()){node->removeChildNode(child);delete child;}}
++}
+ QSGNode *CadCanvas::updatePaintNode(QSGNode *old,UpdatePaintNodeData *){
+-    // ponytail: rebuild batches on view/input updates in this spike; retain geometry + rebase before production-scale scenes.
+-    delete old;auto *root=new QSGNode;QVector<QPointF> grid;
+-    double spacing=100;while(spacing*m_view.scale<28)spacing*=5;
+-    const auto low=m_view.world({0,height()}),high=m_view.world({width(),0});
+-    for(double x=std::ceil(low.x()/spacing)*spacing;x<=high.x();x+=spacing)segment(grid,m_view.screen({x,low.y()}),m_view.screen({x,high.y()}),0.5);
+-    for(double y=std::ceil(low.y()/spacing)*spacing;y<=high.y();y+=spacing)segment(grid,m_view.screen({low.x(),y}),m_view.screen({high.x(),y}),0.5);
+-    appendGeometry(root,grid,color("grid"));
+-    QVector<QPointF> layers[3],selection,ghost;
+-    for(const auto &e:m_doc.entities())if(m_visible[e.layer]){
+-        if(e.kind!=Kind::Text)shape(e.id==m_selected?selection:layers[e.layer],e,m_view,e.id==m_selected?2.6:e.layer==0?1.8:1.0);
+-        else{
+-            const auto p=m_view.screen(e.a);const double height=e.textHeight*m_view.scale;
+-            if(height>=2&&p.x()+height*e.text.size()>0&&p.x()<width()&&p.y()+height>0&&p.y()-height*2<this->height()){
+-                auto *text=window()->createTextNode();text->setColor(e.id==m_selected?color("focus"):color("ink"));
+-                QFont font=QGuiApplication::font();font.setPixelSize(128);
+-                QTextLayout layout(e.text,font);layout.beginLayout();auto line=layout.createLine();layout.endLayout();
+-                text->addTextLayout(QPointF(0,-line.ascent()),&layout);
+-                auto *transform=new QSGTransformNode;QMatrix4x4 matrix;matrix.translate(p.x(),p.y());matrix.scale(height/128,height/128);transform->setMatrix(matrix);
+-                transform->appendChildNode(text);root->appendChildNode(transform);
++    auto *root=old?static_cast<CanvasScene *>(old):new CanvasScene;
++    // Compare scalar doubles exactly: QPointF equality is fuzzy near large world coordinates.
++    const bool viewChanged=!root->initialized || root->view.center.x()!=m_view.center.x() || root->view.center.y()!=m_view.center.y()
++        || root->view.scale!=m_view.scale || root->view.size.width()!=m_view.size.width() || root->view.size.height()!=m_view.size.height();
++    const bool paletteChanged=!root->initialized || root->palette!=palette;
++    const int visibleMask=int(m_visible[0]) | (int(m_visible[1])<<1) | (int(m_visible[2])<<2);
++    const bool drawingChanged=viewChanged || paletteChanged || root->revision!=m_doc.revision()
++        || root->visibleMask!=visibleMask || root->selection!=m_selected;
++    if(viewChanged || paletteChanged){
++        clearChildren(root->grid);
++        QVector<QPointF> grid;
++        double spacing=100;while(spacing*m_view.scale<28)spacing*=5;
++        const auto low=m_view.world({0,height()}),high=m_view.world({width(),0});
++        for(double x=std::ceil(low.x()/spacing)*spacing;x<=high.x();x+=spacing)segment(grid,m_view.screen({x,low.y()}),m_view.screen({x,high.y()}),0.5);
++        for(double y=std::ceil(low.y()/spacing)*spacing;y<=high.y();y+=spacing)segment(grid,m_view.screen({low.x(),y}),m_view.screen({high.x(),y}),0.5);
++        appendGeometry(root->grid,grid,color("grid"));
++    }
++    if(drawingChanged){
++        // Zoom rebuilds screen-space strokes so widths and arc subdivision stay correct.
++        // ponytail: view changes rebuild drawing batches; retain transformed geometry only if measured pan/zoom needs it.
++        clearChildren(root->drawing);
++        QVector<QPointF> layers[3],selection;
++        for(auto &layer:layers)layer.reserve(m_doc.entities().size()*2);
++        for(const auto &e:m_doc.entities())if(m_visible[e.layer]){
++            if(e.kind!=Kind::Text)shape(e.id==m_selected?selection:layers[e.layer],e,m_view,e.id==m_selected?2.6:e.layer==0?1.8:1.0);
++            else{
++                const auto p=m_view.screen(e.a);const double height=e.textHeight*m_view.scale;
++                if(height>=2&&p.x()+height*e.text.size()>0&&p.x()<width()&&p.y()+height>0&&p.y()-height*2<this->height()){
++                    auto *text=window()->createTextNode();text->setColor(e.id==m_selected?color("focus"):color("ink"));
++                    QFont font=QGuiApplication::font();font.setPixelSize(128);
++                    QTextLayout layout(e.text,font);layout.beginLayout();auto line=layout.createLine();layout.endLayout();
++                    text->addTextLayout(QPointF(0,-line.ascent()),&layout);
++                    auto *transform=new QSGTransformNode;QMatrix4x4 matrix;matrix.translate(p.x(),p.y());matrix.scale(height/128,height/128);transform->setMatrix(matrix);
++                    transform->appendChildNode(text);root->drawing->appendChildNode(transform);
++                }
++                if(e.id==m_selected){segment(selection,p-QPointF(6,0),p+QPointF(6,0),2);segment(selection,p-QPointF(0,6),p+QPointF(0,6),2);}
+             }
+-            if(e.id==m_selected){segment(selection,p-QPointF(6,0),p+QPointF(6,0),2);segment(selection,p-QPointF(0,6),p+QPointF(0,6),2);}
+-        }
+-    }
+-    for(int i=0;i<3;++i)appendGeometry(root,layers[i],color(i==0?"ink":i==1?"secondaryInk":"annotationInk"));
+-    appendGeometry(root,selection,color("focus"));
++        }
++        for(int i=0;i<3;++i)appendGeometry(root->drawing,layers[i],color(i==0?"ink":i==1?"secondaryInk":"annotationInk"));
++        appendGeometry(root->drawing,selection,color("focus"));
++    }
++    clearChildren(root->overlay);
++    QVector<QPointF> ghost;
+     if(!m_points.isEmpty()){
+-        auto e=newEntity(Kind::Line,activeLayer);e.a=m_points.first();e.b=m_cursor;
++        Entity e;e.a=m_points.first();e.b=m_cursor;
+         if(m_tool=="arc"&&m_points.size()==2){e.kind=Kind::Arc;e.radius=distance(e.a,m_points[1]);e.startDegrees=angle(e.a,m_points[1]);e.sweepDegrees=positiveDegrees(angle(e.a,m_cursor)-e.startDegrees);}
+         shape(ghost,e,m_view,1.5);
+     }
+@@ -206,7 +239,10 @@
+         const auto p=m_view.screen(m_cursor);segment(ghost,p-QPointF(9,0),p+QPointF(9,0),1);segment(ghost,p-QPointF(0,9),p+QPointF(0,9),1);
+         if(m_snapped){segment(ghost,p+QPointF(-5,-5),p+QPointF(5,-5),2);segment(ghost,p+QPointF(5,-5),p+QPointF(5,5),2);segment(ghost,p+QPointF(5,5),p+QPointF(-5,5),2);segment(ghost,p+QPointF(-5,5),p+QPointF(-5,-5),2);}
+     }
+-    appendGeometry(root,ghost,color(m_snapped?"snap":"focus"));return root;
++    appendGeometry(root->overlay,ghost,color(m_snapped?"snap":"focus"));
++    root->view=m_view;root->palette=palette;root->revision=m_doc.revision();
++    root->visibleMask=visibleMask;root->selection=m_selected;root->initialized=true;
++    return root;
+ }
+ bool CadCanvas::exportPdf(QUrl url){
+     const QString path=url.toLocalFile();

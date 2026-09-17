@@ -1,0 +1,13 @@
+[1/19] Automatic MOC and UIC for target core_check
+[2/17] Automatic MOC and UIC for target fresco_cad
+[3/16] Automatic MOC and UIC for target canvas_check
+[4/15] Automatic MOC and UIC for target render_check
+[5/14] Automatic MOC and UIC for target render_visual_check
+[6/13] Building CXX object CMakeFiles/canvas_check.dir/src/canvas.cpp.o
+[7/13] Building CXX object CMakeFiles/render_check.dir/src/canvas.cpp.o
+[8/13] Building CXX object CMakeFiles/fresco_cad.dir/src/canvas.cpp.o
+[9/13] Building CXX object CMakeFiles/render_visual_check.dir/src/canvas.cpp.o
+[10/13] Linking CXX executable canvas_check
+[11/13] Linking CXX executable fresco_cad.app/Contents/MacOS/fresco_cad
+[12/13] Linking CXX executable render_visual_check
+[13/13] Linking CXX executable render_check

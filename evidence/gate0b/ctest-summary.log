@@ -1,0 +1,12 @@
+Internal ctest changing into directory: /Users/kimsanghoon/Documents/Codex/2026-09-10/files-pasted-by-the-user-master/work/build
+Test project /Users/kimsanghoon/Documents/Codex/2026-09-10/files-pasted-by-the-user-master/work/build
+    Start 1: core_check
+1/3 Test #1: core_check .......................   Passed    0.05 sec
+    Start 2: canvas_check
+2/3 Test #2: canvas_check .....................   Passed    0.39 sec
+    Start 3: render_check
+3/3 Test #3: render_check .....................   Passed    0.16 sec
+
+100% tests passed, 0 tests failed out of 3
+
+Total Test time (real) =   0.60 sec

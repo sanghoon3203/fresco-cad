@@ -1,0 +1,822 @@
+qt.qpa.fonts: Populating font family aliases took 61 ms. Replace uses of missing font family "Monospace" with one that exists to avoid this cost. 
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 0 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 1 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 0ms, sync=0, render=0, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 0 ms
+qt.scenegraph.time.glyph: distancefield: 11 glyphs prepared in 0ms, rendering=0, upload=0
+qt.scenegraph.time.glyph: distancefield: 38 glyphs prepared in 0ms, rendering=0, upload=0
+qt.scenegraph.time.glyph: distancefield: 15 glyphs prepared in 0ms, rendering=0, upload=0
+qt.scenegraph.time.glyph: distancefield: 28 glyphs prepared in 0ms, rendering=0, upload=0
+qt.scenegraph.time.glyph: distancefield: 14 glyphs prepared in 0ms, rendering=0, upload=0
+qt.scenegraph.time.glyph: distancefield: 69 glyphs prepared in 2ms, rendering=1, upload=1
+qt.scenegraph.time.texture: atlastexture upload enqueued in: -9222193526004ms (80x56)
+qt.scenegraph.time.texture: atlastexture upload enqueued in: -9222193526004ms (56x56)
+qt.scenegraph.time.texture: atlastexture upload enqueued in: -9222193526004ms (56x56)
+qt.scenegraph.time.texture: atlastexture upload enqueued in: -9222193526004ms (56x56)
+qt.scenegraph.time.texture: atlastexture upload enqueued in: -9222193526004ms (56x56)
+qt.scenegraph.time.texture: atlastexture upload enqueued in: -9222193526004ms (56x56)
+qt.scenegraph.time.renderer: time in renderer: total=10ms, preprocess=3, updates=0, rendering=6
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 15ms, sync=5, render=10, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=16 ms, animations=1 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 35 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 34 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=0 ms, animations=0 ms
+qt.scenegraph.time.glyph: distancefield: 6 glyphs prepared in 0ms, rendering=0, upload=0
+qt.scenegraph.time.glyph: distancefield: 14 glyphs prepared in 0ms, rendering=0, upload=0
+qt.scenegraph.time.glyph: distancefield: 1 glyphs prepared in 0ms, rendering=0, upload=0
+qt.scenegraph.time.glyph: distancefield: 10 glyphs prepared in 0ms, rendering=0, upload=0
+qt.scenegraph.time.renderer: time in renderer: total=2ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 3ms, sync=0, render=2, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 594 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 594 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=4 ms, animations=0 ms
+qt.scenegraph.time.glyph: distancefield: 1 glyphs prepared in 0ms, rendering=0, upload=0
+qt.scenegraph.time.glyph: distancefield: 2 glyphs prepared in 0ms, rendering=0, upload=0
+qt.scenegraph.time.glyph: distancefield: 2 glyphs prepared in 0ms, rendering=0, upload=0
+qt.scenegraph.time.renderer: time in renderer: total=3ms, preprocess=0, updates=0, rendering=3
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 8ms, sync=4, render=3, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 267 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 267 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=12 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=4ms, preprocess=0, updates=0, rendering=4
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 16ms, sync=12, render=4, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 32 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 32 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=2ms, preprocess=0, updates=0, rendering=2
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 6ms, sync=3, render=2, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=2ms, preprocess=0, updates=0, rendering=2
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 6ms, sync=3, render=2, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 17 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 17 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=2ms, preprocess=0, updates=0, rendering=2
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 6ms, sync=3, render=2, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 15 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 15 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=2ms, preprocess=0, updates=0, rendering=2
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=2, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=2ms, preprocess=0, updates=0, rendering=2
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=2, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=2ms, preprocess=0, updates=0, rendering=2
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=2, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=2ms, preprocess=0, updates=0, rendering=2
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=2, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 19 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 19 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 30 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 30 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=2ms, preprocess=0, updates=0, rendering=2
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=2, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=2ms, preprocess=0, updates=0, rendering=2
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=2, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=2ms, preprocess=0, updates=0, rendering=2
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=2, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 31 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 31 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=2, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=2ms, preprocess=0, updates=0, rendering=2
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=2, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=2ms, preprocess=0, updates=0, rendering=2
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=2, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 31 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 31 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=2ms, preprocess=0, updates=0, rendering=2
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=2, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=2ms, preprocess=0, updates=0, rendering=2
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=2, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 19 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 19 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 31 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 31 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 15 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 15 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 19 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 19 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 35 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 35 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=4 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 6ms, sync=4, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 29 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 29 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=2ms, preprocess=0, updates=0, rendering=2
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 6ms, sync=3, render=2, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 19 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 19 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 32 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 32 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=2ms, preprocess=0, updates=0, rendering=2
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=2, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 17 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 17 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 15 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 15 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 17 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 17 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 30 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 30 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=2ms, preprocess=0, updates=0, rendering=2
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=2, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 17 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 17 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=2ms, preprocess=0, updates=0, rendering=2
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=2, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 17 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 17 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 15 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 15 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 31 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 31 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=2ms, preprocess=0, updates=0, rendering=2
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=2, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 31 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 31 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=2ms, preprocess=0, updates=0, rendering=2
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=2, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 19 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 19 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 31 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 31 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 30 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 30 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=5 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 7ms, sync=5, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=2ms, preprocess=0, updates=0, rendering=2
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=2, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=2ms, preprocess=0, updates=0, rendering=2
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=2, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=8 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=3ms, preprocess=0, updates=0, rendering=3
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 11ms, sync=7, render=3, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 33 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 33 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=4 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 6ms, sync=4, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=2ms, preprocess=0, updates=0, rendering=2
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=2, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=2ms, preprocess=0, updates=0, rendering=2
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=2, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=2ms, preprocess=0, updates=0, rendering=2
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=2, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=2ms, preprocess=0, updates=0, rendering=2
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=2, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=2ms, preprocess=0, updates=0, rendering=2
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=2, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 19 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 19 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 30 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 30 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=2ms, preprocess=0, updates=0, rendering=2
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=2, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=2ms, preprocess=0, updates=0, rendering=2
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=2, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=2ms, preprocess=0, updates=0, rendering=2
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=2, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=2ms, preprocess=0, updates=0, rendering=2
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=2, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 17 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 17 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 32 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 32 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 17 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 17 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 32 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 32 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 31 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 31 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 17 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 17 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 30 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 30 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=4 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 31 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 31 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=2ms, preprocess=0, updates=0, rendering=2
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 6ms, sync=3, render=2, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=2ms, preprocess=0, updates=0, rendering=2
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=2, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 15 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 15 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 15 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 15 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=2ms, preprocess=0, updates=0, rendering=2
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=2, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 16 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 15 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 15 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 18 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 33 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 33 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 17 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 17 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 32 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 32 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 14 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=4 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=2ms, preprocess=0, updates=0, rendering=2
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 6ms, sync=3, render=2, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 17 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 17 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=2ms, preprocess=0, updates=0, rendering=2
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=2, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 15 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 15 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=2ms, preprocess=0, updates=0, rendering=2
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=2, swap=0
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] polishAndSync: start, elapsed since last call: 19 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: start, elapsed since last call: 19 ms
+qt.scenegraph.time.renderloop: [window 0x920cb4600][gui thread] Frame prepared, polish=0 ms, lock=0 ms, blockedForSync=3 ms, animations=0 ms
+qt.scenegraph.time.renderer: time in renderer: total=1ms, preprocess=0, updates=0, rendering=1
+qt.scenegraph.time.renderloop: [window 0x920cb4600][render thread 0x9207cb480] syncAndRender: frame rendered in 5ms, sync=3, render=1, swap=0

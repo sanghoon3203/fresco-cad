@@ -1,0 +1,5 @@
+qUncompress: Input data is corrupted
+qUncompress: Input data is corrupted
+qUncompress: Input data is corrupted
+qt.qpa.fonts: Populating font family aliases took 78 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+PASS 91 canvas checks (real input, geometry, snap, edit, native roundtrip, vector PDF)

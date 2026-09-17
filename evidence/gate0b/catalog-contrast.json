@@ -1,0 +1,199 @@
+{
+  "checked_at_utc": "2026-09-14T07:27:49.545578+00:00",
+  "scope": "catalog coverage and selected semantic color pairs only",
+  "apca": "pending; not measured",
+  "human_ime_accessibility": "pending",
+  "failures": [],
+  "catalog": {
+    "locales": [
+      "ja-JP",
+      "ko-KR",
+      "en-US"
+    ],
+    "keys_per_locale": 94,
+    "core_error_keys": [
+      "Could not commit document.",
+      "Could not verify temporary save.",
+      "Could not write last-good backup.",
+      "Document changed on disk.",
+      "Entity limit exceeded.",
+      "File exceeds 64 MiB.",
+      "File is locked by another writer.",
+      "File is missing or unreadable.",
+      "Invalid entity.",
+      "Invalid transaction.",
+      "Nothing to redo.",
+      "Nothing to undo.",
+      "Only .fresco files are supported.",
+      "Refusing to overwrite another file.",
+      "Stale document revision.",
+      "Unsupported or malformed document."
+    ],
+    "canvas_message_keys": [
+      "changed",
+      "layerHidden",
+      "loaded",
+      "localOnly",
+      "pdfBounds",
+      "pdfExists",
+      "pdfFailed",
+      "pdfPath",
+      "pdfSaved",
+      "ready",
+      "redone",
+      "sampleLoaded",
+      "saved",
+      "selected",
+      "selectionEmpty",
+      "undone"
+    ],
+    "qml_required_keys": [
+      "activeLayer",
+      "addLine",
+      "arc",
+      "arcHint",
+      "cancel",
+      "clean",
+      "close",
+      "delete",
+      "deltaX",
+      "deltaY",
+      "dirty",
+      "discard",
+      "discardBody",
+      "discardTitle",
+      "drawing",
+      "endX",
+      "endY",
+      "entityCount",
+      "export",
+      "fit",
+      "frescoFilter",
+      "guideBody",
+      "help",
+      "language",
+      "layer0",
+      "layer1",
+      "layer2",
+      "layers",
+      "line",
+      "lineHint",
+      "move",
+      "noSelection",
+      "open",
+      "pan",
+      "panHint",
+      "pdfFilter",
+      "pdfTitle",
+      "precision",
+      "preview",
+      "redo",
+      "sample",
+      "save",
+      "select",
+      "selectHint",
+      "selection",
+      "snapGrid",
+      "snapObject",
+      "startX",
+      "startY",
+      "step",
+      "text",
+      "textContent",
+      "textDefault",
+      "textHint",
+      "title",
+      "undo",
+      "unsupported",
+      "untitled",
+      "zoomIn",
+      "zoomOut"
+    ],
+    "duplicate_keys": "rejected"
+  },
+  "contrast": [
+    {
+      "foreground": "ink",
+      "background": "surface",
+      "ratio": 12.053151518741906,
+      "minimum": 4.5,
+      "passed": true
+    },
+    {
+      "foreground": "ink",
+      "background": "canvas",
+      "ratio": 11.427971234802717,
+      "minimum": 4.5,
+      "passed": true
+    },
+    {
+      "foreground": "ink",
+      "background": "brandSurface",
+      "ratio": 9.072030600671786,
+      "minimum": 4.5,
+      "passed": true
+    },
+    {
+      "foreground": "muted",
+      "background": "surface",
+      "ratio": 6.006289367600434,
+      "minimum": 4.5,
+      "passed": true
+    },
+    {
+      "foreground": "muted",
+      "background": "canvas",
+      "ratio": 5.694751452689254,
+      "minimum": 4.5,
+      "passed": true
+    },
+    {
+      "foreground": "onPrimary",
+      "background": "primary",
+      "ratio": 6.7738219222845295,
+      "minimum": 4.5,
+      "passed": true
+    },
+    {
+      "foreground": "focus",
+      "background": "surface",
+      "ratio": 6.7738219222845295,
+      "minimum": 3,
+      "passed": true
+    },
+    {
+      "foreground": "focus",
+      "background": "brandSurface",
+      "ratio": 5.09844414275487,
+      "minimum": 3,
+      "passed": true
+    },
+    {
+      "foreground": "danger",
+      "background": "surface",
+      "ratio": 6.741161229237917,
+      "minimum": 4.5,
+      "passed": true
+    }
+  ],
+  "disabled": {
+    "status": "exempt only for inactive controls",
+    "color": "#65788B",
+    "note": "Do not use this exemption for active text or actions."
+  },
+  "wcag_sources": [
+    "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html",
+    "https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html"
+  ],
+  "input_sha256": {
+    "qml/strings.json": "d5b8d22f01186b14bffedf3062a45e20add0d84de41307978316077dd4a2edbc",
+    "qml/theme.json": "f71ef11d0efe45f7d051f856f62ea64bdfaeaf68b523aa96e455e8ce845766d4",
+    "src/document.cpp": "d65d0c72614f7f5b28741acb67108693c40f8cead437929f73d0640af1122b73",
+    "src/canvas.cpp": "39f23bfa996bddf15d25a9d66d38445d9a82e075eb8e37bfde4ebc02283b2258",
+    "src/canvas.h": "834606c0285cd50a422dc6dbc5bc94feeaba0587ed4aadfaea19910fd607ea2e",
+    "qml/CadButton.qml": "f3ef57664d5692f0d6f75b58521de2f21c14debb1a298ef2fe2fd8e8135b8695",
+    "qml/Field.qml": "7431f35bb9d7200208163391683282eab3f7792b6e521eefebe2d2b12f2b46ae",
+    "qml/Main.qml": "451af3d036747c6bfb223095e7bef149a1fe82591496c4596168235601749145"
+  },
+  "passed": true
+}

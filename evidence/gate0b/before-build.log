@@ -1,0 +1,5 @@
+[1/8] Automatic MOC and UIC for target cad_core
+[2/6] Automatic MOC and UIC for target fresco_cad
+[3/5] Building CXX object CMakeFiles/fresco_cad.dir/src/canvas.cpp.o
+[4/5] Building CXX object CMakeFiles/fresco_cad.dir/src/main.cpp.o
+[5/5] Linking CXX executable fresco_cad.app/Contents/MacOS/fresco_cad

@@ -1,0 +1,9 @@
+{
+    "frame_interval_p50_ms": 33.328875,
+    "frame_interval_p95_ms": 34.249958,
+    "frame_time_target_ms": 16.7,
+    "physical_pointer_to_preview": "not measured",
+    "qt": "6.8.3",
+    "samples": 150,
+    "scene": "100000 mixed line/arc/text; synthetic"
+}

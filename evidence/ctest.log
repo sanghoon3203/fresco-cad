@@ -1,0 +1,36 @@
+Start testing: Sep 11 11:57 JST
+----------------------------------------------------------
+1/2 Testing: core_check
+1/2 Test: core_check
+Command: "/Users/kimsanghoon/Documents/Codex/2026-09-10/files-pasted-by-the-user-master/work/build/core_check"
+Directory: /Users/kimsanghoon/Documents/Codex/2026-09-10/files-pasted-by-the-user-master/work/build
+"core_check" start time: Sep 11 11:57 JST
+Output:
+----------------------------------------------------------
+PASS 131 document checks (precision, transactions, history, safe save, hostile files)
+<end of output>
+Test time =   0.05 sec
+----------------------------------------------------------
+Test Passed.
+"core_check" end time: Sep 11 11:57 JST
+"core_check" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/2 Testing: canvas_check
+2/2 Test: canvas_check
+Command: "/Users/kimsanghoon/Documents/Codex/2026-09-10/files-pasted-by-the-user-master/work/build/canvas_check"
+Directory: /Users/kimsanghoon/Documents/Codex/2026-09-10/files-pasted-by-the-user-master/work/build
+"canvas_check" start time: Sep 11 11:57 JST
+Output:
+----------------------------------------------------------
+qt.qpa.fonts: Populating font family aliases took 62 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+PASS 95 canvas checks (real input, geometry, snap, edit, native roundtrip, vector PDF)
+<end of output>
+Test time =   0.66 sec
+----------------------------------------------------------
+Test Passed.
+"canvas_check" end time: Sep 11 11:57 JST
+"canvas_check" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Sep 11 11:57 JST

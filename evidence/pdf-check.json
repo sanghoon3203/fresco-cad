@@ -1,0 +1,15 @@
+{
+  "pages": 1,
+  "paper_mm": [
+    420.16,
+    297.04
+  ],
+  "raster_images": 0,
+  "has_cubic_arc": true,
+  "searchable_text": "執務室\u0001/\u0001 WORKSPACE 会議室\nラウンジ\n01\u0001\u0001\u0001平⾯図\u0001/\u0001 SYNTHETIC\tSAMPLE\n10\t000\tmm",
+  "outer_10000mm_line_on_paper_mm": 99.99999967222222,
+  "target_scale": "1:100",
+  "scale_tolerance_paper_mm": 0.01,
+  "visual_review": "A3 full page rendered with Poppler; labels, arc, layout checked; human CAD print approval pending",
+  "passed": true
+}

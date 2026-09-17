@@ -1,0 +1,5 @@
+[1/6] Automatic MOC and UIC for target fresco_cad
+[2/5] Running rcc for resource app_resources
+[3/5] Building CXX object CMakeFiles/fresco_cad.dir/.qt/rcc/qrc_app_resources.cpp.o
+[4/5] Building CXX object CMakeFiles/fresco_cad.dir/src/main.cpp.o
+[5/5] Linking CXX executable fresco_cad.app/Contents/MacOS/fresco_cad

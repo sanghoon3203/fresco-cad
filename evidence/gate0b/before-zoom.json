@@ -1,0 +1,2863 @@
+{
+    "canvas_logical_px": [
+        1051,
+        641
+    ],
+    "coalesced_updates": 76,
+    "complete": true,
+    "cpu_sync_to_after_rendering": {
+        "max_ms": 11.590625,
+        "mean_ms": 5.465174000000001,
+        "over_16_7_ms": 0,
+        "p50_ms": 5.28525,
+        "p95_ms": 5.770792,
+        "samples": 74
+    },
+    "device_pixel_ratio": 2,
+    "dispatched_updates": 150,
+    "entities": 100000,
+    "feed_actual_hz": 60.003518646604256,
+    "feed_duration_ms": 2483.187709,
+    "feed_interval": {
+        "max_ms": 21.603959,
+        "mean_ms": 16.665689322147653,
+        "over_16_7_ms": 78,
+        "p50_ms": 16.750875,
+        "p95_ms": 20.82225,
+        "samples": 149
+    },
+    "feed_policy": "Independent precise 60 Hz timer; delayed timers are not replayed; raw dispatch times expose delivery rate",
+    "frame_interval": {
+        "max_ms": 50.455416,
+        "mean_ms": 34.02846059459459,
+        "over_16_7_ms": 74,
+        "p50_ms": 33.398125,
+        "p95_ms": 42.578209,
+        "samples": 74
+    },
+    "frame_time_target_ms": 16.7,
+    "graphics_api": "Metal",
+    "graphics_api_id": 6,
+    "handler": {
+        "max_ms": 7.001792,
+        "mean_ms": 6.683089740000001,
+        "over_16_7_ms": 0,
+        "p50_ms": 6.671791,
+        "p95_ms": 6.868625,
+        "samples": 150
+    },
+    "harness_version": 4,
+    "initial_view_center_mm": [
+        5996,
+        3740.25
+    ],
+    "initial_view_scale": 0.06675994403357985,
+    "latest_input_to_submitted": {
+        "max_ms": 23.8205,
+        "mean_ms": 17.12768304054054,
+        "over_16_7_ms": 38,
+        "p50_ms": 18.638875,
+        "p95_ms": 22.953333,
+        "samples": 74
+    },
+    "layout_unchanged": true,
+    "mode": "zoom",
+    "oldest_pending_input_to_submitted": {
+        "max_ms": 44.100292,
+        "mean_ms": 32.25128832432433,
+        "over_16_7_ms": 74,
+        "p50_ms": 34.653125,
+        "p95_ms": 42.6355,
+        "samples": 74
+    },
+    "physical_pointer_to_preview": "not measured",
+    "qt": "6.8.3",
+    "raw_dispatches": [
+        {
+            "dispatched_at_ms": 1393.932416,
+            "handler_ms": 6.578625,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 31,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.07074241608891038
+        },
+        {
+            "dispatched_at_ms": 1414.296833,
+            "handler_ms": 6.757583,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 32,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.0706012136615872
+        },
+        {
+            "dispatched_at_ms": 1426.105291,
+            "handler_ms": 6.77675,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 33,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.07046029307543632
+        },
+        {
+            "dispatched_at_ms": 1447.70925,
+            "handler_ms": 6.724291,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 34,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.07031965376790052
+        },
+        {
+            "dispatched_at_ms": 1459.746958,
+            "handler_ms": 6.75225,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 35,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.07017929517754543
+        },
+        {
+            "dispatched_at_ms": 1476.706666,
+            "handler_ms": 6.719792,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 36,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.0700392167440573
+        },
+        {
+            "dispatched_at_ms": 1493.491833,
+            "handler_ms": 6.690375,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 37,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06989941790824082
+        },
+        {
+            "dispatched_at_ms": 1509.442875,
+            "handler_ms": 6.605958,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 38,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06975989811201679
+        },
+        {
+            "dispatched_at_ms": 1526.085125,
+            "handler_ms": 6.814916,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 39,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06962065679841994
+        },
+        {
+            "dispatched_at_ms": 1542.986083,
+            "handler_ms": 6.749375,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 40,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06948169341159675
+        },
+        {
+            "dispatched_at_ms": 1559.806625,
+            "handler_ms": 6.767125,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 41,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06934300739680314
+        },
+        {
+            "dispatched_at_ms": 1576.644333,
+            "handler_ms": 6.803583,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 42,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06920459820040234
+        },
+        {
+            "dispatched_at_ms": 1595.489958,
+            "handler_ms": 6.706125,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 43,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06906646526986261
+        },
+        {
+            "dispatched_at_ms": 1609.432625,
+            "handler_ms": 6.638,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 44,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.0689286080537551
+        },
+        {
+            "dispatched_at_ms": 1626.117958,
+            "handler_ms": 6.569667,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 45,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06879102600175159
+        },
+        {
+            "dispatched_at_ms": 1643.003458,
+            "handler_ms": 6.951042,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 46,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06865371856462234
+        },
+        {
+            "dispatched_at_ms": 1660.280083,
+            "handler_ms": 6.826958,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 47,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06851668519423387
+        },
+        {
+            "dispatched_at_ms": 1678.153791,
+            "handler_ms": 6.606417,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 48,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06837992534354678
+        },
+        {
+            "dispatched_at_ms": 1692.998041,
+            "handler_ms": 6.82475,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 49,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06824343846661356
+        },
+        {
+            "dispatched_at_ms": 1711.861291,
+            "handler_ms": 6.664625,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 50,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.0681072240185764
+        },
+        {
+            "dispatched_at_ms": 1727.051916,
+            "handler_ms": 6.860709,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 51,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06797128145566507
+        },
+        {
+            "dispatched_at_ms": 1743.971916,
+            "handler_ms": 6.735834,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 52,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06783561023519467
+        },
+        {
+            "dispatched_at_ms": 1760.073625,
+            "handler_ms": 6.88425,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 53,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06770020981556354
+        },
+        {
+            "dispatched_at_ms": 1776.36175,
+            "handler_ms": 6.685291,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 54,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06756507965625104
+        },
+        {
+            "dispatched_at_ms": 1797.6455,
+            "handler_ms": 6.828166,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 55,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.0674302192178154
+        },
+        {
+            "dispatched_at_ms": 1810.761583,
+            "handler_ms": 6.746417,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 56,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06729562796189162
+        },
+        {
+            "dispatched_at_ms": 1830.766,
+            "handler_ms": 6.671791,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 57,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06716130535118923
+        },
+        {
+            "dispatched_at_ms": 1844.976541,
+            "handler_ms": 6.583042,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 58,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06702725084949025
+        },
+        {
+            "dispatched_at_ms": 1861.592791,
+            "handler_ms": 6.830459,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 59,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06689346392164695
+        },
+        {
+            "dispatched_at_ms": 1878.463416,
+            "handler_ms": 6.636375,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 60,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.0667599440335798
+        },
+        {
+            "dispatched_at_ms": 1897.687416,
+            "handler_ms": 6.603417,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 61,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06689346392164695
+        },
+        {
+            "dispatched_at_ms": 1910.58075,
+            "handler_ms": 6.716958,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 62,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06702725084949025
+        },
+        {
+            "dispatched_at_ms": 1931.203791,
+            "handler_ms": 6.745667,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 63,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06716130535118923
+        },
+        {
+            "dispatched_at_ms": 1944.230416,
+            "handler_ms": 6.597292,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 64,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06729562796189162
+        },
+        {
+            "dispatched_at_ms": 1964.165125,
+            "handler_ms": 6.615333,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 65,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.0674302192178154
+        },
+        {
+            "dispatched_at_ms": 1978.326708,
+            "handler_ms": 6.73725,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 66,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06756507965625104
+        },
+        {
+            "dispatched_at_ms": 1997.420708,
+            "handler_ms": 6.657083,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 67,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06770020981556354
+        },
+        {
+            "dispatched_at_ms": 2011.611666,
+            "handler_ms": 6.548875,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 68,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06783561023519467
+        },
+        {
+            "dispatched_at_ms": 2030.760541,
+            "handler_ms": 6.639167,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 69,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06797128145566507
+        },
+        {
+            "dispatched_at_ms": 2044.253166,
+            "handler_ms": 6.564542,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 70,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.0681072240185764
+        },
+        {
+            "dispatched_at_ms": 2064.332583,
+            "handler_ms": 6.669917,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 71,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06824343846661356
+        },
+        {
+            "dispatched_at_ms": 2077.284583,
+            "handler_ms": 6.596833,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 72,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06837992534354678
+        },
+        {
+            "dispatched_at_ms": 2093.147333,
+            "handler_ms": 6.701583,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 73,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06851668519423387
+        },
+        {
+            "dispatched_at_ms": 2109.939041,
+            "handler_ms": 6.620542,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 74,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06865371856462234
+        },
+        {
+            "dispatched_at_ms": 2130.894916,
+            "handler_ms": 6.636459,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 75,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06879102600175158
+        },
+        {
+            "dispatched_at_ms": 2143.81025,
+            "handler_ms": 6.752958,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 76,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06892860805375509
+        },
+        {
+            "dispatched_at_ms": 2164.266583,
+            "handler_ms": 6.813083,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 77,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.0690664652698626
+        },
+        {
+            "dispatched_at_ms": 2177.354625,
+            "handler_ms": 6.656958,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 78,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06920459820040233
+        },
+        {
+            "dispatched_at_ms": 2197.474541,
+            "handler_ms": 6.650459,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 79,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06934300739680313
+        },
+        {
+            "dispatched_at_ms": 2211.667125,
+            "handler_ms": 6.539125,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 80,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06948169341159674
+        },
+        {
+            "dispatched_at_ms": 2230.831375,
+            "handler_ms": 6.52,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 81,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06962065679841993
+        },
+        {
+            "dispatched_at_ms": 2244.254416,
+            "handler_ms": 6.477584,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 82,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06975989811201677
+        },
+        {
+            "dispatched_at_ms": 2264.25075,
+            "handler_ms": 6.637625,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 83,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06989941790824081
+        },
+        {
+            "dispatched_at_ms": 2277.167458,
+            "handler_ms": 6.640833,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 84,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.07003921674405729
+        },
+        {
+            "dispatched_at_ms": 2297.430041,
+            "handler_ms": 6.671625,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 85,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.0701792951775454
+        },
+        {
+            "dispatched_at_ms": 2311.649,
+            "handler_ms": 6.596291,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 86,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.07031965376790049
+        },
+        {
+            "dispatched_at_ms": 2326.384291,
+            "handler_ms": 6.60875,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 87,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.07046029307543629
+        },
+        {
+            "dispatched_at_ms": 2343.063041,
+            "handler_ms": 6.833584,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 88,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.07060121366158716
+        },
+        {
+            "dispatched_at_ms": 2364.164375,
+            "handler_ms": 6.487916,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 89,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.07074241608891033
+        },
+        {
+            "dispatched_at_ms": 2378.18975,
+            "handler_ms": 6.744708,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 90,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.07088390092108815
+        },
+        {
+            "dispatched_at_ms": 2397.693291,
+            "handler_ms": 6.678084,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 91,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.07074241608891033
+        },
+        {
+            "dispatched_at_ms": 2410.657208,
+            "handler_ms": 6.617792,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 92,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.07060121366158714
+        },
+        {
+            "dispatched_at_ms": 2426.428083,
+            "handler_ms": 6.713083,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 93,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.07046029307543626
+        },
+        {
+            "dispatched_at_ms": 2443.465541,
+            "handler_ms": 6.577125,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 94,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.07031965376790046
+        },
+        {
+            "dispatched_at_ms": 2464.124375,
+            "handler_ms": 6.67575,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 95,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.07017929517754537
+        },
+        {
+            "dispatched_at_ms": 2477.012625,
+            "handler_ms": 6.604041,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 96,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.07003921674405725
+        },
+        {
+            "dispatched_at_ms": 2492.840875,
+            "handler_ms": 6.620541,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 97,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06989941790824077
+        },
+        {
+            "dispatched_at_ms": 2511.504666,
+            "handler_ms": 6.640417,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 98,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06975989811201673
+        },
+        {
+            "dispatched_at_ms": 2530.701458,
+            "handler_ms": 6.586292,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 99,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06962065679841989
+        },
+        {
+            "dispatched_at_ms": 2543.551791,
+            "handler_ms": 6.5675,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 100,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.0694816934115967
+        },
+        {
+            "dispatched_at_ms": 2564.190625,
+            "handler_ms": 6.764833,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 101,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06934300739680309
+        },
+        {
+            "dispatched_at_ms": 2576.010375,
+            "handler_ms": 6.429,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 102,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06920459820040228
+        },
+        {
+            "dispatched_at_ms": 2593.721708,
+            "handler_ms": 6.657833,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 103,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06906646526986256
+        },
+        {
+            "dispatched_at_ms": 2611.410625,
+            "handler_ms": 6.95475,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 104,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06892860805375504
+        },
+        {
+            "dispatched_at_ms": 2630.8095,
+            "handler_ms": 6.642125,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 105,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06879102600175153
+        },
+        {
+            "dispatched_at_ms": 2644.980791,
+            "handler_ms": 6.739834,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 106,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06865371856462228
+        },
+        {
+            "dispatched_at_ms": 2664.07825,
+            "handler_ms": 6.681416,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 107,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06851668519423382
+        },
+        {
+            "dispatched_at_ms": 2677.045375,
+            "handler_ms": 6.705,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 108,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06837992534354673
+        },
+        {
+            "dispatched_at_ms": 2692.962291,
+            "handler_ms": 6.502917,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 109,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.0682434384666135
+        },
+        {
+            "dispatched_at_ms": 2711.512666,
+            "handler_ms": 6.72875,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 110,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06810722401857634
+        },
+        {
+            "dispatched_at_ms": 2726.296458,
+            "handler_ms": 6.717333,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 111,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06797128145566501
+        },
+        {
+            "dispatched_at_ms": 2743.311833,
+            "handler_ms": 6.777208,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 112,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06783561023519462
+        },
+        {
+            "dispatched_at_ms": 2764.134083,
+            "handler_ms": 6.796583,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 113,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06770020981556349
+        },
+        {
+            "dispatched_at_ms": 2776.473041,
+            "handler_ms": 6.70625,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 114,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06756507965625098
+        },
+        {
+            "dispatched_at_ms": 2793.251125,
+            "handler_ms": 6.722833,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 115,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06743021921781535
+        },
+        {
+            "dispatched_at_ms": 2810.307458,
+            "handler_ms": 6.688875,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 116,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06729562796189156
+        },
+        {
+            "dispatched_at_ms": 2826.31925,
+            "handler_ms": 6.629166,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 117,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06716130535118918
+        },
+        {
+            "dispatched_at_ms": 2843.697166,
+            "handler_ms": 6.750375,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 118,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.0670272508494902
+        },
+        {
+            "dispatched_at_ms": 2864.221458,
+            "handler_ms": 6.556958,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 119,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.0668934639216469
+        },
+        {
+            "dispatched_at_ms": 2877.226791,
+            "handler_ms": 6.818542,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 120,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06675994403357974
+        },
+        {
+            "dispatched_at_ms": 2893.247458,
+            "handler_ms": 6.619958,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 121,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.0668934639216469
+        },
+        {
+            "dispatched_at_ms": 2911.907208,
+            "handler_ms": 6.869,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 122,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.0670272508494902
+        },
+        {
+            "dispatched_at_ms": 2926.898875,
+            "handler_ms": 6.836791,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 123,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06716130535118918
+        },
+        {
+            "dispatched_at_ms": 2942.815833,
+            "handler_ms": 6.717208,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 124,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06729562796189156
+        },
+        {
+            "dispatched_at_ms": 2959.65,
+            "handler_ms": 6.931416,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 125,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06743021921781535
+        },
+        {
+            "dispatched_at_ms": 2978.624625,
+            "handler_ms": 6.868625,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 126,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06756507965625098
+        },
+        {
+            "dispatched_at_ms": 2995.526916,
+            "handler_ms": 6.718459,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 127,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06770020981556349
+        },
+        {
+            "dispatched_at_ms": 3014.176916,
+            "handler_ms": 6.752917,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 128,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06783561023519462
+        },
+        {
+            "dispatched_at_ms": 3027.210166,
+            "handler_ms": 6.758625,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 129,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06797128145566501
+        },
+        {
+            "dispatched_at_ms": 3043.064666,
+            "handler_ms": 6.661167,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 130,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06810722401857634
+        },
+        {
+            "dispatched_at_ms": 3061.76175,
+            "handler_ms": 6.744541,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 131,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.0682434384666135
+        },
+        {
+            "dispatched_at_ms": 3080.986041,
+            "handler_ms": 6.597167,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 132,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06837992534354673
+        },
+        {
+            "dispatched_at_ms": 3092.75925,
+            "handler_ms": 6.592208,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 133,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06851668519423382
+        },
+        {
+            "dispatched_at_ms": 3109.706916,
+            "handler_ms": 6.476209,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 134,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06865371856462228
+        },
+        {
+            "dispatched_at_ms": 3128.226208,
+            "handler_ms": 7.001792,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 135,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06879102600175152
+        },
+        {
+            "dispatched_at_ms": 3143.433125,
+            "handler_ms": 6.613208,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 136,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06892860805375503
+        },
+        {
+            "dispatched_at_ms": 3160.15625,
+            "handler_ms": 6.589375,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 137,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06906646526986254
+        },
+        {
+            "dispatched_at_ms": 3180.741291,
+            "handler_ms": 6.613459,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 138,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06920459820040227
+        },
+        {
+            "dispatched_at_ms": 3194.890791,
+            "handler_ms": 6.50125,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 139,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06934300739680307
+        },
+        {
+            "dispatched_at_ms": 3209.478666,
+            "handler_ms": 6.575584,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 140,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06948169341159668
+        },
+        {
+            "dispatched_at_ms": 3226.098583,
+            "handler_ms": 6.728917,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 141,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06962065679841987
+        },
+        {
+            "dispatched_at_ms": 3247.601833,
+            "handler_ms": 6.687917,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 142,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06975989811201672
+        },
+        {
+            "dispatched_at_ms": 3260.580166,
+            "handler_ms": 6.665375,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 143,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06989941790824075
+        },
+        {
+            "dispatched_at_ms": 3280.813666,
+            "handler_ms": 6.606084,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 144,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.07003921674405723
+        },
+        {
+            "dispatched_at_ms": 3294.961,
+            "handler_ms": 6.64325,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 145,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.07017929517754534
+        },
+        {
+            "dispatched_at_ms": 3314.224333,
+            "handler_ms": 6.816125,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 146,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.07031965376790043
+        },
+        {
+            "dispatched_at_ms": 3327.329,
+            "handler_ms": 6.619416,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 147,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.07046029307543623
+        },
+        {
+            "dispatched_at_ms": 3343.23575,
+            "handler_ms": 6.798625,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 148,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.0706012136615871
+        },
+        {
+            "dispatched_at_ms": 3360.384916,
+            "handler_ms": 6.739084,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 149,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.07074241608891027
+        },
+        {
+            "dispatched_at_ms": 3376.467791,
+            "handler_ms": 6.687875,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 150,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.0708839009210881
+        },
+        {
+            "dispatched_at_ms": 3395.192875,
+            "handler_ms": 6.72025,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 151,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.07074241608891027
+        },
+        {
+            "dispatched_at_ms": 3411.947041,
+            "handler_ms": 6.617417,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 152,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.07060121366158709
+        },
+        {
+            "dispatched_at_ms": 3426.782166,
+            "handler_ms": 6.602167,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 153,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.0704602930754362
+        },
+        {
+            "dispatched_at_ms": 3443.514416,
+            "handler_ms": 6.728084,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 154,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.0703196537679004
+        },
+        {
+            "dispatched_at_ms": 3459.337583,
+            "handler_ms": 6.52575,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 155,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.07017929517754531
+        },
+        {
+            "dispatched_at_ms": 3476.028416,
+            "handler_ms": 6.633,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 156,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.07003921674405719
+        },
+        {
+            "dispatched_at_ms": 3492.835208,
+            "handler_ms": 6.559917,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 157,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06989941790824071
+        },
+        {
+            "dispatched_at_ms": 3509.567666,
+            "handler_ms": 6.715792,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 158,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06975989811201667
+        },
+        {
+            "dispatched_at_ms": 3526.390166,
+            "handler_ms": 6.721459,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 159,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06962065679841983
+        },
+        {
+            "dispatched_at_ms": 3543.501291,
+            "handler_ms": 6.819667,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 160,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06948169341159664
+        },
+        {
+            "dispatched_at_ms": 3559.432875,
+            "handler_ms": 6.665,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 161,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06934300739680303
+        },
+        {
+            "dispatched_at_ms": 3576.266291,
+            "handler_ms": 6.910667,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 162,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06920459820040223
+        },
+        {
+            "dispatched_at_ms": 3593.221958,
+            "handler_ms": 6.563208,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 163,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.0690664652698625
+        },
+        {
+            "dispatched_at_ms": 3609.90275,
+            "handler_ms": 6.570291,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 164,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06892860805375499
+        },
+        {
+            "dispatched_at_ms": 3630.880458,
+            "handler_ms": 6.580583,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 165,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06879102600175148
+        },
+        {
+            "dispatched_at_ms": 3644.261166,
+            "handler_ms": 6.733542,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 166,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06865371856462223
+        },
+        {
+            "dispatched_at_ms": 3664.121083,
+            "handler_ms": 6.802417,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 167,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06851668519423376
+        },
+        {
+            "dispatched_at_ms": 3677.216625,
+            "handler_ms": 6.754208,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 168,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06837992534354667
+        },
+        {
+            "dispatched_at_ms": 3693.198791,
+            "handler_ms": 6.552084,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 169,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06824343846661345
+        },
+        {
+            "dispatched_at_ms": 3709.789625,
+            "handler_ms": 6.6365,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 170,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06810722401857629
+        },
+        {
+            "dispatched_at_ms": 3730.662791,
+            "handler_ms": 6.771167,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 171,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06797128145566496
+        },
+        {
+            "dispatched_at_ms": 3744.257083,
+            "handler_ms": 6.663875,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 172,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06783561023519456
+        },
+        {
+            "dispatched_at_ms": 3760.072416,
+            "handler_ms": 6.525209,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 173,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06770020981556343
+        },
+        {
+            "dispatched_at_ms": 3776.823291,
+            "handler_ms": 6.680959,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 174,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06756507965625093
+        },
+        {
+            "dispatched_at_ms": 3797.529375,
+            "handler_ms": 6.676666,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 175,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.0674302192178153
+        },
+        {
+            "dispatched_at_ms": 3810.500041,
+            "handler_ms": 6.703917,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 176,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06729562796189151
+        },
+        {
+            "dispatched_at_ms": 3830.660833,
+            "handler_ms": 6.642625,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 177,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06716130535118912
+        },
+        {
+            "dispatched_at_ms": 3844.481583,
+            "handler_ms": 6.621833,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 178,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06702725084949014
+        },
+        {
+            "dispatched_at_ms": 3862.137375,
+            "handler_ms": 6.6465,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 179,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06689346392164684
+        },
+        {
+            "dispatched_at_ms": 3877.120125,
+            "handler_ms": 6.562916,
+            "pointer_logical_px": [
+                525.5,
+                320.5
+            ],
+            "sequence": 180,
+            "view_center_mm": [
+                5996,
+                3740.25
+            ],
+            "view_scale": 0.06675994403357968
+        }
+    ],
+    "raw_frames": [
+        {
+            "cpu_ms": 5.262458,
+            "frame_interval_ms": 33.052959,
+            "latest_input_ms": 21.955125,
+            "new_input": true,
+            "oldest_pending_input_ms": 21.955125,
+            "sequence": 31,
+            "submitted_at_ms": 1415.887541
+        },
+        {
+            "cpu_ms": 5.589959,
+            "frame_interval_ms": 33.686375,
+            "latest_input_ms": 23.4685,
+            "new_input": true,
+            "oldest_pending_input_ms": 35.276958,
+            "sequence": 33,
+            "submitted_at_ms": 1449.573791
+        },
+        {
+            "cpu_ms": 5.236292,
+            "frame_interval_ms": 39.265333,
+            "latest_input_ms": 12.132542,
+            "new_input": true,
+            "oldest_pending_input_ms": 41.129958,
+            "sequence": 36,
+            "submitted_at_ms": 1488.839208
+        },
+        {
+            "cpu_ms": 5.253209,
+            "frame_interval_ms": 32.576542,
+            "latest_input_ms": 11.972833,
+            "new_input": true,
+            "oldest_pending_input_ms": 27.923875,
+            "sequence": 38,
+            "submitted_at_ms": 1521.415708
+        },
+        {
+            "cpu_ms": 5.436292,
+            "frame_interval_ms": 33.85825,
+            "latest_input_ms": 12.287875,
+            "new_input": true,
+            "oldest_pending_input_ms": 29.188833,
+            "sequence": 40,
+            "submitted_at_ms": 1555.273958
+        },
+        {
+            "cpu_ms": 5.387375,
+            "frame_interval_ms": 33.720916,
+            "latest_input_ms": 12.350542,
+            "new_input": true,
+            "oldest_pending_input_ms": 29.18825,
+            "sequence": 42,
+            "submitted_at_ms": 1588.994875
+        },
+        {
+            "cpu_ms": 5.3215,
+            "frame_interval_ms": 49.1305,
+            "latest_input_ms": 12.0075,
+            "new_input": true,
+            "oldest_pending_input_ms": 42.6355,
+            "sequence": 45,
+            "submitted_at_ms": 1638.125458
+        },
+        {
+            "cpu_ms": 5.575,
+            "frame_interval_ms": 34.672,
+            "latest_input_ms": 12.51725,
+            "new_input": true,
+            "oldest_pending_input_ms": 29.793875,
+            "sequence": 47,
+            "submitted_at_ms": 1672.797333
+        },
+        {
+            "cpu_ms": 5.236334,
+            "frame_interval_ms": 32.430209,
+            "latest_input_ms": 12.229542,
+            "new_input": true,
+            "oldest_pending_input_ms": 27.073792,
+            "sequence": 49,
+            "submitted_at_ms": 1705.227583
+        },
+        {
+            "cpu_ms": 11.590625,
+            "frame_interval_ms": 40.463125,
+            "latest_input_ms": 18.638875,
+            "new_input": true,
+            "oldest_pending_input_ms": 33.8295,
+            "sequence": 51,
+            "submitted_at_ms": 1745.690791
+        },
+        {
+            "cpu_ms": 5.570916,
+            "frame_interval_ms": 27.02525,
+            "latest_input_ms": 12.64225,
+            "new_input": true,
+            "oldest_pending_input_ms": 28.743959,
+            "sequence": 53,
+            "submitted_at_ms": 1772.715875
+        },
+        {
+            "cpu_ms": 5.531042,
+            "frame_interval_ms": 26.599125,
+            "latest_input_ms": 22.953333,
+            "new_input": true,
+            "oldest_pending_input_ms": 22.953333,
+            "sequence": 54,
+            "submitted_at_ms": 1799.315083
+        },
+        {
+            "cpu_ms": 5.242625,
+            "frame_interval_ms": 33.0335,
+            "latest_input_ms": 21.586958,
+            "new_input": true,
+            "oldest_pending_input_ms": 34.703041,
+            "sequence": 56,
+            "submitted_at_ms": 1832.348541
+        },
+        {
+            "cpu_ms": 6.099292,
+            "frame_interval_ms": 42.273208,
+            "latest_input_ms": 13.029042,
+            "new_input": true,
+            "oldest_pending_input_ms": 43.855833,
+            "sequence": 59,
+            "submitted_at_ms": 1874.621833
+        },
+        {
+            "cpu_ms": 5.295875,
+            "frame_interval_ms": 24.667833,
+            "latest_input_ms": 20.826292,
+            "new_input": true,
+            "oldest_pending_input_ms": 20.826292,
+            "sequence": 60,
+            "submitted_at_ms": 1899.289708
+        },
+        {
+            "cpu_ms": 5.5265,
+            "frame_interval_ms": 33.71525,
+            "latest_input_ms": 22.42425,
+            "new_input": true,
+            "oldest_pending_input_ms": 35.317584,
+            "sequence": 62,
+            "submitted_at_ms": 1933.005
+        },
+        {
+            "cpu_ms": 5.211792,
+            "frame_interval_ms": 32.74525,
+            "latest_input_ms": 21.519792,
+            "new_input": true,
+            "oldest_pending_input_ms": 34.546417,
+            "sequence": 64,
+            "submitted_at_ms": 1965.750208
+        },
+        {
+            "cpu_ms": 5.243958,
+            "frame_interval_ms": 33.256709,
+            "latest_input_ms": 20.680125,
+            "new_input": true,
+            "oldest_pending_input_ms": 34.841708,
+            "sequence": 66,
+            "submitted_at_ms": 1999.006833
+        },
+        {
+            "cpu_ms": 5.19625,
+            "frame_interval_ms": 33.300833,
+            "latest_input_ms": 20.696042,
+            "new_input": true,
+            "oldest_pending_input_ms": 34.887,
+            "sequence": 68,
+            "submitted_at_ms": 2032.307708
+        },
+        {
+            "cpu_ms": 5.452416,
+            "frame_interval_ms": 33.790417,
+            "latest_input_ms": 21.844875,
+            "new_input": true,
+            "oldest_pending_input_ms": 35.3375,
+            "sequence": 70,
+            "submitted_at_ms": 2066.098041
+        },
+        {
+            "cpu_ms": 5.201209,
+            "frame_interval_ms": 39.117291,
+            "latest_input_ms": 12.068083,
+            "new_input": true,
+            "oldest_pending_input_ms": 40.882833,
+            "sequence": 73,
+            "submitted_at_ms": 2105.215416
+        },
+        {
+            "cpu_ms": 5.215042,
+            "frame_interval_ms": 27.21175,
+            "latest_input_ms": 22.488125,
+            "new_input": true,
+            "oldest_pending_input_ms": 22.488125,
+            "sequence": 74,
+            "submitted_at_ms": 2132.427166
+        },
+        {
+            "cpu_ms": 5.632917,
+            "frame_interval_ms": 33.73975,
+            "latest_input_ms": 22.356625,
+            "new_input": true,
+            "oldest_pending_input_ms": 35.271959,
+            "sequence": 76,
+            "submitted_at_ms": 2166.166875
+        },
+        {
+            "cpu_ms": 5.306208,
+            "frame_interval_ms": 32.908667,
+            "latest_input_ms": 21.721,
+            "new_input": true,
+            "oldest_pending_input_ms": 34.809042,
+            "sequence": 78,
+            "submitted_at_ms": 2199.075625
+        },
+        {
+            "cpu_ms": 5.247125,
+            "frame_interval_ms": 33.342875,
+            "latest_input_ms": 20.751458,
+            "new_input": true,
+            "oldest_pending_input_ms": 34.944042,
+            "sequence": 80,
+            "submitted_at_ms": 2232.418583
+        },
+        {
+            "cpu_ms": 5.5235,
+            "frame_interval_ms": 33.624375,
+            "latest_input_ms": 21.788375,
+            "new_input": true,
+            "oldest_pending_input_ms": 35.211416,
+            "sequence": 82,
+            "submitted_at_ms": 2266.042791
+        },
+        {
+            "cpu_ms": 5.220542,
+            "frame_interval_ms": 32.961125,
+            "latest_input_ms": 21.836417,
+            "new_input": true,
+            "oldest_pending_input_ms": 34.753125,
+            "sequence": 84,
+            "submitted_at_ms": 2299.003875
+        },
+        {
+            "cpu_ms": 5.239708,
+            "frame_interval_ms": 39.3485,
+            "latest_input_ms": 11.968125,
+            "new_input": true,
+            "oldest_pending_input_ms": 40.922375,
+            "sequence": 87,
+            "submitted_at_ms": 2338.352416
+        },
+        {
+            "cpu_ms": 5.594416,
+            "frame_interval_ms": 27.646583,
+            "latest_input_ms": 22.935917,
+            "new_input": true,
+            "oldest_pending_input_ms": 22.935917,
+            "sequence": 88,
+            "submitted_at_ms": 2365.998958
+        },
+        {
+            "cpu_ms": 5.252333,
+            "frame_interval_ms": 33.265417,
+            "latest_input_ms": 21.074708,
+            "new_input": true,
+            "oldest_pending_input_ms": 35.100083,
+            "sequence": 90,
+            "submitted_at_ms": 2399.264458
+        },
+        {
+            "cpu_ms": 5.704625,
+            "frame_interval_ms": 39.682458,
+            "latest_input_ms": 12.518792,
+            "new_input": true,
+            "oldest_pending_input_ms": 41.253584,
+            "sequence": 93,
+            "submitted_at_ms": 2438.946875
+        },
+        {
+            "cpu_ms": 5.218916,
+            "frame_interval_ms": 26.743084,
+            "latest_input_ms": 22.224709,
+            "new_input": true,
+            "oldest_pending_input_ms": 22.224709,
+            "sequence": 94,
+            "submitted_at_ms": 2465.69025
+        },
+        {
+            "cpu_ms": 5.183291,
+            "frame_interval_ms": 39.067916,
+            "latest_input_ms": 11.916958,
+            "new_input": true,
+            "oldest_pending_input_ms": 40.633458,
+            "sequence": 97,
+            "submitted_at_ms": 2504.757833
+        },
+        {
+            "cpu_ms": 5.194916,
+            "frame_interval_ms": 27.483584,
+            "latest_input_ms": 20.73675,
+            "new_input": true,
+            "oldest_pending_input_ms": 20.73675,
+            "sequence": 98,
+            "submitted_at_ms": 2532.241416
+        },
+        {
+            "cpu_ms": 5.465208,
+            "frame_interval_ms": 33.701916,
+            "latest_input_ms": 22.391625,
+            "new_input": true,
+            "oldest_pending_input_ms": 35.241958,
+            "sequence": 100,
+            "submitted_at_ms": 2565.943416
+        },
+        {
+            "cpu_ms": 5.486084,
+            "frame_interval_ms": 40.086209,
+            "latest_input_ms": 12.307792,
+            "new_input": true,
+            "oldest_pending_input_ms": 41.838875,
+            "sequence": 103,
+            "submitted_at_ms": 2606.0295
+        },
+        {
+            "cpu_ms": 5.229458,
+            "frame_interval_ms": 26.373416,
+            "latest_input_ms": 20.992333,
+            "new_input": true,
+            "oldest_pending_input_ms": 20.992333,
+            "sequence": 104,
+            "submitted_at_ms": 2632.402958
+        },
+        {
+            "cpu_ms": 5.4925,
+            "frame_interval_ms": 33.45525,
+            "latest_input_ms": 20.877667,
+            "new_input": true,
+            "oldest_pending_input_ms": 35.048958,
+            "sequence": 106,
+            "submitted_at_ms": 2665.858458
+        },
+        {
+            "cpu_ms": 5.24525,
+            "frame_interval_ms": 39.022792,
+            "latest_input_ms": 11.918709,
+            "new_input": true,
+            "oldest_pending_input_ms": 40.80275,
+            "sequence": 109,
+            "submitted_at_ms": 2704.881
+        },
+        {
+            "cpu_ms": 5.515042,
+            "frame_interval_ms": 33.755458,
+            "latest_input_ms": 12.340042,
+            "new_input": true,
+            "oldest_pending_input_ms": 27.123834,
+            "sequence": 111,
+            "submitted_at_ms": 2738.6365
+        },
+        {
+            "cpu_ms": 5.517666,
+            "frame_interval_ms": 27.294917,
+            "latest_input_ms": 22.61975,
+            "new_input": true,
+            "oldest_pending_input_ms": 22.61975,
+            "sequence": 112,
+            "submitted_at_ms": 2765.931583
+        },
+        {
+            "cpu_ms": 5.234417,
+            "frame_interval_ms": 39.431208,
+            "latest_input_ms": 12.111458,
+            "new_input": true,
+            "oldest_pending_input_ms": 41.2285,
+            "sequence": 115,
+            "submitted_at_ms": 2805.362583
+        },
+        {
+            "cpu_ms": 5.203208,
+            "frame_interval_ms": 32.909792,
+            "latest_input_ms": 11.953166,
+            "new_input": true,
+            "oldest_pending_input_ms": 27.964958,
+            "sequence": 117,
+            "submitted_at_ms": 2838.272416
+        },
+        {
+            "cpu_ms": 5.210834,
+            "frame_interval_ms": 27.497,
+            "latest_input_ms": 22.07225,
+            "new_input": true,
+            "oldest_pending_input_ms": 22.07225,
+            "sequence": 118,
+            "submitted_at_ms": 2865.769416
+        },
+        {
+            "cpu_ms": 5.518708,
+            "frame_interval_ms": 39.728,
+            "latest_input_ms": 12.249958,
+            "new_input": true,
+            "oldest_pending_input_ms": 41.275958,
+            "sequence": 121,
+            "submitted_at_ms": 2905.497416
+        },
+        {
+            "cpu_ms": 5.770792,
+            "frame_interval_ms": 34.170583,
+            "latest_input_ms": 12.769083,
+            "new_input": true,
+            "oldest_pending_input_ms": 27.76075,
+            "sequence": 123,
+            "submitted_at_ms": 2939.667958
+        },
+        {
+            "cpu_ms": 5.305791,
+            "frame_interval_ms": 32.399542,
+            "latest_input_ms": 12.417541,
+            "new_input": true,
+            "oldest_pending_input_ms": 29.251708,
+            "sequence": 125,
+            "submitted_at_ms": 2972.067541
+        },
+        {
+            "cpu_ms": 5.277791,
+            "frame_interval_ms": 43.682125,
+            "latest_input_ms": 20.222834,
+            "new_input": true,
+            "oldest_pending_input_ms": 37.125125,
+            "sequence": 127,
+            "submitted_at_ms": 3015.74975
+        },
+        {
+            "cpu_ms": 5.678834,
+            "frame_interval_ms": 39.761167,
+            "latest_input_ms": 12.446125,
+            "new_input": true,
+            "oldest_pending_input_ms": 41.333875,
+            "sequence": 130,
+            "submitted_at_ms": 3055.510791
+        },
+        {
+            "cpu_ms": 5.262667,
+            "frame_interval_ms": 27.089208,
+            "latest_input_ms": 20.838583,
+            "new_input": true,
+            "oldest_pending_input_ms": 20.838583,
+            "sequence": 131,
+            "submitted_at_ms": 3082.600333
+        },
+        {
+            "cpu_ms": 5.230208,
+            "frame_interval_ms": 38.923625,
+            "latest_input_ms": 11.81675,
+            "new_input": true,
+            "oldest_pending_input_ms": 40.537625,
+            "sequence": 134,
+            "submitted_at_ms": 3121.523666
+        },
+        {
+            "cpu_ms": 5.574,
+            "frame_interval_ms": 34.212333,
+            "latest_input_ms": 12.302916,
+            "new_input": true,
+            "oldest_pending_input_ms": 27.509833,
+            "sequence": 136,
+            "submitted_at_ms": 3155.736041
+        },
+        {
+            "cpu_ms": 5.225833,
+            "frame_interval_ms": 26.548667,
+            "latest_input_ms": 22.128458,
+            "new_input": true,
+            "oldest_pending_input_ms": 22.128458,
+            "sequence": 137,
+            "submitted_at_ms": 3182.284708
+        },
+        {
+            "cpu_ms": 5.28525,
+            "frame_interval_ms": 39.15175,
+            "latest_input_ms": 11.957709,
+            "new_input": true,
+            "oldest_pending_input_ms": 40.695084,
+            "sequence": 140,
+            "submitted_at_ms": 3221.436375
+        },
+        {
+            "cpu_ms": 5.52725,
+            "frame_interval_ms": 27.962833,
+            "latest_input_ms": 23.300625,
+            "new_input": true,
+            "oldest_pending_input_ms": 23.300625,
+            "sequence": 141,
+            "submitted_at_ms": 3249.399208
+        },
+        {
+            "cpu_ms": 5.545875,
+            "frame_interval_ms": 33.220292,
+            "latest_input_ms": 22.039334,
+            "new_input": true,
+            "oldest_pending_input_ms": 35.017667,
+            "sequence": 143,
+            "submitted_at_ms": 3282.6195
+        },
+        {
+            "cpu_ms": 5.202125,
+            "frame_interval_ms": 33.136542,
+            "latest_input_ms": 20.795125,
+            "new_input": true,
+            "oldest_pending_input_ms": 34.942459,
+            "sequence": 145,
+            "submitted_at_ms": 3315.756125
+        },
+        {
+            "cpu_ms": 5.4465,
+            "frame_interval_ms": 39.830458,
+            "latest_input_ms": 12.350875,
+            "new_input": true,
+            "oldest_pending_input_ms": 41.362292,
+            "sequence": 148,
+            "submitted_at_ms": 3355.586625
+        },
+        {
+            "cpu_ms": 5.237209,
+            "frame_interval_ms": 32.961042,
+            "latest_input_ms": 12.079792,
+            "new_input": true,
+            "oldest_pending_input_ms": 28.162667,
+            "sequence": 150,
+            "submitted_at_ms": 3388.547583
+        },
+        {
+            "cpu_ms": 5.504125,
+            "frame_interval_ms": 50.455416,
+            "latest_input_ms": 12.221084,
+            "new_input": true,
+            "oldest_pending_input_ms": 43.810375,
+            "sequence": 153,
+            "submitted_at_ms": 3439.00325
+        },
+        {
+            "cpu_ms": 5.255416,
+            "frame_interval_ms": 32.286542,
+            "latest_input_ms": 11.952,
+            "new_input": true,
+            "oldest_pending_input_ms": 27.775167,
+            "sequence": 155,
+            "submitted_at_ms": 3471.289583
+        },
+        {
+            "cpu_ms": 5.178,
+            "frame_interval_ms": 33.398125,
+            "latest_input_ms": 11.852458,
+            "new_input": true,
+            "oldest_pending_input_ms": 28.65925,
+            "sequence": 157,
+            "submitted_at_ms": 3504.687666
+        },
+        {
+            "cpu_ms": 5.529,
+            "frame_interval_ms": 34.05325,
+            "latest_input_ms": 12.350709,
+            "new_input": true,
+            "oldest_pending_input_ms": 29.173209,
+            "sequence": 159,
+            "submitted_at_ms": 3538.740875
+        },
+        {
+            "cpu_ms": 5.540584,
+            "frame_interval_ms": 33.050875,
+            "latest_input_ms": 12.358916,
+            "new_input": true,
+            "oldest_pending_input_ms": 28.2905,
+            "sequence": 161,
+            "submitted_at_ms": 3571.791791
+        },
+        {
+            "cpu_ms": 5.335834,
+            "frame_interval_ms": 33.503542,
+            "latest_input_ms": 12.073333,
+            "new_input": true,
+            "oldest_pending_input_ms": 29.029,
+            "sequence": 163,
+            "submitted_at_ms": 3605.295291
+        },
+        {
+            "cpu_ms": 5.166292,
+            "frame_interval_ms": 27.08325,
+            "latest_input_ms": 22.475833,
+            "new_input": true,
+            "oldest_pending_input_ms": 22.475833,
+            "sequence": 164,
+            "submitted_at_ms": 3632.378583
+        },
+        {
+            "cpu_ms": 5.517416,
+            "frame_interval_ms": 33.537208,
+            "latest_input_ms": 21.654709,
+            "new_input": true,
+            "oldest_pending_input_ms": 35.035417,
+            "sequence": 166,
+            "submitted_at_ms": 3665.915875
+        },
+        {
+            "cpu_ms": 5.262375,
+            "frame_interval_ms": 39.257958,
+            "latest_input_ms": 11.974917,
+            "new_input": true,
+            "oldest_pending_input_ms": 41.052625,
+            "sequence": 169,
+            "submitted_at_ms": 3705.173708
+        },
+        {
+            "cpu_ms": 5.219584,
+            "frame_interval_ms": 27.011959,
+            "latest_input_ms": 22.396041,
+            "new_input": true,
+            "oldest_pending_input_ms": 22.396041,
+            "sequence": 170,
+            "submitted_at_ms": 3732.185666
+        },
+        {
+            "cpu_ms": 5.67225,
+            "frame_interval_ms": 40.189166,
+            "latest_input_ms": 12.302417,
+            "new_input": true,
+            "oldest_pending_input_ms": 41.712042,
+            "sequence": 173,
+            "submitted_at_ms": 3772.374833
+        },
+        {
+            "cpu_ms": 5.206791,
+            "frame_interval_ms": 26.70775,
+            "latest_input_ms": 22.259334,
+            "new_input": true,
+            "oldest_pending_input_ms": 22.259334,
+            "sequence": 174,
+            "submitted_at_ms": 3799.082625
+        },
+        {
+            "cpu_ms": 5.211625,
+            "frame_interval_ms": 33.099875,
+            "latest_input_ms": 21.682459,
+            "new_input": true,
+            "oldest_pending_input_ms": 34.653125,
+            "sequence": 176,
+            "submitted_at_ms": 3832.1825
+        },
+        {
+            "cpu_ms": 5.858584,
+            "frame_interval_ms": 42.578209,
+            "latest_input_ms": 12.62375,
+            "new_input": true,
+            "oldest_pending_input_ms": 44.100292,
+            "sequence": 179,
+            "submitted_at_ms": 3874.761125
+        },
+        {
+            "cpu_ms": 5.282042,
+            "frame_interval_ms": 26.179875,
+            "latest_input_ms": 23.8205,
+            "new_input": true,
+            "oldest_pending_input_ms": 23.8205,
+            "sequence": 180,
+            "submitted_at_ms": 3900.940625
+        }
+    ],
+    "requested_measured_dispatches": 150,
+    "scene": "100000 mixed line/arc/text; synthetic",
+    "screen_refresh_hz": 60,
+    "submitted_dispatch_ratio": 0.49333333333333335,
+    "submitted_updates": 74,
+    "target_feed_hz": 60,
+    "timing_scope": "CPU sync/command recording and synthetic dispatch-to-submission; no GPU completion or physical presentation timing",
+    "unsubmitted_updates": 0,
+    "warmup_dispatches": 30,
+    "window_logical_px": [
+        1320,
+        800
+    ],
+    "window_physical_px": [
+        2640,
+        1600
+    ],
+    "workload": "60-step triangle: 30 x1.002 zoom steps then 30 inverse steps about canvas center"
+}

@@ -1,0 +1,6 @@
+PASS before-zoom.json: zoom, 150 inputs, 74 submitted, frame p95 42.578 ms (evidence integrity only), 73 changed / 0 unchanged submitted camera/pointer states
+PASS after-zoom.json: zoom, 150 inputs, 150 submitted, frame p95 18.675 ms (evidence integrity only), 149 changed / 0 unchanged submitted camera/pointer states
+PASS before-pan.json: pan, 150 inputs, 76 submitted, frame p95 39.110 ms (evidence integrity only), 71 changed / 4 unchanged submitted camera/pointer states
+PASS after-pan.json: pan, 150 inputs, 102 submitted, frame p95 36.516 ms (evidence integrity only), 99 changed / 2 unchanged submitted camera/pointer states
+PASS before-hover.json: hover, 150 inputs, 76 submitted, frame p95 35.032 ms (evidence integrity only), 75 changed / 0 unchanged submitted camera/pointer states
+PASS after-hover.json: hover, 150 inputs, 86 submitted, frame p95 35.933 ms (evidence integrity only), 85 changed / 0 unchanged submitted camera/pointer states

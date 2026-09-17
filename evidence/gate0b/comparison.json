@@ -1,0 +1,92 @@
+{
+  "date": "2026-09-14 JST",
+  "gate": "0B",
+  "verdict": "FAIL: frame interval p95 exceeds 16.7 ms in all measured modes; physical pointer-to-preview unmeasured",
+  "hardware": "MacBook Air Mac16,12 Apple M4 16GB; macOS26.6.2 25G83",
+  "qt": "6.8.3",
+  "render_loop": "threaded",
+  "graphics_api": "Metal",
+  "harness_version": 4,
+  "source_sha256": {
+    "renderer_before": "e995f6b8586fed371ce7d9303ac4febe9983a533520e0a360af36eff678e4689",
+    "renderer_after": "39f23bfa996bddf15d25a9d66d38445d9a82e075eb8e37bfde4ebc02283b2258",
+    "harness_both": "9c4e9611578e32a844817d35811d87b65eb71aea555e20efa2316440a7cf17af"
+  },
+  "binary_sha256": {
+    "before": "e82b9e6c72aabe8b72c0de55c2a3a5a959cad037d90fcc3c76d7046d5684828a",
+    "after": "a6ec95a457e8f0171eda73fd20de4c17ef34985b2b92f17583fe89b1c0c61f60"
+  },
+  "run_policy": "Finished all builds, then serial before/after pairs zoom, pan, hover; no simultaneous benchmark apps; power, thermal state and other desktop activity not controlled",
+  "scene_caveat": "80k lines,19k arcs,1k text entities; text height15mm is1.00–1.06 logicalpx and is culled; not a representative readable-text corpus",
+  "results": [
+    {
+      "mode": "zoom",
+      "before": {
+        "submitted_updates": 74,
+        "dispatched_updates": 150,
+        "feed_actual_hz": 60.003518646604256,
+        "frame_interval": 42.578209,
+        "cpu_sync_to_after_rendering": 5.770792,
+        "handler": 6.868625,
+        "latest_input_to_submitted": 22.953333,
+        "oldest_pending_input_to_submitted": 42.6355
+      },
+      "after": {
+        "submitted_updates": 150,
+        "dispatched_updates": 150,
+        "feed_actual_hz": 59.96016270934622,
+        "frame_interval": 18.675167,
+        "cpu_sync_to_after_rendering": 5.290291,
+        "handler": 1.249583,
+        "latest_input_to_submitted": 19.696042,
+        "oldest_pending_input_to_submitted": 19.696042
+      }
+    },
+    {
+      "mode": "pan",
+      "before": {
+        "submitted_updates": 76,
+        "dispatched_updates": 150,
+        "feed_actual_hz": 59.951749914286495,
+        "frame_interval": 39.109583,
+        "cpu_sync_to_after_rendering": 5.675291,
+        "handler": 7.830792,
+        "latest_input_to_submitted": 24.149584,
+        "oldest_pending_input_to_submitted": 40.960958
+      },
+      "after": {
+        "submitted_updates": 102,
+        "dispatched_updates": 150,
+        "feed_actual_hz": 59.95973944140297,
+        "frame_interval": 36.516292,
+        "cpu_sync_to_after_rendering": 7.306875,
+        "handler": 1.258625,
+        "latest_input_to_submitted": 19.086083,
+        "oldest_pending_input_to_submitted": 34.681834
+      }
+    },
+    {
+      "mode": "hover",
+      "before": {
+        "submitted_updates": 76,
+        "dispatched_updates": 150,
+        "feed_actual_hz": 60.0139381444951,
+        "frame_interval": 35.031791,
+        "cpu_sync_to_after_rendering": 5.61925,
+        "handler": 6.881666,
+        "latest_input_to_submitted": 15.246583,
+        "oldest_pending_input_to_submitted": 31.196667
+      },
+      "after": {
+        "submitted_updates": 86,
+        "dispatched_updates": 150,
+        "feed_actual_hz": 59.989807771921164,
+        "frame_interval": 35.932833,
+        "cpu_sync_to_after_rendering": 4.458042,
+        "handler": 3.518208,
+        "latest_input_to_submitted": 21.488083,
+        "oldest_pending_input_to_submitted": 24.502916
+      }
+    }
+  ]
+}

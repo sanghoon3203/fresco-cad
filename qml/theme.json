@@ -1,0 +1,54 @@
+{
+  "colors": {
+    "brandSurface": "#C9E2FF",
+    "surface": "#FFFFFF",
+    "canvas": "#F7F9FC",
+    "background": "#EDF2F7",
+    "ink": "#24384B",
+    "muted": "#526579",
+    "secondaryInk": "#5B778F",
+    "annotationInk": "#506B85",
+    "border": "#CCD6E0",
+    "grid": "#DFE6EE",
+    "focus": "#235E94",
+    "primary": "#235E94",
+    "onPrimary": "#FFFFFF",
+    "hover": "#E7EFF7",
+    "pressed": "#D3E3F3",
+    "disabled": "#65788B",
+    "snap": "#146747",
+    "danger": "#AD263A"
+  },
+  "space": {
+    "xs": 4,
+    "sm": 8,
+    "md": 12,
+    "lg": 16,
+    "xl": 24,
+    "xxl": 32
+  },
+  "type": {
+    "small": 11,
+    "body": 13,
+    "label": 12,
+    "title": 20,
+    "brand": 17
+  },
+  "radius": {
+    "control": 6,
+    "panel": 8
+  },
+  "size": {
+    "control": 36,
+    "sidebar": 268,
+    "toolbar": 56,
+    "header": 64,
+    "status": 36
+  },
+  "motion": {
+    "instant": 0,
+    "fast": 120,
+    "standard": 180,
+    "slow": 240
+  }
+}
