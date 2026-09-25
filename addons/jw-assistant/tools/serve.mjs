@@ -8,6 +8,7 @@ const files = new Map([
   ['/ui/index.html', 'text/html; charset=utf-8'],
   ['/ui/field-panel.mjs', 'text/javascript; charset=utf-8'],
   ['/field/standards.mjs', 'text/javascript; charset=utf-8'],
+  ['/field/drafts.mjs', 'text/javascript; charset=utf-8'],
   ['/storage/local-store.mjs', 'text/javascript; charset=utf-8'],
   ['/ui/app.mjs', 'text/javascript; charset=utf-8'],
   ['/ui/locales.mjs', 'text/javascript; charset=utf-8'],

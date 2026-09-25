@@ -469,7 +469,7 @@ function render() {
   settingsList.append(element("button", { className: "button", type: "button", text: t("backupView"), on: { click: showReviewBackup } })); settingsList.append(element("button", {className:"button", type:"button", text: state.locale === "ja-JP" ? "現在の検討データをJSONで表示" : "View current review workspace JSON", disabled: !state.reviewStoreReady, on: {click: () => { state.reportJson = JSON.stringify(state.reviewWorkspace,null,2); state.reportDialogTitle = t("backupTitle"); state.reportDialogHelp = t("backupHelp"); state.reportDialogLabel = t("backupTitle"); render(); document.querySelector("#report-dialog")?.showModal(); }}}));
   settingsPanel.append(settingsList); inspector.append(settingsPanel);
   workspace.append(sourcePanel, issuePanel, canvasPanel, inspector);
-  if (state.mode === "import") workspace.append(fieldPanel.render({locale:state.locale, reviewContextKey:state.reviewContextKey, observedLayers:[...new Set((state.importResult?.snapshot?.entities ?? []).map(e => e.layer))]})); main.append(workspace, element("footer", { className: "footer", text: t(state.mode === "import" ? "importFooter" : "syntheticFooter") })); shell.append(sidebar, main); app.append(shell);
+  workspace.append(fieldPanel.render({locale:state.locale, reviewContextKey:state.mode === "import" ? state.reviewContextKey : null, observedLayers:state.mode === "import" ? [...new Set((state.importResult?.snapshot?.entities ?? []).map(e => e.layer))] : []})); main.append(workspace, element("footer", { className: "footer", text: t(state.mode === "import" ? "importFooter" : "syntheticFooter") })); shell.append(sidebar, main); app.append(shell);
   const dialog = element("dialog", { id: "apply-dialog", attributes: { "aria-labelledby": "apply-title" } }); dialog.addEventListener("cancel", (event) => { event.preventDefault(); closeDialog(); }); const dialogContent = element("div", { className: "dialog-content" }); dialogContent.append(element("h2", { className: "dialog-title", id: "apply-title", text: t("applyTitle") }), element("p", { className: "dialog-copy", text: t("applyBody") })); const dialogActions = element("div", { className: "dialog-actions" }); dialogActions.append(element("button", { className: "button", type: "button", text: t("cancel"), on: { click: closeDialog } }), element("button", { className: "button primary", type: "button", text: t("applyConfirm"), on: { click: applyToDemo } })); dialogContent.append(dialogActions); dialog.append(dialogContent); app.append(dialog);
   if (state.reportJson) {
     const reportDialog = element("dialog", { id: "report-dialog", attributes: { "aria-labelledby": "report-title", "aria-describedby": "report-help" } });
@@ -495,6 +495,7 @@ function render() {
 }
 
 window.addEventListener("keydown", (event) => { if (event.key === "Escape" && state.previewSnapshot && !document.querySelector("dialog[open]")) cancelPreview(); });
+window.addEventListener("beforeunload", event => { if (fieldPanel.hasUnsaved()) { event.preventDefault(); event.returnValue = ""; } });
 render();
 loadDemo();
 loadReviewWorkspace();

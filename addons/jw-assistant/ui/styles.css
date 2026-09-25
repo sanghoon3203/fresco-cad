@@ -160,3 +160,7 @@ body.reduce-motion *, body.reduce-motion *::before, body.reduce-motion *::after 
 .field-panel input, .field-panel textarea { width: 100%; min-width: 0; padding: 10px; border: 1px solid var(--line-strong); border-radius: 8px; font: inherit; }
 .field-panel p { overflow-wrap: anywhere; line-height: 1.6; }
 .field-panel .button { margin: 6px 8px 6px 0; }
+
+.field-panel .button { justify-self: start; max-width: 100%; white-space: normal; }
+.mapping-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 0 20px; }
+.finish-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 0 20px; }
