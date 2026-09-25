@@ -1,5 +1,15 @@
 # Fresco CAD — native canvas spike
 
+**2026-09-23: Jw_cad 애드온 개발을 먼저 진행합니다.** 별도 [Jw Assistant 시제품](addons/jw-assistant/README.md), [요구사항](docs/jw-assistant/requirements.md), [스프린트 보고서](docs/jw-assistant/sprint-00-report.md)를 추가했습니다. 아래는 기존 통합형 Qt/C++ CAD 시제품의 이력입니다.
+
+**2026-09-24: 일본 업무·AI API 조사에 따라 계획을 v0.2로 개정했습니다.** [개정 제품 계획](docs/jw-assistant/product-plan-v2.md) · [개발 로드맵](docs/jw-assistant/roadmap.md) · [조사 스프린트 보고](docs/jw-assistant/sprint-01-research-report.md). API 연결·실제 Jw 쓰기는 아직 구현/검증 전입니다.
+
+**2026-09-24: JWC_TEMP 읽기 전용 가져오기를 구현했습니다.** 실제 Jw 10.3.6의 테스트 선 캡처를 읽고, 좌표 단위 확인·그룹 선택·검사 범위를 일본어/영어 UI에 표시합니다. [실행 안내](addons/jw-assistant/README.md) · [I1 구현/실기 보고](docs/jw-assistant/sprint-02-i1-report.md). UTF-8 래퍼 인식과 세션 격리 등 호환성 게이트는 남아 있습니다.
+
+**2026-09-25: 캡처 무결성 검증과 수동 세션 디렉터리 분리를 추가했습니다.** 메타데이터 불일치/미완료 파일은 검사를 차단하고, 일본어·영어 화면에서 확인 상태를 표시합니다. Node 32개 검사와 Windows bridge 검사 통과. [I1B 스프린트 보고](docs/jw-assistant/sprint-03-i1b-report.md). 실시간 창 연결·동시 실행 보장·실제 도면 쓰기는 미구현입니다.
+
+**2026-09-25: 사무소 규칙·검토 메모·34개 레이어 분류·현장 마감 확인을 추가했습니다.** 읽기 전용 시제품이며 47개 자동 검증과 브라우저 저장/재열기 검증 통과. [Sprint 04 보고](docs/jw-assistant/sprint-04-i2a-report.md) · [현장 확인 계약](docs/jw-assistant/field-coordination.md).
+
 **Phase 0, gate 0B: 실패 — 화면 재사용·입력 비용 개선과 회귀 검사는 통과했으나 프레임 성능 목표에 미달.**
 
 Gate 0A의 로컬 캔버스 검증은 유지됩니다. [최신 성능 보고서](docs/performance-0b.md).

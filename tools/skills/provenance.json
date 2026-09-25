@@ -1,0 +1,24 @@
+{
+  "recordedAt": "2026-09-23",
+  "scope": "Project-local vendored skills, read explicitly; not globally registered",
+  "skills": [
+    {
+      "directory": "seed-design",
+      "repository": "https://github.com/daangn/seed-design",
+      "path": "skills/seed-design",
+      "commit": "ff8836c082d20e601eb58aea07270c5b0f98ece1",
+      "license": "Apache-2.0",
+      "skillSha256": "32214bade47066629df1902e905ca5e7516877dff94d668a027f7338702ba7d5",
+      "licenseSha256": "44b8c61c1d0f4fad76c7755a21e44067893ab23f5bcc2a0d7fbfdf1794e8d160"
+    },
+    {
+      "directory": "apple-design",
+      "repository": "https://github.com/naplesblue/apple-design-skill",
+      "path": ".",
+      "commit": "e81692da299d64b9bf38ae26db2d709fc60c8bf3",
+      "license": "MIT; see upstream attribution notices",
+      "skillSha256": "8270881e0601c12e0e5c906b44f0dead767927c8c96ba363c8bb52f23dfe9c77",
+      "licenseSha256": "499920e1459bf5bace237f93709e8143278a5e0fa2f90d32752c4de8b8f771ad"
+    }
+  ]
+}

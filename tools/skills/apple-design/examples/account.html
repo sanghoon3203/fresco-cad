@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Account & Plan</title>
+<style>
+:root{
+  --bg:#f5f5f7; --surface:#fff; --hover:#fbfbfd;
+  --text:#1d1d1f; --text-body:#424245; --text-2:#6e6e73; --text-3:#86868b; --text-4:#aeaeb2;
+  --faint:#d2d2d7; --hairline:rgba(0,0,0,0.07);
+  --accent:#0071e3; --accent-link:#0066cc; --indigo:#5e5ce6; --heat:#ff6b00; --live:#30d158;
+  --grad-cta:linear-gradient(135deg,#0071e3 0%,#5e5ce6 100%);
+  --font:-apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display','Helvetica Neue','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;
+  --r-pill:999px; --r-chip:6px; --r-thumb:12px; --r-sheet:16px; --r-card:18px; --r-panel:22px; --r-hero:26px;
+  --track:#e8e8ed;
+  --sh-card:0 1px 2px rgba(0,0,0,0.04),0 8px 24px rgba(0,0,0,0.05);
+  --sh-panel:0 1px 3px rgba(0,0,0,0.05),0 14px 40px rgba(0,0,0,0.05);
+  --sh-lift:0 12px 32px rgba(0,0,0,0.1);
+  --sh-cta:0 20px 54px rgba(0,113,227,0.24);
+  --sh-overlay:0 2px 8px rgba(0,0,0,0.10),0 30px 80px rgba(0,0,0,0.24);
+  --max-grid:1080px; --pad-x:22px;
+  --ease-spring:cubic-bezier(0.32,0.72,0,1);
+  --ease-out-quart:cubic-bezier(0.25,1,0.5,1);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{font-optical-sizing:auto;}
+body{background:var(--bg);color:var(--text);font-family:var(--font);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.6;}
+.wrap{max-width:var(--max-grid);margin:0 auto;padding:0 var(--pad-x);}
+.num{font-variant-numeric:tabular-nums;}
+
+/* ── nav (glass — scroll-edge, no permanent divider) ── */
+.nav{position:sticky;top:0;z-index:50;background:rgba(245,245,247,0.72);
+  backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid transparent;transition:border-color .3s,box-shadow .3s;}
+.nav.scrolled{border-bottom-color:var(--hairline);box-shadow:0 1px 12px rgba(0,0,0,0.04);}
+.nav-in{height:54px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.brand{display:flex;align-items:center;gap:9px;text-decoration:none;color:var(--text);}
+.brand-mark{width:26px;height:26px;border-radius:var(--r-chip);background:var(--text);color:#fff;
+  display:grid;place-items:center;font-size:13px;font-weight:700;letter-spacing:-0.02em;}
+.brand span{font-size:15px;font-weight:650;letter-spacing:-0.01em;}
+.nav-right{display:flex;align-items:center;gap:14px;}
+.nav-link{font-size:13px;font-weight:550;color:var(--text-2);text-decoration:none;}
+.avatar{width:28px;height:28px;border-radius:50%;background:#e2e2e7;color:var(--text-2);
+  display:grid;place-items:center;font-size:12px;font-weight:600;}
+
+/* ── hero ── */
+.hero{padding:clamp(40px,6vw,68px) 0 clamp(20px,3vw,30px);}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:0.14em;color:var(--text-3);text-transform:uppercase;}
+.hero h1{margin-top:14px;font-size:clamp(30px,5vw,46px);font-weight:700;letter-spacing:-0.03em;line-height:1.08;}
+.hero p{margin-top:15px;font-size:clamp(15px,2.5vw,18px);color:var(--text-2);line-height:1.6;max-width:540px;}
+
+section.block{padding-bottom:clamp(34px,6vw,56px);}
+.sec-label{font-size:13px;font-weight:600;color:var(--text-3);letter-spacing:-0.01em;
+  margin:0 4px 12px;text-transform:uppercase;letter-spacing:0.06em;}
+
+/* ── plan tiers (card grid — independent pickable objects; all white/grayscale, one accent on current) ── */
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.tier{background:var(--surface);border-radius:var(--r-card);box-shadow:var(--sh-card);
+  padding:22px 22px 24px;display:flex;flex-direction:column;gap:4px;}
+.tier.current{box-shadow:var(--sh-lift);}
+.tier-top{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:24px;}
+.tier-name{font-size:17px;font-weight:600;letter-spacing:-0.01em;}
+.tag-current{font-size:11px;font-weight:600;color:#fff;background:var(--accent);
+  padding:3px 9px;border-radius:var(--r-pill);letter-spacing:0;}
+.tier-price{margin-top:8px;font-size:28px;font-weight:700;letter-spacing:-0.02em;}
+.tier-price small{font-size:14px;font-weight:500;color:var(--text-3);letter-spacing:0;}
+.tier-desc{margin-top:6px;font-size:13.5px;color:var(--text-2);line-height:1.5;}
+.tier-feat{margin-top:16px;display:flex;flex-direction:column;gap:9px;}
+.tier-feat div{font-size:13px;color:var(--text-body);display:flex;gap:9px;line-height:1.4;}
+.tier-feat .ck{color:var(--text-4);flex:none;}
+.tier-cta{margin-top:auto;padding-top:20px;}
+.btn-block{display:flex;align-items:center;justify-content:center;height:40px;border-radius:var(--r-pill);
+  font-size:14px;font-weight:600;text-decoration:none;cursor:pointer;border:none;width:100%;}
+.btn-fill{background:var(--accent);color:#fff;}
+.btn-quiet{background:rgba(0,0,0,0.05);color:var(--text);}
+.btn-current{background:transparent;color:var(--text-3);font-weight:550;}
+
+/* ── unified panel (account details, notifications, billing) ── */
+.panel{background:var(--surface);border-radius:var(--r-panel);box-shadow:var(--sh-panel);overflow:hidden;}
+.prow{display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:15px clamp(18px,3vw,24px);min-height:56px;}
+.prow+.prow{border-top:1px solid var(--hairline);}
+.prow .lbl{font-size:15px;color:var(--text);font-weight:450;}
+.prow .val{font-size:15px;color:var(--text-2);text-align:right;display:flex;align-items:center;gap:10px;}
+.prow .val a{color:var(--accent-link);text-decoration:none;font-weight:500;font-size:14px;}
+.chev{color:var(--faint);font-size:17px;}
+
+/* storage meter row — solid white, grayscale track + single accent fill */
+.storage{padding:20px clamp(18px,3vw,24px) 22px;}
+.storage-top{display:flex;align-items:baseline;justify-content:space-between;gap:12px;}
+.storage-top .u{font-size:15px;font-weight:600;}
+.storage-top .r{font-size:13px;color:var(--text-3);}
+.meter{margin-top:12px;height:8px;border-radius:var(--r-pill);background:var(--track);overflow:hidden;}
+.meter i{display:block;height:100%;width:41.4%;background:var(--accent);border-radius:var(--r-pill);}
+.storage-note{margin-top:10px;font-size:12.5px;color:var(--text-3);}
+
+/* toggle */
+.tg{position:relative;width:44px;height:26px;border-radius:var(--r-pill);background:var(--track);
+  cursor:pointer;flex:none;transition:background .25s var(--ease-out-quart);border:none;}
+.tg::after{content:"";position:absolute;top:2px;left:2px;width:22px;height:22px;border-radius:50%;
+  background:#fff;box-shadow:0 1px 3px rgba(0,0,0,0.2);transition:transform .25s var(--ease-out-quart);}
+.tg[aria-checked="true"]{background:var(--accent);}
+.tg[aria-checked="true"]::after{transform:translateX(18px);}
+
+/* billing */
+.bill .lbl{display:flex;flex-direction:column;gap:2px;}
+.bill .lbl .d{font-size:15px;color:var(--text);}
+.bill .lbl .m{font-size:12.5px;color:var(--text-3);}
+.bill .val{gap:16px;}
+.bill .amt{font-size:15px;color:var(--text);min-width:76px;text-align:right;}
+.bill .st{font-size:13px;color:var(--text-3);min-width:64px;text-align:right;}
+
+/* manage row (quiet, holds destructive entry) */
+.manage{margin-top:14px;display:flex;gap:22px;padding:0 4px;}
+.manage a{font-size:13.5px;color:var(--text-2);text-decoration:none;font-weight:500;cursor:pointer;}
+.manage a.danger{color:var(--text-2);}
+
+/* ── colored CTA (the one place: color + glass + orbs) ── */
+.cta{position:relative;overflow:hidden;border-radius:var(--r-hero);padding:clamp(28px,4vw,44px);
+  background:var(--grad-cta);box-shadow:var(--sh-cta);}
+.cta .orb{position:absolute;border-radius:50%;}
+.cta .o1{width:280px;height:280px;background:rgba(255,255,255,0.18);filter:blur(48px);top:-90px;right:-40px;}
+.cta .o2{width:220px;height:220px;background:rgba(120,80,255,0.5);filter:blur(52px);bottom:-100px;left:14%;}
+.cta-in{position:relative;max-width:560px;}
+.cta h2{font-size:clamp(20px,3vw,26px);font-weight:700;color:#fff;letter-spacing:-0.02em;line-height:1.2;}
+.cta p{margin-top:11px;font-size:14.5px;color:rgba(255,255,255,0.82);line-height:1.6;}
+.cta .row{display:flex;gap:11px;margin-top:22px;flex-wrap:wrap;align-items:center;}
+.glass-chip{display:inline-flex;align-items:center;height:44px;padding:0 20px;border-radius:var(--r-pill);
+  background:rgba(255,255,255,0.16);border:1px solid rgba(255,255,255,0.22);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  color:#fff;font-size:14px;font-weight:600;text-decoration:none;cursor:pointer;}
+.cta .fine{color:rgba(255,255,255,0.72);font-size:13px;}
+
+/* footer */
+footer{border-top:1px solid var(--hairline);padding:26px 0 40px;margin-top:8px;}
+.foot{display:flex;gap:22px;flex-wrap:wrap;}
+.foot a{font-size:12.5px;color:var(--text-3);text-decoration:none;}
+
+/* ── cancel sheet (interactive layer — motion.md) ── */
+.scrim{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,0.28);
+  opacity:0;pointer-events:none;transition:opacity .25s ease;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.sheet{position:fixed;z-index:91;left:50%;top:50%;width:min(440px,calc(100vw - 40px));
+  transform:translate(-50%,-46%) scale(0.97);transform-origin:center bottom;
+  background:rgba(255,255,255,0.86);backdrop-filter:blur(0px) saturate(180%);-webkit-backdrop-filter:blur(0px) saturate(180%);
+  border-radius:var(--r-hero);box-shadow:var(--sh-overlay);
+  padding:28px 26px 24px;opacity:0;pointer-events:none;
+  transition:opacity .4s var(--ease-spring),transform .4s var(--ease-spring),
+    backdrop-filter .4s var(--ease-spring),-webkit-backdrop-filter .4s var(--ease-spring);}
+.sheet.open{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1);
+  backdrop-filter:blur(30px) saturate(180%);-webkit-backdrop-filter:blur(30px) saturate(180%);}
+.sheet h3{font-size:20px;font-weight:700;letter-spacing:-0.02em;}
+.sheet p{margin-top:10px;font-size:14px;color:var(--text-body);line-height:1.6;}
+.sheet .acts{margin-top:22px;display:flex;flex-direction:column;gap:9px;}
+.sheet .acts a{display:flex;align-items:center;justify-content:center;height:46px;border-radius:var(--r-sheet);
+  font-size:15px;font-weight:600;text-decoration:none;cursor:pointer;}
+.sheet .primary{background:var(--accent);color:#fff;}
+.sheet .ghost{background:rgba(0,0,0,0.05);color:var(--text);}
+.sheet .destroy{background:transparent;color:var(--text-2);font-weight:500;font-size:14px;height:40px;}
+
+@media (max-width:680px){
+  .tiers{grid-template-columns:1fr;}
+  .hide-sm{display:none;}
+}
+@media (prefers-reduced-motion:reduce){
+  .sheet{transition:opacity 200ms ease;transform:translate(-50%,-50%) !important;}
+}
+@media (prefers-reduced-transparency:reduce){
+  .glass-chip,.sheet{background:#fff;backdrop-filter:none;-webkit-backdrop-filter:none;}
+  .nav{background:#f5f5f7;backdrop-filter:none;-webkit-backdrop-filter:none;}
+}
+@media (prefers-contrast:more){
+  .glass-chip{background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.5);}
+}
+.btn-block:active,.glass-chip:active,.sheet .acts a:active{transform:scale(0.98);transition:transform 100ms ease-out;}
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#">
+      <span class="brand-mark">A</span>
+      <span>Aperture</span>
+    </a>
+    <div class="nav-right">
+      <a class="nav-link hide-sm" href="#">Overview</a>
+      <a class="nav-link hide-sm" href="#">Support</a>
+      <div class="avatar">李</div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <div class="eyebrow">Account</div>
+    <h1>方案与账单</h1>
+    <p>管理你的订阅、存储与付款方式。所有变更即时生效，随时可以调整或取消。</p>
+  </section>
+
+  <!-- PLAN TIERS -->
+  <section class="block">
+    <div class="sec-label">订阅方案</div>
+    <div class="tiers">
+      <div class="tier">
+        <div class="tier-top"><span class="tier-name">Free</span></div>
+        <div class="tier-price num">¥0</div>
+        <div class="tier-desc">适合入门与轻度使用。</div>
+        <div class="tier-feat">
+          <div><span class="ck">—</span>5 GB 云端存储</div>
+          <div><span class="ck">—</span>基础导出</div>
+          <div><span class="ck">—</span>单设备同步</div>
+        </div>
+        <div class="tier-cta"><button class="btn-block btn-quiet">切换到 Free</button></div>
+      </div>
+      <div class="tier current">
+        <div class="tier-top"><span class="tier-name">Plus</span><span class="tag-current">当前方案</span></div>
+        <div class="tier-price num">¥28 <small>/ 月</small></div>
+        <div class="tier-desc">日常创作的稳妥之选。</div>
+        <div class="tier-feat">
+          <div><span class="ck">—</span>2 TB 云端存储</div>
+          <div><span class="ck">—</span>高清导出与版本历史</div>
+          <div><span class="ck">—</span>最多 5 台设备同步</div>
+        </div>
+        <div class="tier-cta"><button class="btn-block btn-current">使用中</button></div>
+      </div>
+      <div class="tier">
+        <div class="tier-top"><span class="tier-name">Pro</span></div>
+        <div class="tier-price num">¥68 <small>/ 月</small></div>
+        <div class="tier-desc">面向专业与团队协作。</div>
+        <div class="tier-feat">
+          <div><span class="ck">—</span>6 TB 云端存储</div>
+          <div><span class="ck">—</span>无损导出与优先渲染</div>
+          <div><span class="ck">—</span>协作空间与权限管理</div>
+        </div>
+        <div class="tier-cta"><button class="btn-block btn-fill">升级到 Pro</button></div>
+      </div>
+    </div>
+    <div class="manage">
+      <a href="#">查看方案对比</a>
+      <a class="danger" id="openCancel">取消订阅</a>
+    </div>
+  </section>
+
+  <!-- STORAGE (solid white, grayscale track + one accent fill) -->
+  <section class="block">
+    <div class="sec-label">存储空间</div>
+    <div class="panel">
+      <div class="storage">
+        <div class="storage-top">
+          <span class="u num">已用 847 GB</span>
+          <span class="r num">共 2 TB</span>
+        </div>
+        <div class="meter"><i></i></div>
+        <div class="storage-note">还剩 1.15 TB。照片与视频占用最多。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACCOUNT DETAILS (one unified panel) -->
+  <section class="block">
+    <div class="sec-label">账户信息</div>
+    <div class="panel">
+      <div class="prow"><span class="lbl">姓名</span><span class="val">李 明</span></div>
+      <div class="prow"><span class="lbl">邮箱</span><span class="val">ming.li@icloud.com</span></div>
+      <div class="prow"><span class="lbl">国家 / 地区</span><span class="val">中国大陆</span></div>
+      <div class="prow"><span class="lbl">语言</span><span class="val">简体中文</span></div>
+      <div class="prow"><span class="lbl">付款方式</span><span class="val">•••• 4921 <a href="#">更换</a></span></div>
+    </div>
+  </section>
+
+  <!-- NOTIFICATIONS (one unified panel, toggles) -->
+  <section class="block">
+    <div class="sec-label">通知偏好</div>
+    <div class="panel">
+      <div class="prow"><span class="lbl">账单与续费提醒</span><button class="tg" role="switch" aria-checked="true"></button></div>
+      <div class="prow"><span class="lbl">新功能与产品公告</span><button class="tg" role="switch" aria-checked="true"></button></div>
+      <div class="prow"><span class="lbl">存储空间预警</span><button class="tg" role="switch" aria-checked="false"></button></div>
+      <div class="prow"><span class="lbl">营销与优惠邮件</span><button class="tg" role="switch" aria-checked="false"></button></div>
+    </div>
+  </section>
+
+  <!-- BILLING HISTORY (one unified panel, tabular numbers, grayscale status) -->
+  <section class="block">
+    <div class="sec-label">账单历史</div>
+    <div class="panel bill">
+      <div class="prow"><span class="lbl"><span class="d">Plus 月度订阅</span><span class="m num">2026年6月1日</span></span>
+        <span class="val"><span class="amt num">¥28.00</span><span class="st">已支付</span></span></div>
+      <div class="prow"><span class="lbl"><span class="d">Plus 月度订阅</span><span class="m num">2026年5月1日</span></span>
+        <span class="val"><span class="amt num">¥28.00</span><span class="st">已支付</span></span></div>
+      <div class="prow"><span class="lbl"><span class="d">额外存储 500 GB</span><span class="m num">2026年4月18日</span></span>
+        <span class="val"><span class="amt num">¥15.00</span><span class="st">已退款</span></span></div>
+      <div class="prow"><span class="lbl"><span class="d">Plus 月度订阅</span><span class="m num">2026年4月1日</span></span>
+        <span class="val"><span class="amt num">¥28.00</span><span class="st">已支付</span></span></div>
+    </div>
+  </section>
+
+  <!-- COLORED CTA (color + glass allowed here) -->
+  <section class="block">
+    <div class="cta">
+      <div class="orb o1"></div><div class="orb o2"></div>
+      <div class="cta-in">
+        <h2>升级到 Pro，解锁 6 TB 与优先渲染</h2>
+        <p>更大的空间、无损导出、团队协作空间。随时可降级，按日抵扣已付费用。</p>
+        <div class="row">
+          <a class="glass-chip">升级到 Pro</a>
+          <span class="fine num">¥68 / 月 · 前 14 天免费</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a href="#">隐私政策</a>
+    <a href="#">服务条款</a>
+    <a href="#">订阅管理</a>
+    <a href="#">联系支持</a>
+  </div>
+</footer>
+
+<!-- cancel sheet -->
+<div class="scrim" id="scrim"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+  <h3 id="sheetTitle">要取消 Plus 订阅吗？</h3>
+  <p>取消后，Plus 将在本计费周期结束（2026年7月1日）后停止。你的文件会保留，但超出 5 GB 的部分将变为只读，直到你重新升级。</p>
+  <div class="acts">
+    <a class="ghost" id="keepPlan">继续保留 Plus</a>
+    <a class="primary" id="switchFree">改用 Free 方案</a>
+    <a class="destroy" id="confirmCancel">仍要取消订阅</a>
+  </div>
+</div>
+
+<script>
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>8),{passive:true});
+
+document.querySelectorAll('.tg').forEach(t=>{
+  t.addEventListener('click',()=>t.setAttribute('aria-checked',t.getAttribute('aria-checked')!=='true'));
+});
+
+const scrim=document.getElementById('scrim'),sheet=document.getElementById('sheet');
+function openSheet(){scrim.classList.add('open');sheet.classList.add('open');}
+function closeSheet(){scrim.classList.remove('open');sheet.classList.remove('open');}
+document.getElementById('openCancel').addEventListener('click',openSheet);
+scrim.addEventListener('click',closeSheet);
+document.getElementById('keepPlan').addEventListener('click',closeSheet);
+document.getElementById('switchFree').addEventListener('click',closeSheet);
+document.getElementById('confirmCancel').addEventListener('click',closeSheet);
+addEventListener('keydown',e=>{if(e.key==='Escape')closeSheet();});
+</script>
+</body>
+</html>

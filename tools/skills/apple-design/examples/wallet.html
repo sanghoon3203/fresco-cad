@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wallet — App screen test (current skill)</title>
+<style>
+:root{
+  --bg:#f5f5f7; --surface:#fff; --hover:#fbfbfd;
+  --text:#1d1d1f; --text-body:#424245; --text-2:#6e6e73; --text-3:#86868b; --text-4:#aeaeb2;
+  --faint:#d2d2d7; --hairline:rgba(0,0,0,0.07);
+  --accent:#0071e3; --accent-link:#0066cc; --indigo:#5e5ce6; --heat:#ff6b00; --live:#30d158;
+  --grad-cta:linear-gradient(135deg,#0071e3 0%,#5e5ce6 100%);
+  --track:#e8e8ed;
+  --font:-apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display','Helvetica Neue','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;
+  --r-pill:999px; --r-chip:6px; --r-thumb:12px; --r-sheet:16px; --r-card:18px; --r-panel:22px; --r-hero:26px;
+  --sh-card:0 1px 2px rgba(0,0,0,0.04),0 8px 24px rgba(0,0,0,0.05);
+  --sh-panel:0 1px 3px rgba(0,0,0,0.05),0 14px 40px rgba(0,0,0,0.05);
+  --sh-cta:0 20px 54px rgba(0,113,227,0.24);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{font-optical-sizing:auto;}
+body{background:#c9ccd2;font-family:var(--font);-webkit-font-smoothing:antialiased;
+  min-height:100vh;display:grid;place-items:center;padding:40px;}
+
+/* ── device frame — HAND-ROLLED because the skill ships none (this is the gap) ── */
+.device{position:relative;width:393px;height:852px;background:#000;border-radius:55px;
+  padding:12px;box-shadow:0 50px 100px rgba(0,0,0,0.5);}
+.screen{position:relative;width:100%;height:100%;background:var(--bg);border-radius:44px;overflow:hidden;
+  display:flex;flex-direction:column;}
+.island{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:125px;height:37px;
+  background:#000;border-radius:999px;z-index:60;}
+.statusbar{height:59px;flex:none;display:flex;align-items:center;justify-content:space-between;
+  padding:0 32px;font-size:15px;font-weight:600;color:var(--text);z-index:55;}
+.statusbar .r{display:flex;gap:5px;align-items:center;font-size:13px;}
+
+/* compact large-title bar (shows on scroll) */
+.navc{position:absolute;top:59px;left:0;right:0;height:44px;z-index:50;display:flex;align-items:center;justify-content:center;
+  background:rgba(245,245,247,0.72);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid transparent;opacity:0;pointer-events:none;transition:opacity .25s,border-color .25s;}
+.navc.show{opacity:1;border-bottom-color:var(--hairline);}
+.navc span{font-size:16px;font-weight:600;letter-spacing:-0.01em;}
+
+.scroll{flex:1;overflow-y:auto;}
+.lt{padding:6px 20px 8px;}
+.lt h1{font-size:34px;font-weight:700;letter-spacing:-0.02em;}
+.content{padding:16px 16px 24px;display:flex;flex-direction:column;gap:22px;}
+
+.balance{position:relative;overflow:hidden;border-radius:var(--r-hero);padding:22px;
+  background:var(--grad-cta);box-shadow:var(--sh-cta);}
+.balance .orb{position:absolute;border-radius:50%;}
+.balance .o1{width:200px;height:200px;background:rgba(255,255,255,0.18);filter:blur(46px);top:-70px;right:-30px;}
+.balance .o2{width:160px;height:160px;background:rgba(120,80,255,0.5);filter:blur(50px);bottom:-70px;left:10%;}
+.balance-in{position:relative;}
+.balance .lbl{font-size:13px;color:rgba(255,255,255,0.8);font-weight:550;}
+.balance .amt{margin-top:6px;font-size:38px;font-weight:700;color:#fff;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;}
+.balance .row{display:flex;gap:10px;margin-top:18px;}
+.glass-chip{display:inline-flex;align-items:center;height:40px;padding:0 18px;border-radius:var(--r-pill);
+  background:rgba(255,255,255,0.16);border:1px solid rgba(255,255,255,0.22);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#fff;font-size:14px;font-weight:600;text-decoration:none;}
+
+.sec-label{font-size:13px;font-weight:600;color:var(--text-3);letter-spacing:0.04em;
+  text-transform:uppercase;margin:0 6px 10px;}
+.panel{background:var(--surface);border-radius:var(--r-panel);box-shadow:var(--sh-panel);overflow:hidden;}
+.tx{display:flex;align-items:center;gap:13px;padding:13px 16px;min-height:60px;}
+.tx+.tx{border-top:1px solid var(--hairline);}
+.tx .ic{width:38px;height:38px;border-radius:50%;background:#eef0f3;flex:none;
+  display:grid;place-items:center;font-size:16px;color:var(--text-2);}
+.tx .m{flex:1;min-width:0;}
+.tx .m .t{font-size:15px;color:var(--text);font-weight:500;}
+.tx .m .s{font-size:12.5px;color:var(--text-3);margin-top:1px;}
+.tx .a{font-size:15px;font-weight:600;color:var(--text);font-variant-numeric:tabular-nums;}
+.tx .a.in{color:var(--live);}
+
+.tabbar{flex:none;height:83px;padding:8px 0 22px;
+  background:rgba(245,245,247,0.82);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-top:1px solid var(--hairline);display:flex;justify-content:space-around;align-items:flex-start;}
+.tab{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10px;color:var(--text-3);width:64px;padding-top:2px;}
+.tab.on{color:var(--accent);}
+.tab .ic{color:currentColor;}   /* line icon inherits tab color: grey inactive, accent active */
+.homebar{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:140px;height:5px;
+  border-radius:999px;background:rgba(0,0,0,0.85);z-index:80;}
+
+.scrim{position:absolute;inset:0;background:rgba(0,0,0,0.28);opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:70;}
+.scrim.open{opacity:1;pointer-events:auto;}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:var(--surface);
+  border-radius:22px 22px 0 0;padding:10px 20px 34px;z-index:71;
+  transform:translateY(100%);transition:transform .4s cubic-bezier(0.32,0.72,0,1);}
+.sheet.open{transform:translateY(0);}
+.grab{width:38px;height:5px;border-radius:999px;background:var(--faint);margin:0 auto 16px;}
+.sheet h3{font-size:20px;font-weight:700;letter-spacing:-0.02em;margin-bottom:6px;}
+.sheet .opt{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--hairline);font-size:16px;color:var(--text);}
+.sheet .opt .ic{width:34px;height:34px;border-radius:9px;background:#eef0f3;flex:none;}
+</style>
+</head>
+<body>
+<div class="device">
+  <div class="screen">
+    <div class="island"></div>
+    <div class="statusbar"><span>9:41</span><span class="r">5G&nbsp;&nbsp;&#9646;&#9646;&#9646;</span></div>
+
+    <div class="navc" id="navc"><span>钱包</span></div>
+    <div class="scroll" id="scroll">
+      <div class="lt"><h1>钱包</h1></div>
+      <div class="content">
+        <div class="balance">
+          <div class="orb o1"></div><div class="orb o2"></div>
+          <div class="balance-in">
+            <div class="lbl">可用余额</div>
+            <div class="amt">¥12,480.00</div>
+            <div class="row">
+              <a class="glass-chip">转账</a>
+              <a class="glass-chip">收款</a>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="sec-label">最近交易</div>
+          <div class="panel">
+            <div class="tx"><div class="ic">超</div><div class="m"><div class="t">超市购物</div><div class="s">今天 14:32 · 招商银行</div></div><div class="a">-¥86.50</div></div>
+            <div class="tx"><div class="ic">薪</div><div class="m"><div class="t">工资入账</div><div class="s">昨天 09:00 · 公司</div></div><div class="a">+¥18,600.00</div></div>
+            <div class="tx"><div class="ic">咖</div><div class="m"><div class="t">星巴克</div><div class="s">昨天 08:15 · 支付宝</div></div><div class="a">-¥38.00</div></div>
+            <div class="tx"><div class="ic">订</div><div class="m"><div class="t">流媒体订阅</div><div class="s">6月10日 · 自动扣款</div></div><div class="a">-¥28.00</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tabbar">
+      <div class="tab on"><svg class="ic" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2.5"/><path d="M3 10.5h18"/><circle cx="17" cy="14.5" r="1.25"/></svg>钱包</div>
+      <div class="tab"><svg class="ic" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19"/></svg>卡片</div>
+      <div class="tab" id="addTab"><svg class="ic" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>添加</div>
+      <div class="tab"><svg class="ic" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20a8 8 0 0 1 16 0"/></svg>我的</div>
+    </div>
+    <div class="homebar"></div>
+
+    <div class="scrim" id="scrim"></div>
+    <div class="sheet" id="sheet">
+      <div class="grab"></div>
+      <h3>添加</h3>
+      <div class="opt"><div class="ic"></div>添加银行卡</div>
+      <div class="opt"><div class="ic"></div>发起转账</div>
+      <div class="opt"><div class="ic"></div>扫码收款</div>
+    </div>
+  </div>
+</div>
+<script>
+const scrim=document.getElementById('scrim'),sheet=document.getElementById('sheet');
+const sc=document.getElementById('scroll'),nc=document.getElementById('navc');sc.addEventListener('scroll',()=>nc.classList.toggle('show',sc.scrollTop>44),{passive:true});
+document.getElementById('addTab').addEventListener('click',()=>{scrim.classList.add('open');sheet.classList.add('open');});
+scrim.addEventListener('click',()=>{scrim.classList.remove('open');sheet.classList.remove('open');});
+</script>
+</body>
+</html>
