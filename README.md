@@ -10,6 +10,8 @@
 
 **2026-09-25: 사무소 규칙·검토 메모·34개 레이어 분류·현장 마감 확인을 추가했습니다.** 읽기 전용 시제품이며 47개 자동 검증과 브라우저 저장/재열기 검증 통과. [Sprint 04 보고](docs/jw-assistant/sprint-04-i2a-report.md) · [현장 확인 계약](docs/jw-assistant/field-coordination.md).
 
+**2026-09-26: 위치별 현장 메모와 백업 복원을 추가했습니다.** 화면 전환 시 초안을 보존하고, 기존 데이터 변환·복원 미리보기·이전 정상본 보존을 검증했습니다. 자동 검사 54개 통과. [Sprint 05 보고](docs/jw-assistant/sprint-05-i2b-report.md).
+
 **Phase 0, gate 0B: 실패 — 화면 재사용·입력 비용 개선과 회귀 검사는 통과했으나 프레임 성능 목표에 미달.**
 
 Gate 0A의 로컬 캔버스 검증은 유지됩니다. [최신 성능 보고서](docs/performance-0b.md).

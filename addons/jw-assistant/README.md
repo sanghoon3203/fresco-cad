@@ -1,4 +1,4 @@
-# Fresco Jw Assistant — I2A office and site review
+# Fresco Jw Assistant — I2B site notes and recovery
 
 Windows Jw_cad companion foundation. The prototype now imports local JWC_TEMP captures for **read-only line checks**, alongside the synthetic editing demo. It does not parse/write JWW, modify real drawings, or call cloud AI. Installation and live host connection remain future gates.
 
@@ -70,4 +70,6 @@ The existing Qt/C++ Fresco CAD remains a separate project in this repository. No
 
 Imported reviews support versioned office rules, reasoned review decisions, local persistence, and safe CSV text export. The detailed layer starter provides 34 categories; confirm the actual group:layer mapping before saving. Site coordination notes check 12 handoff fields without approving construction. Japanese/English is available in Settings. These features do not alter CAD files.
 
-Use one browser tab. Local data is specific to the browser and port. A site note is limited to one per checked context; save drafts before changing source or rules. View current JSON to preserve a manual copy. File-based restore remains planned. See [review contract](../../docs/jw-assistant/review-workflow.md), [field contract](../../docs/jw-assistant/field-coordination.md), and [Sprint 04 report](../../docs/jw-assistant/sprint-04-i2a-report.md).
+Use one browser tab. Local data is specific to the browser and port. Multiple site notes are supported per checked context, up to 100 saved cards in total. Unsaved site drafts survive in-app switches and can be saved under their original contexts. Save before closing the browser. Current and previous JSON are viewable; validate pasted or local-file backup JSON before explicitly replacing saved field data. This restores mapping/site notes, not office review decisions. Corrupt primary data is not overwritten. See [review contract](../../docs/jw-assistant/review-workflow.md), [field contract](../../docs/jw-assistant/field-coordination.md), and [Sprint 04 report](../../docs/jw-assistant/sprint-04-i2a-report.md).
+
+Latest: [Sprint 05 report](../../docs/jw-assistant/sprint-05-i2b-report.md), 54 Node tests plus browser verification of multiple notes, draft isolation and restore preview.
