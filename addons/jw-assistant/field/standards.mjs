@@ -27,6 +27,8 @@ export const finishFields = Object.freeze([
   ['inspection','確認方法・検査時点','Inspection method / stage'], ['owner','担当・確認先','Responsible person / reviewer'],
 ].map(([id,ja,en]) => Object.freeze({id,ja,en})));
 const HASH = /^[a-f0-9]{64}$/u;
+const RECORD_ID = /^[A-Za-z0-9_-]{1,80}$/u;
+const MAX_BYTES = 2 * 1024 * 1024;
 const IDs = new Set(layerCategories.map(c => c.id));
 const fail = code => { throw Object.assign(new Error(code), { code }); };
 function exact(value, keys) {
@@ -67,32 +69,64 @@ export async function fieldContextKey(reviewContextKey, map) {
   const bytes = new TextEncoder().encode(JSON.stringify({ schema: 1, reviewContextKey, map: ordered }));
   return Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', bytes)), b => b.toString(16).padStart(2,'0')).join('');
 }
-export function emptyFieldWorkspace() { return { schemaVersion: 1, revision: 0, layerMap: [], cards: [] }; }
-export function validateFieldWorkspace(workspace) {
+export function emptyFieldWorkspace() { return { schemaVersion: 2, revision: 0, layerMap: [], cards: [] }; }
+function validateWorkspaceHeader(workspace, version) {
   exact(workspace, ['schemaVersion','revision','layerMap','cards']);
-  if (workspace.schemaVersion !== 1 || !Number.isSafeInteger(workspace.revision) || workspace.revision < 0 || workspace.revision > 2147483646) fail('E_FIELD_SCHEMA');
+  if (workspace.schemaVersion !== version || !Number.isSafeInteger(workspace.revision) || workspace.revision < 0 || workspace.revision > 2147483646) fail('E_FIELD_SCHEMA');
   validateLayerMap(workspace.layerMap);
   if (!Array.isArray(workspace.cards) || workspace.cards.length > 100) fail('E_FIELD_LIMIT');
+}
+function validateRecords(workspace, legacy) {
   const seen = new Set();
   for (const record of workspace.cards) {
-    exact(record, ['contextKey','card','updatedAt']);
-    if (typeof record.contextKey !== 'string' || !HASH.test(record.contextKey) || seen.has(record.contextKey)) fail('E_FIELD_CONTEXT');
-    seen.add(record.contextKey); checkFinishCard(record.card);
+    exact(record, legacy ? ['contextKey','card','updatedAt'] : ['id','contextKey','card','updatedAt']);
+    if (typeof record.contextKey !== 'string' || !HASH.test(record.contextKey)) fail('E_FIELD_CONTEXT');
+    if (!legacy && (typeof record.id !== 'string' || !RECORD_ID.test(record.id))) fail('E_FIELD_ID');
+    const identity = `${record.contextKey}:${legacy ? 'legacy' : record.id}`;
+    if (seen.has(identity)) fail('E_FIELD_CONTEXT');
+    seen.add(identity); checkFinishCard(record.card);
     if (typeof record.updatedAt !== 'string' || !/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z$/u.test(record.updatedAt)
       || !Number.isFinite(Date.parse(record.updatedAt)) || new Date(record.updatedAt).toISOString() !== record.updatedAt) fail('E_FIELD_TIME');
   }
-  if (new TextEncoder().encode(JSON.stringify(workspace)).length > 2*1024*1024) fail('E_FIELD_LIMIT');
+  if (new TextEncoder().encode(JSON.stringify(workspace)).length > MAX_BYTES) fail('E_FIELD_LIMIT');
+}
+export function validateFieldWorkspace(workspace) {
+  validateWorkspaceHeader(workspace, 2);
+  validateRecords(workspace, false);
   return workspace;
 }
-export function saveFinishCard(workspace, contextKey, card, now = new Date().toISOString()) {
+function migrateFieldWorkspace(workspace) {
+  if (workspace?.schemaVersion === 2) return validateFieldWorkspace(workspace);
+  validateWorkspaceHeader(workspace, 1);
+  validateRecords(workspace, true);
+  const migrated = { schemaVersion: 2, revision: workspace.revision, layerMap: structuredClone(workspace.layerMap),
+    cards: workspace.cards.map(record => ({ id: 'legacy', contextKey: record.contextKey, card: structuredClone(record.card), updatedAt: record.updatedAt })) };
+  return validateFieldWorkspace(migrated);
+}
+export function saveFinishCard(workspace, contextKey, card, now = new Date().toISOString(), id = 'legacy') {
   validateFieldWorkspace(workspace); checkFinishCard(card);
+  if (typeof id !== 'string' || !RECORD_ID.test(id)) fail('E_FIELD_ID');
   const next = structuredClone(workspace);
-  const record = { contextKey, card: structuredClone(card), updatedAt: now };
-  const i = next.cards.findIndex(r => r.contextKey === contextKey);
+  const record = { id, contextKey, card: structuredClone(card), updatedAt: now };
+  const i = next.cards.findIndex(r => r.contextKey === contextKey && r.id === id);
   if (i < 0) next.cards.push(record); else next.cards[i] = record;
   return validateFieldWorkspace(next);
 }
-export function createFieldStore(storage) { return createJsonStore(storage, 'fresco-jw-field-v1', { initial: emptyFieldWorkspace, validate: validateFieldWorkspace, prefix: 'E_FIELD' }); }
+export function parseFieldBackup(raw) {
+  if (typeof raw !== 'string' || new TextEncoder().encode(raw).length > MAX_BYTES) fail('E_FIELD_CORRUPT');
+  try { return structuredClone(migrateFieldWorkspace(JSON.parse(raw))); } catch { fail('E_FIELD_CORRUPT'); }
+}
+export function restoreFieldBackup(current, incoming) {
+  validateFieldWorkspace(current);
+  validateFieldWorkspace(incoming);
+  const replacement = structuredClone(incoming);
+  replacement.revision = current.revision;
+  return validateFieldWorkspace(replacement);
+}
+export function createFieldStore(storage) {
+  const store = createJsonStore(storage, 'fresco-jw-field-v1', { initial: emptyFieldWorkspace, validate: migrateFieldWorkspace, prefix: 'E_FIELD' });
+  return { load: store.load, loadBackup: store.loadBackup, save(value) { validateFieldWorkspace(value); return store.save(value); } };
+}
 export function handoffText(card, locale = 'ja-JP') {
   const result = checkFinishCard(card), ja = locale === 'ja-JP';
   const category = layerCategories.find(c => c.id === card.categoryId);
