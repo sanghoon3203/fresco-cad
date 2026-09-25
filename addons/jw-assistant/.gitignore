@@ -1,0 +1,6 @@
+captures/
+exports/
+node_modules/
+target/
+dist/
+*.log

@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "documentId": "synthetic-timber-910-grid",
+  "revision": 7,
+  "units": "mm",
+  "entities": [
+    { "id": "wall-south", "kind": "line", "layer": "WALL", "color": "default", "lineType": "solid", "start": [0, 0], "end": [7280, 0] },
+    { "id": "wall-east", "kind": "line", "layer": "WALL", "color": "default", "lineType": "solid", "start": [7280, 0], "end": [7280, 5460] },
+    { "id": "wall-north", "kind": "line", "layer": "WALL", "color": "default", "lineType": "solid", "start": [7280, 5460], "end": [0, 5460] },
+    { "id": "wall-west", "kind": "line", "layer": "WALL", "color": "default", "lineType": "solid", "start": [0, 5460], "end": [0, 0] },
+    { "id": "wall-center-ns", "kind": "line", "layer": "WALL", "color": "default", "lineType": "solid", "start": [3640, 0], "end": [3640, 5460] },
+    { "id": "wall-center-ew-west", "kind": "line", "layer": "WALL", "color": "default", "lineType": "solid", "start": [0, 2730], "end": [3640, 2730] },
+    { "id": "wall-center-ew-east", "kind": "line", "layer": "WALL", "color": "default", "lineType": "solid", "start": [3640, 2730], "end": [7280, 2730] },
+    { "id": "opening-south", "kind": "line", "layer": "OPENING", "color": "blue", "lineType": "solid", "start": [2730, 0], "end": [3640, 0] },
+    { "id": "opening-east", "kind": "line", "layer": "OPENING", "color": "blue", "lineType": "solid", "start": [7280, 3640], "end": [7280, 4550] },
+    { "id": "grid-a", "kind": "line", "layer": "GRID", "color": "gray", "lineType": "dash", "start": [-455, 0], "end": [7735, 0] },
+    { "id": "grid-1", "kind": "line", "layer": "GRID", "color": "gray", "lineType": "dash", "start": [0, -455], "end": [0, 5915] },
+    { "id": "wall-south-copy", "kind": "line", "layer": "WALL", "color": "default", "lineType": "solid", "start": [7280, 0], "end": [0, 0] },
+    { "id": "annotation-zero", "kind": "line", "layer": "ANNOTATION", "color": "red", "lineType": "solid", "start": [10000, 10000], "end": [10000, 10000] },
+    { "id": "annotation-short", "kind": "line", "layer": "ANNOTATION", "color": "red", "lineType": "solid", "start": [9000, 9000], "end": [9000.3, 9000] }
+  ]
+}

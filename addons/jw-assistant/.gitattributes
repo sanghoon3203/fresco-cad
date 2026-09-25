@@ -1,0 +1,4 @@
+# Exact-byte host capture: preserve CP932 and CRLF for SHA-256 regression.
+fixtures/jwc-temp/*.txt -text
+fixtures/jwc-temp/jw-10.3.6-line-10000-shift-jis.txt -diff
+bridge/*.bat -text
