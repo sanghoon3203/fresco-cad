@@ -5,6 +5,7 @@ import { catalogs, message } from "./locales.mjs";
 import { emptyWorkspace, reviseProfile, createContextKey, recordReview, reviewsForContext, createWorkspaceStore } from "../review/store.mjs";
 import { reviewCsv } from "../review/export.mjs";
 import { createFieldPanel } from "./field-panel.mjs";
+import { createRestorePanel } from "./restore-panel.mjs";
 let fieldStorage; try { fieldStorage = window.localStorage; } catch {}
 const fieldPanel = createFieldPanel(fieldStorage);
 let contextGeneration = 0;
@@ -40,12 +41,33 @@ const state = {
   reviewWorkspace: emptyWorkspace(), reviewStoreReady: false, reviewStoreError: null, reviewContextKey: null,
   officeShortLine: "3", officeGap: "2", officeLayers: "WALL\nOPENING\nGRID\nANNOTATION", reviewDraftStatus: "reviewing", reviewDraftNote: "", officeOpen: false
 };
+let officeBaseline = [state.officeShortLine, state.officeGap, state.officeLayers];
+function hasUnsavedReview() {
+  const saved = state.reviewContextKey && reviewsForContext(state.reviewWorkspace, state.reviewContextKey).find(item => item.issueId === state.selectedIssueId);
+  return JSON.stringify([state.officeShortLine, state.officeGap, state.officeLayers]) !== JSON.stringify(officeBaseline)
+    || state.reviewDraftStatus !== (saved?.status ?? 'reviewing') || state.reviewDraftNote !== (saved?.note ?? '');
+}
+const reviewRecovery = createRestorePanel({ id: 'review', store: reviewStore,
+  title: { ja: '事務所ルール・検討記録の復元', en: 'Restore office rules and review decisions' },
+  describe: (value, locale) => locale === 'ja-JP'
+    ? `検討 ${value.reviews.length}件・事務所ルール ${value.profile ? 'あり' : 'なし'}`
+    : `${value.reviews.length} decisions; office rules ${value.profile ? 'included' : 'absent'}`,
+  hasUnsaved: () => hasUnsavedReview() || fieldPanel.hasUnsaved(),
+  onRestore(next) {
+    state.reviewWorkspace = next; state.reviewStoreReady = true; state.reviewStoreError = null;
+    state.reviewDraftStatus = 'reviewing'; state.reviewDraftNote = ''; clearReviewContext();
+    const profile = next.profile ?? state.importResult?.profile;
+    if (profile) setOfficeDraft(profile);
+    else { state.officeShortLine = '3'; state.officeGap = '2'; state.officeLayers = 'WALL\nOPENING\nGRID\nANNOTATION'; officeBaseline = [state.officeShortLine, state.officeGap, state.officeLayers]; }
+    if (state.importBytes && state.mode === 'import') void processImport(); else render();
+  },
+});
 
 async function loadReviewWorkspace() {
   try { state.reviewWorkspace = await reviewStore.load(); state.reviewStoreReady = true; state.reviewStoreError = null; if (state.reviewWorkspace.profile) setOfficeDraft(state.reviewWorkspace.profile); if (state.importResult?.snapshot) { state.importIssues = checkSnapshot(state.importResult.snapshot, effectiveImportProfile()); void updateReviewContext(); } render(); }
   catch { state.reviewStoreError = "load"; state.reviewStoreReady = false; render(); }
 }
-function setOfficeDraft(profile) { state.officeShortLine = String(profile.shortLineMm); state.officeGap = String(profile.gapMm); state.officeLayers = profile.allowedLayers.join("\n"); }
+function setOfficeDraft(profile) { state.officeShortLine = String(profile.shortLineMm); state.officeGap = String(profile.gapMm); state.officeLayers = profile.allowedLayers.join("\n"); officeBaseline = [state.officeShortLine, state.officeGap, state.officeLayers]; }
 function effectiveImportProfile() { return state.reviewWorkspace.profile ?? state.importResult?.profile ?? null; }
 function clearReviewContext() { ++contextGeneration; state.reviewContextKey = null; }
 async function updateReviewContext(request = state.importRequest) {
@@ -75,7 +97,7 @@ async function saveOfficeProfile() {
   } catch { state.reviewStoreError = "profile"; render(); return; }
   try { state.reviewWorkspace = reviewStore.save(candidate); }
   catch (error) { state.reviewStoreError = error?.code === "E_REVIEW_CONFLICT" ? "conflict" : "save"; render(); say("reviewNotSaved"); return; }
-  state.reviewStoreError = null; clearReviewContext(); say("officeSaved");
+  state.reviewStoreError = null; setOfficeDraft(state.reviewWorkspace.profile); reviewRecovery.invalidate(); clearReviewContext(); say("officeSaved");
   if (state.importBytes) await processImport(); else render();
 }
 async function saveIssueReview() {
@@ -83,7 +105,7 @@ async function saveIssueReview() {
   if (state.reviewDraftNote.length > 2000 || (state.reviewDraftStatus === "excluded" && !state.reviewDraftNote.trim())) { state.reviewStoreError = "reason"; render(); return; }
   try {
     const candidate = recordReview(state.reviewWorkspace, { contextKey: state.reviewContextKey, issueId: issue.id, status: state.reviewDraftStatus, note: state.reviewDraftNote });
-    state.reviewWorkspace = await reviewStore.save(candidate); state.reviewStoreError = null; render(); say("reviewSaved");
+    state.reviewWorkspace = await reviewStore.save(candidate); state.reviewStoreError = null; reviewRecovery.invalidate(); render(); say("reviewSaved");
   } catch (error) { state.reviewStoreError = error?.code === "E_REVIEW_CONFLICT" ? "conflict" : "save"; render(); say("reviewNotSaved"); }
 }
 async function showReviewBackup() {
@@ -467,6 +489,12 @@ function render() {
   const actions = element("div", { className: "action-stack" }); if (state.mode === "import") { actions.append(element("button", { className: "button", type: "button", text: t("preview"), disabled: true }), element("button", { className: "button", type: "button", text: t("applyDemo"), disabled: true }), element("button", { className: "button quiet", type: "button", text: t("undo"), disabled: true })); } else if (state.previewSnapshot) { actions.append(element("button", { className: "button primary", type: "button", text: t("applyDemo"), on: { click: openApplyDialog } }), element("button", { className: "button", type: "button", text: t("cancelPreview"), on: { click: cancelPreview } })); } else { actions.append(element("button", { className: "button", type: "button", text: t("runCheck"), disabled: !state.snapshot, on: { click: () => runCheck(true) } }), element("button", { className: "button quiet", type: "button", text: t("undo"), disabled: !state.history.length, on: { click: undoPreviewEdit } })); } detailBody.append(actions); detailPanel.append(detailBody); inspector.append(detailPanel);
   const settingsPanel = element("section", { className: "panel", id: "settings", attributes: { "aria-labelledby": "settings-heading" } }); const settingsHead = element("div", { className: "panel-heading" }); settingsHead.append(element("h2", { className: "panel-title", id: "settings-heading", text: t("settings") })); settingsPanel.append(settingsHead); const settingsList = element("div", { className: "settings-list" }); const languageLabel = element("label", { className: "field-label", text: t("language") }); const select = element("select", { attributes: { "aria-label": t("language"), "data-focus-key": "settings-language" } }); [["ja-JP", t("japanese")], ["en-US", t("english")]].forEach(([value, label]) => { const option = element("option", { text: label, attributes: { value } }); option.selected = value === state.locale; select.append(option); }); select.value = state.locale; select.addEventListener("change", () => setLocale(select.value)); languageLabel.append(select); const motion = element("label", { className: "toggle" }); const motionInput = element("input", { type: "checkbox" }); motionInput.checked = state.reduceMotion; motionInput.addEventListener("change", () => { setMotion(motionInput.checked); render(); }); motion.append(motionInput, element("span", { text: t("reduceMotion") })); settingsList.append(languageLabel, motion, element("div", { className: "note", text: t("reduceMotionHelp") }), element("div", { className: "note", text: `${t("connection")}: ${t("connectionBody")}` }), element("div", { className: "note", text: `${t("shortcut")}: ${t("shortcutBody")}` }), element("button", { className: "button", type: "button", text: t("reset"), attributes: { "data-focus-key": "settings-reset" }, on: { click: resetDemo } }), element("button", { className: "button", type: "button", text: t("export"), attributes: { "data-focus-key": "settings-export" }, disabled: state.mode === "import" ? !state.importResult : !state.snapshot, on: { click: exportReview } }));
   settingsList.append(element("button", { className: "button", type: "button", text: t("backupView"), on: { click: showReviewBackup } })); settingsList.append(element("button", {className:"button", type:"button", text: state.locale === "ja-JP" ? "現在の検討データをJSONで表示" : "View current review workspace JSON", disabled: !state.reviewStoreReady, on: {click: () => { state.reportJson = JSON.stringify(state.reviewWorkspace,null,2); state.reportDialogTitle = t("backupTitle"); state.reportDialogHelp = t("backupHelp"); state.reportDialogLabel = t("backupTitle"); render(); document.querySelector("#report-dialog")?.showModal(); }}}));
+  settingsList.append(element('button', { className: 'button', type: 'button', attributes: { 'data-discard-review': '' }, text: state.locale === 'ja-JP' ? '未保存の事務所ルール・検討入力を戻す' : 'Discard unsaved office and review input', disabled: !hasUnsavedReview(), on: { click: () => {
+    [state.officeShortLine, state.officeGap, state.officeLayers] = officeBaseline;
+    const saved = state.reviewContextKey && reviewsInCurrentContext().find(item => item.issueId === state.selectedIssueId);
+    state.reviewDraftStatus = saved?.status ?? 'reviewing'; state.reviewDraftNote = saved?.note ?? ''; reviewRecovery.invalidate(); render();
+  } } }));
+  settingsList.append(reviewRecovery.render(state.locale));
   settingsPanel.append(settingsList); inspector.append(settingsPanel);
   workspace.append(sourcePanel, issuePanel, canvasPanel, inspector);
   workspace.append(fieldPanel.render({locale:state.locale, reviewContextKey:state.mode === "import" ? state.reviewContextKey : null, observedLayers:state.mode === "import" ? [...new Set((state.importResult?.snapshot?.entities ?? []).map(e => e.layer))] : []})); main.append(workspace, element("footer", { className: "footer", text: t(state.mode === "import" ? "importFooter" : "syntheticFooter") })); shell.append(sidebar, main); app.append(shell);
@@ -495,7 +523,13 @@ function render() {
 }
 
 window.addEventListener("keydown", (event) => { if (event.key === "Escape" && state.previewSnapshot && !document.querySelector("dialog[open]")) cancelPreview(); });
-window.addEventListener("beforeunload", event => { if (fieldPanel.hasUnsaved()) { event.preventDefault(); event.returnValue = ""; } });
+function refreshRecovery() {
+  reviewRecovery.refresh();
+  const discard = app.querySelector('[data-discard-review]'); if (discard) discard.disabled = !hasUnsavedReview();
+}
+app.addEventListener('input', refreshRecovery);
+app.addEventListener('change', refreshRecovery);
+window.addEventListener("beforeunload", event => { if (fieldPanel.hasUnsaved() || hasUnsavedReview()) { event.preventDefault(); event.returnValue = ""; } });
 render();
 loadDemo();
 loadReviewWorkspace();

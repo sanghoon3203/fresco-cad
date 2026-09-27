@@ -1,5 +1,6 @@
-import { layerCategories, finishFields, defaultLayerMap, createFieldStore, emptyFieldWorkspace, blankFinishCard, fieldContextKey, saveFinishCard, checkFinishCard, handoffText, parseFieldBackup, restoreFieldBackup } from '../field/standards.mjs';
+import { layerCategories, finishFields, defaultLayerMap, createFieldStore, emptyFieldWorkspace, blankFinishCard, fieldContextKey, saveFinishCard, checkFinishCard, handoffText } from '../field/standards.mjs';
 import { createDrafts } from '../field/drafts.mjs';
+import { createRestorePanel } from './restore-panel.mjs';
 
 const node = (tag, text) => { const n = document.createElement(tag); if (text) n.textContent = text; return n; };
 export function createFieldPanel(storage) {
@@ -7,15 +8,20 @@ export function createFieldPanel(storage) {
   try { store = createFieldStore(storage); workspace = store.load(); ready = true; } catch (e) { error = e.code || 'E_FIELD_STORAGE'; }
   const drafts = createDrafts(), selectedByContext = new Map();
   let mapDraft = null, mapDirty = false, card = blankFinishCard(), cardId = null, key = null, requested = null, generation = 0;
-  let mapOpen = false, cardOpen = false, restoreOpen = false, restoreText = '', restorePreview = null, restoreRevision = null;
-  let backupRead = 0, backupBusy = false;
+  let mapOpen = false, cardOpen = false;
   const host = node('section'); host.className = 'panel field-panel';
   let context = { locale: 'ja-JP', reviewContextKey: null, observedLayers: [] };
   const labelFor = item => context.locale === 'ja-JP' ? item.ja : item.en;
   const words = (ja, en) => context.locale === 'ja-JP' ? ja : en;
   const hasUnsaved = () => mapDirty || drafts.size > 0;
   function button(text, action, disabled = false) { const b = node('button', text); b.type = 'button'; b.className = 'button'; b.disabled = disabled; b.addEventListener('click', action); return b; }
-  function invalidatePreview() { restorePreview = null; restoreRevision = null; }
+  const recovery = createRestorePanel({ id: 'field', store,
+    title: { ja: '分類・現場メモのバックアップ復元', en: 'Restore mapping and site notes' },
+    describe: (value, locale) => locale === 'ja-JP' ? `メモ ${value.cards.length}件・分類 ${value.layerMap.length}件` : `${value.cards.length} notes; ${value.layerMap.length} categories`,
+    hasUnsaved,
+    onRestore(next) { workspace = next; ready = true; error = ''; mapDraft = null; requested = null; syncKey(); draw(); },
+  });
+  function invalidatePreview() { recovery.invalidate(); }
   function persist(next) { try { workspace = store.save(next); error = ''; invalidatePreview(); return true; } catch(e) { error = e.code || 'E_FIELD_STORAGE'; return false; } }
   function entries() {
     if (!key) return [];
@@ -31,11 +37,10 @@ export function createFieldPanel(storage) {
   function updateDraftStatus() {
     const status = host.querySelector('[data-draft-status]');
     if (status) status.textContent = !hasUnsaved() ? words('現場メモに未保存の変更はありません。','No unsaved site changes.') : words(`未保存メモ ${drafts.size} 件${mapDirty ? '・レイヤー対応未保存' : ''}。画面内の切替では保持します。閉じる前に保存してください。`, `${drafts.size} unsaved notes${mapDirty ? '; layer mapping unsaved' : ''}. Drafts survive in-app switches. Save before closing.`);
-    const summary = host.querySelector('[data-restore-summary]'); if(summary && !restorePreview) summary.textContent = words('内容が変わりました。もう一度検証してください。','Content changed. Validate the preview again.');
+    recovery.refresh();
     const discard = host.querySelector('[data-discard-note]'); if (discard) discard.disabled = !key || !drafts.get(key,cardId);
     const revert = host.querySelector('[data-revert-map]'); if (revert) revert.disabled = !mapDirty;
     const saveAll = host.querySelector('[data-save-all]'); if (saveAll) saveAll.disabled = !ready || !drafts.size;
-    const apply = host.querySelector('[data-restore-apply]'); if (apply) apply.disabled = hasUnsaved() || !restorePreview;
   }
   function syncKey() {
     const signature = JSON.stringify([context.reviewContextKey,workspace.layerMap]);
@@ -55,7 +60,7 @@ export function createFieldPanel(storage) {
     const body = node('div'); body.className = 'settings-list';
     body.append(node('h2',words('レイヤー分類と現場確認','Layer mapping and site coordination')));
     body.append(node('p',words('既存のCADは変更しません。分類案を実際のグループ:レイヤーに対応させて保存してください。','CAD data stays unchanged. Match the proposed categories to actual group:layer numbers before saving.')));
-    const savedState = node('p',`${words('保存済みリビジョン','Saved revision')}: ${workspace.revision}`); savedState.setAttribute('role','status'); body.append(savedState);
+    const savedState = node('p',ready ? `${words('保存済みリビジョン','Saved revision')}: ${workspace.revision}` : words('保存データを読み込めません。バックアップ復元を確認してください。','Saved data could not be loaded. Review backup recovery below.')); savedState.setAttribute('role','status'); body.append(savedState);
     const saveAll = button(words('未保存メモを元の条件でまとめて保存','Save all drafts under original contexts'), () => {
       try { let next = workspace; const pending = drafts.all(); for (const d of pending) next = saveFinishCard(next,d.contextKey,d.card,undefined,d.id);
         if (persist(next)) for (const d of pending) drafts.clear(d.contextKey,d.id);
@@ -103,15 +108,7 @@ export function createFieldPanel(storage) {
     body.append(button(words('現在の分類・メモをJSONで表示','View current mapping and notes JSON'),()=>{backup.value=JSON.stringify(workspace,null,2);backup.hidden=false;},!ready));
     body.append(button(words('直前のバックアップをJSONで表示','View previous field backup JSON'),()=>{try{backup.value=JSON.stringify(store.loadBackup(),null,2);backup.hidden=false;}catch(e){error=e.code;draw();}},!store));
     const backup=node('textarea');backup.readOnly=true;backup.hidden=true;backup.rows=10;backup.setAttribute('aria-label','Field workspace JSON');body.append(backup);
-    const restore=node('details');restore.open=restoreOpen;restore.addEventListener('toggle',()=>{restoreOpen=restore.open;});restore.append(node('summary',words('分類・現場メモのバックアップ復元','Restore mapping and site notes')));
-    restore.append(node('p',words('JSONを検証してから置換内容を確認します。現在の保存済み分類・メモを置き換え、直前の正常データをバックアップします。事務所の検討記録は別データです。','Validate the JSON and review the replacement first. This replaces saved mapping and site notes, preserving the previous good version. Office review decisions are separate.')));
-    const input=node('textarea');input.value=restoreText;input.rows=6;input.disabled=backupBusy;input.maxLength=2*1024*1024;input.dataset.fieldFocus='restore-json';input.setAttribute('aria-label',words('復元するJSON','JSON to restore'));input.addEventListener('input',()=>{restoreText=input.value;invalidatePreview();updateDraftStatus();});restore.append(input);
-    const file=node('input');file.type='file';file.accept='.json,application/json';file.hidden=true;
-    file.addEventListener('change',async()=>{const selected=file.files?.[0];if(!selected)return;const ticket=++backupRead;invalidatePreview();if(selected.size>2*1024*1024){error='E_FIELD_LIMIT';draw();return;}backupBusy=true;draw();try{const text=await selected.text();if(ticket!==backupRead)return;restoreText=text;error='';}catch{if(ticket===backupRead)error='E_FIELD_STORAGE';}finally{if(ticket===backupRead){backupBusy=false;draw();}}});
-    restore.append(file,button(words('ローカルJSONを選択','Choose local backup JSON'),()=>file.click(),backupBusy));
-    restore.append(button(words('復元内容を検証','Validate restore preview'),()=>{try{restorePreview=parseFieldBackup(restoreText);restoreRevision=workspace.revision;error='';}catch(e){invalidatePreview();error=e.code||'E_FIELD_SCHEMA';}draw();},backupBusy));
-    if(restorePreview){const restoreSummary=node('p',words(`置換後: メモ ${restorePreview.cards.length}件、分類 ${restorePreview.layerMap.length}件。現在: メモ ${workspace.cards.length}件。`,`Replacement: ${restorePreview.cards.length} notes, ${restorePreview.layerMap.length} categories. Current: ${workspace.cards.length} notes.`));restoreSummary.dataset.restoreSummary='';restore.append(restoreSummary);restore.append(node('p',words('未保存のメモ・分類を保存または破棄してから復元してください。','Save or discard unsaved notes and mapping before restoring.')));}
-    const apply=button(words('確認したバックアップで置換','Replace with reviewed backup'),()=>{if(!restorePreview||hasUnsaved()||restoreRevision!==workspace.revision)return;try{if(persist(restoreFieldBackup(workspace,restorePreview))){mapDraft=null;requested=null;syncKey();}}catch(e){error=e.code;}draw();},!ready||!restorePreview||hasUnsaved());apply.dataset.restoreApply='';restore.append(apply);body.append(restore);host.append(body);updateDraftStatus();
+    body.append(recovery.render(context.locale)); host.append(body); updateDraftStatus();
     for(const el of host.querySelectorAll('[data-field-focus]')) el.dataset.focusKey=`field-${el.dataset.fieldFocus}`;
     if(focus)host.querySelector(`[data-field-focus="${CSS.escape(focus)}"]`)?.focus({preventScroll:true});
   }

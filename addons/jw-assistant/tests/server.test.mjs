@@ -22,7 +22,7 @@ test('preview serves only review assets and rejects writes/cross-origin requests
     assert.match(await verifier.text(), /export async function verifyCapturePair/);
     assert.equal((await fetch(`${origin}/review/store.mjs`)).status, 200);
     assert.equal((await fetch(`${origin}/review/export.mjs`)).status, 200);
-    for (const asset of ['/field/standards.mjs','/field/drafts.mjs','/storage/local-store.mjs','/ui/field-panel.mjs']) assert.equal((await fetch(`${origin}${asset}`)).status, 200);
+    for (const asset of ['/field/standards.mjs','/field/drafts.mjs','/storage/local-store.mjs','/ui/field-panel.mjs','/ui/restore-panel.mjs']) assert.equal((await fetch(`${origin}${asset}`)).status, 200);
     assert.equal((await fetch(`${origin}/field/workspace.json`)).status, 404);
     assert.equal((await fetch(`${origin}/review/workspace.json`)).status, 404);
     assert.equal((await fetch(`${origin}/metadata.json`)).status, 404);
