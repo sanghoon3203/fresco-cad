@@ -12,6 +12,8 @@
 
 **2026-09-26: 위치별 현장 메모와 백업 복원을 추가했습니다.** 화면 전환 시 초안을 보존하고, 기존 데이터 변환·복원 미리보기·이전 정상본 보존을 검증했습니다. 자동 검사 54개 통과. [Sprint 05 보고](docs/jw-assistant/sprint-05-i2b-report.md).
 
+**2026-09-28: 기존 기획의 진척을 대조하고 사무소 검토 기록·손상 원본 보존 복구를 추가했습니다.** 자동 검사 67개와 브라우저 복원 흐름을 확인했습니다. [Sprint 06 진척표·다음 계획](docs/jw-assistant/sprint-06-i2c-report.md) · [복구 안내](docs/jw-assistant/backup-recovery.md). 다음 우선순위는 파일 기반 작업 공간과 실기/파일럿 잔여 검증입니다.
+
 **Phase 0, gate 0B: 실패 — 화면 재사용·입력 비용 개선과 회귀 검사는 통과했으나 프레임 성능 목표에 미달.**
 
 Gate 0A의 로컬 캔버스 검증은 유지됩니다. [최신 성능 보고서](docs/performance-0b.md).
@@ -64,4 +66,4 @@ work/tooling/bin/python outputs/fresco-cad/tests/catalog_check.py
 
 [제품 정의](docs/product-brief.md) · [호환성·코퍼스 매트릭스](docs/compatibility-matrix.md) · [기술 ADR](docs/adr-001.md) · [디자인 토큰·상태 계약](docs/design-system.md) · [라이선스·보안표](docs/license-security.md) · [외부 통합 조사](docs/integrations.md)
 
-다음 작업은 gate 0B의 남은 입력·프레임 갱신 병목 개선입니다. 회사 라이선스 승인과 Windows 실기기 검증은 별도 게이트입니다.
+현재 우선 개발은 위 Jw Assistant 로드맵을 따릅니다. 독립 Qt/C++ CAD를 재개할 때의 잔여 작업은 gate 0B 입력·프레임 갱신 병목 개선입니다. 회사 라이선스 승인과 Windows 실기기 검증은 별도 게이트입니다.
