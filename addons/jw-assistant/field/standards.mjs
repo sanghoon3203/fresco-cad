@@ -125,7 +125,7 @@ export function restoreFieldBackup(current, incoming) {
 }
 export function createFieldStore(storage) {
   const store = createJsonStore(storage, 'fresco-jw-field-v1', { initial: emptyFieldWorkspace, validate: migrateFieldWorkspace, prefix: 'E_FIELD' });
-  return { load: store.load, loadBackup: store.loadBackup, save(value) { validateFieldWorkspace(value); return store.save(value); } };
+  return { ...store, save(value) { validateFieldWorkspace(value); return store.save(value); } };
 }
 export function handoffText(card, locale = 'ja-JP') {
   const result = checkFinishCard(card), ja = locale === 'ja-JP';

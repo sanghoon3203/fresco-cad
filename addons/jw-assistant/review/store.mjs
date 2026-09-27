@@ -1,4 +1,5 @@
 import { validateProfile } from '../core/engine.mjs';
+import { createJsonStore } from '../storage/local-store.mjs';
 
 const MAX_BYTES = 2 * 1024 * 1024;
 const MAX_REVISION = 2_147_483_646;
@@ -100,33 +101,7 @@ export function reviewsForContext(workspace, contextKey) {
   return copy(workspace.reviews.filter(record => record.contextKey === contextKey));
 }
 
-function parse(raw) {
-  if (typeof raw !== 'string' || new TextEncoder().encode(raw).length > MAX_BYTES) fail('E_REVIEW_CORRUPT');
-  try { return validateWorkspace(JSON.parse(raw)); } catch { fail('E_REVIEW_CORRUPT'); }
-}
-
 export function createWorkspaceStore(storage, key = 'fresco-jw-review-v1') {
-  if (!storage || typeof storage.getItem !== 'function' || typeof storage.setItem !== 'function') fail('E_REVIEW_STORAGE');
   text(key, 128);
-  const get = name => { try { return storage.getItem(name); } catch { fail('E_REVIEW_STORAGE'); } };
-  const set = (name, value) => { try { storage.setItem(name, value); } catch { fail('E_REVIEW_STORAGE'); } };
-  return {
-    load() { const raw = get(key); return raw === null ? emptyWorkspace() : parse(raw); },
-    loadBackup() { const raw = get(`${key}.backup`); return raw === null ? null : parse(raw); },
-    save(workspace) {
-      validateWorkspace(workspace);
-      const raw = get(key);
-      const current = raw === null ? emptyWorkspace() : parse(raw);
-      if (current.revision !== workspace.revision) fail('E_REVIEW_CONFLICT');
-      const next = copy(workspace);
-      next.revision += 1;
-      validateWorkspace(next);
-      const encoded = serialized(next);
-      // Best-effort stale writer detection, NOT an atomic transaction between tabs.
-      // A failed backup must stop before replacing the primary record.
-      if (raw !== null) set(`${key}.backup`, raw);
-      set(key, encoded);
-      return next;
-    },
-  };
+  return createJsonStore(storage, key, { initial: emptyWorkspace, validate: validateWorkspace, prefix: 'E_REVIEW', maxBytes: MAX_BYTES });
 }
