@@ -152,6 +152,9 @@ body.reduce-motion, body.reduce-motion * { scroll-behavior: auto !important; }
 body.reduce-motion *, body.reduce-motion *::before, body.reduce-motion *::after { transition-duration: 1ms !important; animation-duration: 1ms !important; }
 
 .field-panel { grid-column: 1 / -1; min-width: 0; }
+.project-panel { grid-column: 1 / -1; min-width: 0; }
+.project-panel p { margin: 0; overflow-wrap: anywhere; line-height: 1.6; }
+.project-panel .button { justify-self: start; max-width: 100%; white-space: normal; }
 .source-controls .office-rules { grid-column: 1 / -1; }
 .office-rules .field-label { max-width: 520px; }
 .field-panel details { border: 1px solid var(--line); border-radius: 12px; padding: 16px; }

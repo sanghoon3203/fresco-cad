@@ -6,8 +6,11 @@ import { emptyWorkspace, reviseProfile, createContextKey, recordReview, reviewsF
 import { reviewCsv } from "../review/export.mjs";
 import { createFieldPanel } from "./field-panel.mjs";
 import { createRestorePanel } from "./restore-panel.mjs";
+import { createProjectPanel } from './project-panel.mjs';
+import { encodeBytes, projectStorage } from '../project/file.mjs';
+import { fieldContextKey } from '../field/standards.mjs';
 let fieldStorage; try { fieldStorage = window.localStorage; } catch {}
-const fieldPanel = createFieldPanel(fieldStorage);
+let fieldPanel = createFieldPanel(fieldStorage);
 let contextGeneration = 0;
 
 const SVG_NS = "http://www.w3.org/2000/svg";
@@ -47,7 +50,7 @@ function hasUnsavedReview() {
   return JSON.stringify([state.officeShortLine, state.officeGap, state.officeLayers]) !== JSON.stringify(officeBaseline)
     || state.reviewDraftStatus !== (saved?.status ?? 'reviewing') || state.reviewDraftNote !== (saved?.note ?? '');
 }
-const reviewRecovery = createRestorePanel({ id: 'review', store: reviewStore,
+function makeReviewRecovery() { return createRestorePanel({ id: 'review', store: reviewStore,
   title: { ja: '事務所ルール・検討記録の復元', en: 'Restore office rules and review decisions' },
   describe: (value, locale) => locale === 'ja-JP'
     ? `検討 ${value.reviews.length}件・事務所ルール ${value.profile ? 'あり' : 'なし'}`
@@ -60,6 +63,49 @@ const reviewRecovery = createRestorePanel({ id: 'review', store: reviewStore,
     if (profile) setOfficeDraft(profile);
     else { state.officeShortLine = '3'; state.officeGap = '2'; state.officeLayers = 'WALL\nOPENING\nGRID\nANNOTATION'; officeBaseline = [state.officeShortLine, state.officeGap, state.officeLayers]; }
     if (state.importBytes && state.mode === 'import') void processImport(); else render();
+  },
+}); }
+let reviewRecovery = makeReviewRecovery();
+const browserReviewStore = reviewStore;
+let browserSession = null;
+const projectPanel = createProjectPanel({
+  hasDrafts: () => hasUnsavedReview() || fieldPanel.hasUnsaved() || state.importBusy,
+  readSaved: () => ({ review: reviewStore.load(), field: fieldPanel.savedWorkspace() }),
+  refresh: () => render(),
+  async captureCurrent() {
+    if (state.mode !== 'import' || !state.reviewContextKey || !state.importResult?.snapshot) throw Object.assign(new Error(), { code: 'E_PROJECT_IMPORT_FIRST' });
+    const review = structuredClone(state.reviewWorkspace), field = fieldPanel.savedWorkspace();
+    review.reviews = review.reviews.filter(item => item.contextKey === state.reviewContextKey);
+    const fieldKey = await fieldContextKey(state.reviewContextKey, field.layerMap);
+    field.cards = field.cards.filter(item => item.contextKey === fieldKey);
+    return { format: 'fresco-jw-project', schemaVersion: 1, id: crypto.randomUUID(), name: state.importFileName,
+      savedAt: new Date().toISOString(), review, field,
+      capture: { name: state.importFileName, sha256: state.importResult.source.sha256, base64: encodeBytes(state.importBytes),
+        metadataBase64: state.captureMetadataBytes ? encodeBytes(state.captureMetadataBytes) : null,
+        encoding: state.importEncoding, coordinateMode: state.importResult.source.coordinateMode, group: state.importResult.coverage.selectedGroup } };
+  },
+  async install(candidate) {
+    if (!browserSession) browserSession = { fieldPanel, state: { ...state } };
+    const storage = projectStorage(candidate.project);
+    reviewStore = createWorkspaceStore(storage, 'fresco-jw-review-v1'); fieldPanel = createFieldPanel(storage); reviewRecovery = makeReviewRecovery();
+    state.reviewWorkspace = reviewStore.load(); state.reviewStoreReady = true; state.reviewStoreError = null;
+    state.reviewDraftStatus = 'reviewing'; state.reviewDraftNote = '';
+    state.importBytes = candidate.bytes; state.importFileName = candidate.project.capture.name;
+    state.captureMetadataBytes = candidate.metadata; state.captureMetadataFileName = candidate.metadata ? 'metadata.json' : '';
+    state.captureVerification = candidate.verification; state.importEncoding = candidate.project.capture.encoding;
+    state.importCalibration = candidate.project.capture.coordinateMode; state.importConfirmed = true;
+    state.importGroup = candidate.project.capture.group;
+    if (state.reviewWorkspace.profile) setOfficeDraft(state.reviewWorkspace.profile);
+    await processImport();
+  },
+  async close() {
+    const previous = browserSession; browserSession = null;
+    reviewStore = browserReviewStore; fieldPanel = previous.fieldPanel; reviewRecovery = makeReviewRecovery();
+    const nextRequest = state.importRequest + 1; Object.assign(state, previous.state); state.importRequest = nextRequest;
+    state.reviewDraftStatus = 'reviewing'; state.reviewDraftNote = ''; clearReviewContext();
+    await loadReviewWorkspace();
+    if (state.mode === 'import' && state.importBytes) await processImport();
+    else setOfficeDraft(state.reviewWorkspace.profile ?? defaultProfile);
   },
 });
 
@@ -147,6 +193,7 @@ function ruleTitle(ruleId) { return t(({ "exact-duplicate": "exactDuplicate", "z
 function setLocale(locale) { state.locale = Object.hasOwn(catalogs, locale) ? locale : "ja-JP"; savePreference(localeKey, state.locale); document.documentElement.lang = state.locale; render(); say("statusLanguage"); }
 function setMotion(reduceMotion) { state.reduceMotion = reduceMotion; savePreference(motionKey, String(reduceMotion)); document.body.classList.toggle("reduce-motion", reduceMotion); }
 function switchMode(mode) {
+  if (projectPanel.isActive()) return;
   ++state.importRequest;
   state.importBusy = false;
   state.mode = mode;
@@ -407,6 +454,7 @@ function render() {
 
   const main = element("main", { className: "main" }); const topbar = element("header", { className: "topbar" }); const titleWrap = element("div"); titleWrap.append(element("p", { className: "eyebrow", text: t(state.mode === "import" ? "readOnlyTag" : "synthetic") }), element("h1", { className: "topbar-title", text: state.mode === "import" ? (state.importFileName || t("sourceTitle")) : t("document") })); topbar.append(titleWrap, element("span", { className: "badge", text: t("disconnected") })); main.append(topbar);
   const workspace = element("section", { className: "workspace", id: "workspace", attributes: { "aria-label": t("review") } });
+  workspace.append(projectPanel.render(state.locale));
   const sourcePanel = element("section", { className: "panel source-panel", attributes: { "aria-labelledby": "source-heading" } });
   const sourceHead = element("div", { className: "panel-heading" }); sourceHead.append(element("h2", { className: "panel-title", id: "source-heading", text: t("sourceTitle") })); sourcePanel.append(sourceHead);
   const sourceBody = element("div", { className: "settings-list source-controls" });
@@ -438,6 +486,10 @@ function render() {
   if (state.importBusy) sourceBody.append(element("p", { className: "panel-meta", attributes: { role: "status" }, text: t("importLoading") }));
   if (state.importResult) { const result = state.importResult; const selectedGroup = result.metadata.groups.find((group) => group.id === result.coverage.selectedGroup) ?? (result.metadata.groups.length === 1 ? result.metadata.groups[0] : null); sourceBody.append(element("p", { className: "file-name", text: t("sourceEncoding", { encoding: result.source.encoding }) })); if (selectedGroup) sourceBody.append(element("p", { className: "file-name", text: t("selectedGroupSummary", { id: selectedGroup.id, scale: selectedGroup.scale ?? "—", count: selectedGroup.lineCount }) })); sourceBody.append(element("p", { className: "note", text: t("importCoverage", { status: t(`coverage.${result.coverage.status}`), lines: result.coverage.supportedLines, excluded: result.coverage.excludedGroupLines, unsupported: result.coverage.unsupportedRecords }) })); sourceBody.append(element("p", { className: "hash-value", text: t("sourceHash", { hash: result.source.sha256 }) })); for (const reason of result.coverage.reasons) sourceBody.append(element("p", { className: "note", text: `${t(`importReason.${reason.code}`)}${reason.lineNumber ? ` (${reason.lineNumber})` : ""}` })); if (!result.snapshot) sourceBody.append(element("p", { className: "description", text: t("importNeedsSetup") })); }
   if (state.mode === "import") {
+    if (projectPanel.isActive()) {
+      for (const control of sourceBody.querySelectorAll('button, input, select')) control.disabled = true;
+      sourceBody.append(element('p', { className: 'note', text: state.locale === 'ja-JP' ? 'プロジェクトの図面・単位・グループは固定です。別の図面を扱うにはプロジェクトを閉じてください。' : 'Project source, units and group are fixed. Close the project to work with another drawing.' }));
+    }
     sourceBody.append(element("p", { className: "note", text: t("importReadOnly") }));
     const office = element("details", { className: "office-rules" }); office.open = state.officeOpen; office.addEventListener("toggle", () => { state.officeOpen = office.open; });
     const summary = element("summary", { text: t("officeRules") }); office.append(summary);
@@ -453,7 +505,9 @@ function render() {
     sourceBody.append(office);
     const savedCount = reviewsInCurrentContext().length;
     sourceBody.append(element("p", { className: "panel-meta", text: t("reviewContextCount", { count: savedCount }) }));
-    sourceBody.append(element("p", { className: "note", text: t("reviewReselectHelp") }));
+    sourceBody.append(element("p", { className: "note", text: projectPanel.isActive()
+      ? (state.locale === 'ja-JP' ? '記録の保存後、プロジェクトをダウンロードしてください。ルールや分類対応を変えると、以前の条件の記録は保持されますが自動で再関連付けされません。' : 'After saving records, download the project. Changing rules or layer mappings retains earlier records without automatically attaching them to new conditions.')
+      : t("reviewReselectHelp") }));
     sourceBody.append(element("button", { className: "button", type: "button", text: t("exportCsv"), disabled: !state.reviewContextKey, on: { click: showCsvExport } }));
   }
   sourcePanel.append(sourceBody);
@@ -519,17 +573,21 @@ function render() {
     ['#apply-dialog button:first-of-type', 'dialog-cancel'], ['#apply-dialog button:last-of-type', 'dialog-apply']
   ];
   for (const [selector, key] of focusKeys) { const target = app.querySelector(selector); if (target) target.dataset.focusKey = key; }
+  if (projectPanel.isBusy()) for (const control of app.querySelectorAll('button, input, select, textarea')) control.disabled = true;
+  if (projectPanel.isActive()) app.querySelector('[data-focus-key="settings-reset"]').disabled = true;
   if (focusKey) app.querySelector(`[data-focus-key="${CSS.escape(focusKey)}"]`)?.focus({ preventScroll: true });
 }
 
 window.addEventListener("keydown", (event) => { if (event.key === "Escape" && state.previewSnapshot && !document.querySelector("dialog[open]")) cancelPreview(); });
 function refreshRecovery() {
+  projectPanel.refresh();
   reviewRecovery.refresh();
   const discard = app.querySelector('[data-discard-review]'); if (discard) discard.disabled = !hasUnsavedReview();
 }
 app.addEventListener('input', refreshRecovery);
 app.addEventListener('change', refreshRecovery);
-window.addEventListener("beforeunload", event => { if (fieldPanel.hasUnsaved() || hasUnsavedReview()) { event.preventDefault(); event.returnValue = ""; } });
+app.addEventListener('fieldstatechange', () => projectPanel.refresh());
+window.addEventListener("beforeunload", event => { if (fieldPanel.hasUnsaved() || hasUnsavedReview() || projectPanel.hasUnsaved()) { event.preventDefault(); event.returnValue = ""; } });
 render();
 loadDemo();
 loadReviewWorkspace();

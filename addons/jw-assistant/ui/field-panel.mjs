@@ -41,6 +41,7 @@ export function createFieldPanel(storage) {
     const discard = host.querySelector('[data-discard-note]'); if (discard) discard.disabled = !key || !drafts.get(key,cardId);
     const revert = host.querySelector('[data-revert-map]'); if (revert) revert.disabled = !mapDirty;
     const saveAll = host.querySelector('[data-save-all]'); if (saveAll) saveAll.disabled = !ready || !drafts.size;
+    host.dispatchEvent(new Event('fieldstatechange', { bubbles: true }));
   }
   function syncKey() {
     const signature = JSON.stringify([context.reviewContextKey,workspace.layerMap]);
@@ -112,5 +113,5 @@ export function createFieldPanel(storage) {
     for(const el of host.querySelectorAll('[data-field-focus]')) el.dataset.focusKey=`field-${el.dataset.fieldFocus}`;
     if(focus)host.querySelector(`[data-field-focus="${CSS.escape(focus)}"]`)?.focus({preventScroll:true});
   }
-  return {hasUnsaved, render(next){context=next;syncKey();draw();return host;}};
+  return {hasUnsaved, savedWorkspace(){if(!ready)throw Object.assign(new Error(),{code:'E_FIELD_LOAD'});return store.load();}, render(next){context=next;syncKey();draw();return host;}};
 }

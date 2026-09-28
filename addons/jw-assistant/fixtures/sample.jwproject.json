@@ -1,0 +1,233 @@
+{
+  "format": "fresco-jw-project",
+  "schemaVersion": 1,
+  "id": "c06a2426-13e6-4940-8d8e-ad8607a60601",
+  "name": "Synthetic sample - group 0",
+  "savedAt": "2026-09-28T00:00:00.000Z",
+  "capture": {
+    "name": "synthetic-mixed-groups.txt",
+    "sha256": "2065fe90301cf6a388d41e84b336eb85e4e15d4813c4ece360cc3e85e579633e",
+    "base64": "aHEKaGsgMApocyAxMDAgNTAgMTAwIDEwMCAxMDAgMTAwIDEwMCAxMDAgMTAwIDEwMCAxMDAgMTAwIDEwMCAxMDAgMTAwIDEwMApsZzAKbHkwCmxjMgpsdDEKMCAwIDEwMDAgMAoxMDAwIDAgMCAwCmNpIDUwMCA1MDAgNTAKbGcxCmx5MApsYzIKbHQxCjAgMCA1MDAgMAo=",
+    "metadataBase64": null,
+    "encoding": "utf-8",
+    "coordinateMode": "model-mm",
+    "group": "0"
+  },
+  "review": {
+    "schemaVersion": 1,
+    "revision": 0,
+    "profile": null,
+    "reviews": []
+  },
+  "field": {
+    "schemaVersion": 2,
+    "revision": 0,
+    "layerMap": [
+      {
+        "categoryId": "exterior-wall",
+        "layers": [
+          "0:0"
+        ]
+      },
+      {
+        "categoryId": "interior-wall",
+        "layers": [
+          "0:1"
+        ]
+      },
+      {
+        "categoryId": "column",
+        "layers": [
+          "0:2"
+        ]
+      },
+      {
+        "categoryId": "beam",
+        "layers": [
+          "0:3"
+        ]
+      },
+      {
+        "categoryId": "grid",
+        "layers": [
+          "0:4"
+        ]
+      },
+      {
+        "categoryId": "foundation",
+        "layers": [
+          "0:5"
+        ]
+      },
+      {
+        "categoryId": "floor-base",
+        "layers": [
+          "0:6"
+        ]
+      },
+      {
+        "categoryId": "stair",
+        "layers": [
+          "0:7"
+        ]
+      },
+      {
+        "categoryId": "furniture",
+        "layers": [
+          "1:0"
+        ]
+      },
+      {
+        "categoryId": "kitchen",
+        "layers": [
+          "1:1"
+        ]
+      },
+      {
+        "categoryId": "toilet",
+        "layers": [
+          "1:2"
+        ]
+      },
+      {
+        "categoryId": "basin",
+        "layers": [
+          "1:3"
+        ]
+      },
+      {
+        "categoryId": "bath",
+        "layers": [
+          "1:4"
+        ]
+      },
+      {
+        "categoryId": "window",
+        "layers": [
+          "1:5"
+        ]
+      },
+      {
+        "categoryId": "door",
+        "layers": [
+          "1:6"
+        ]
+      },
+      {
+        "categoryId": "storage",
+        "layers": [
+          "1:7"
+        ]
+      },
+      {
+        "categoryId": "hvac",
+        "layers": [
+          "1:9"
+        ]
+      },
+      {
+        "categoryId": "plumbing",
+        "layers": [
+          "1:A"
+        ]
+      },
+      {
+        "categoryId": "electrical",
+        "layers": [
+          "1:C"
+        ]
+      },
+      {
+        "categoryId": "floor-finish",
+        "layers": [
+          "2:0"
+        ]
+      },
+      {
+        "categoryId": "wall-finish",
+        "layers": [
+          "2:1"
+        ]
+      },
+      {
+        "categoryId": "ceiling-finish",
+        "layers": [
+          "2:2"
+        ]
+      },
+      {
+        "categoryId": "skirting",
+        "layers": [
+          "2:3"
+        ]
+      },
+      {
+        "categoryId": "waterproof",
+        "layers": [
+          "2:4"
+        ]
+      },
+      {
+        "categoryId": "insulation",
+        "layers": [
+          "2:5"
+        ]
+      },
+      {
+        "categoryId": "roof",
+        "layers": [
+          "2:6"
+        ]
+      },
+      {
+        "categoryId": "joint",
+        "layers": [
+          "2:7"
+        ]
+      },
+      {
+        "categoryId": "substrate",
+        "layers": [
+          "2:9"
+        ]
+      },
+      {
+        "categoryId": "penetration",
+        "layers": [
+          "2:A"
+        ]
+      },
+      {
+        "categoryId": "hatch",
+        "layers": [
+          "0:8"
+        ]
+      },
+      {
+        "categoryId": "fill",
+        "layers": [
+          "0:B"
+        ]
+      },
+      {
+        "categoryId": "text",
+        "layers": [
+          "0:D"
+        ]
+      },
+      {
+        "categoryId": "dimension",
+        "layers": [
+          "0:E"
+        ]
+      },
+      {
+        "categoryId": "auxiliary",
+        "layers": [
+          "0:F"
+        ]
+      }
+    ],
+    "cards": []
+  }
+}
