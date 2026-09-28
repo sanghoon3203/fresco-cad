@@ -39,6 +39,8 @@ Only these line records are supported. Entity IDs are snapshot-local; they are n
 
 ## Core exports
 
+Portable project v1 additionally follows [the project file contract](../../docs/jw-assistant/project-file.md): strict `.jwproject.json`, original byte hash verification, isolated memory stores and explicit download/reopen. This does not add host CAD writes or atomic filesystem saving.
+
 `defaultProfile`: `{ id: 'timber-basic', version: 1, shortLineMm: 0.5, gapMm: 5, allowedLayers: ['WALL','OPENING','GRID','ANNOTATION'] }`.
 
 `validateSnapshot(snapshot)`: throws Error with stable `.code` on invalid input, returns snapshot on success; no mutation.
