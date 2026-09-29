@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { hash } from '../native/jww.mjs';
+import { hash, verifyLineEdit } from '../native/jww.mjs';
 import { translate, toIR } from '../native/jww-pipeline.mjs';
 
 function fixture() {
@@ -40,4 +40,14 @@ test('rejects stale, unknown, duplicate, partial-invalid and malformed patches',
   }
   document.layers[0].scale = 0;
   assert.throws(() => translate(bytes, document, patch), { code: 'E_PATCH_SCALE' });
+});
+
+test('write verification rejects unintended changes inside block definitions and image metadata', () => {
+  const { document } = fixture();
+  document.blocks = [{ id: 'b0', entities: [{ id: 'b0/e0', props: { m_string: 'A' } }] }];
+  document.imageMetadata = [{ name: 'image', compressedBytes: 20 }];
+  for (const field of ['blocks', 'imageMetadata']) {
+    const changed = structuredClone(document); changed[field] = [];
+    assert.throws(() => verifyLineEdit(document, changed, null, []), { code: 'E_JWW_REOPEN_MISMATCH' });
+  }
 });

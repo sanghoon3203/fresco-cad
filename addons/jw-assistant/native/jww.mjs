@@ -41,6 +41,9 @@ export function patchLine(bytes, document, entityId, points) {
 }
 
 export function verifyLineEdit(before, after, entityId, points) {
+  for (const key of ['blocks', 'imageMetadata', 'diagnostics']) {
+    if (JSON.stringify(before[key]) !== JSON.stringify(after[key])) fail('E_JWW_REOPEN_MISMATCH');
+  }
   if (before.version !== after.version || before.blockDefinitions !== after.blockDefinitions || before.images !== after.images
     || JSON.stringify(before.layers) !== JSON.stringify(after.layers) || before.entities.length !== after.entities.length) fail('E_JWW_REOPEN_MISMATCH');
   const fields = ['m_start_x', 'm_start_y', 'm_end_x', 'm_end_y'];

@@ -1,25 +1,31 @@
 import { hash, fail, readJww, patchLine, verifyLineEdit } from './jww.mjs';
+import { buildStructure } from './jww-structure.mjs';
 
 const fields = ['m_start_x', 'm_start_y', 'm_end_x', 'm_end_y'];
 const layerId = p => `${p.m_nGLayer.toString(16).toUpperCase()}:${p.m_nLayer.toString(16).toUpperCase()}`;
 
 // The native record stays local. AI-facing coordinates use model millimetres.
 export function toIR(bytes, document) {
+  const structure = buildStructure(document);
   return {
-    schemaVersion: 1, sourceHash: hash(bytes), formatVersion: document.version,
+    schemaVersion: 2, sourceHash: hash(bytes), formatVersion: document.version,
     units: 'model-mm', axes: 'drawing-xy',
     layers: document.layers,
-    entities: document.entities.map(entity => {
+    entities: document.entities.map((entity, index) => {
       const p = entity.props, layer = document.layers.find(item => item.id === layerId(p));
       let editable = false;
       if (entity.type === 'JwwSen' && Number.isFinite(layer?.scale) && layer.scale > 0) {
         try { patchLine(bytes, document, entity.id, fields.map(name => p[name])); editable = true; } catch {}
       }
-      return { id: entity.id, type: entity.type, layerId: layerId(p), editable,
+      return { ...structure.entities[index], id: entity.id, type: entity.type, layerId: layerId(p), editable,
         ...(entity.type === 'JwwSen' && Number.isFinite(layer?.scale) && layer.scale > 0
+          && fields.every(name => Number.isFinite(p[name]) && Number.isFinite(p[name] * layer.scale))
           ? { points: fields.map(name => p[name] * layer.scale) } : {}) };
     }),
-    coverage: { scope: 'top-level', blockDefinitions: document.blockDefinitions, images: document.images }
+    blockDefinitions: structure.definitions, blockInstances: structure.instances, expandedEntities: structure.expanded,
+    diagnostics: structure.diagnostics, imageMetadata: document.imageMetadata ?? [],
+    coordinateContract: { geometry: 'native paper/block-local coordinates', points: 'model-mm', transformToModel: '[a,b,c,d,tx,ty]', blockScale: 'root instance group scale applied once' },
+    coverage: { ...structure.coverage, scope: 'top-level-and-block-definitions', blockDefinitions: document.blockDefinitions, images: document.images }
   };
 }
 

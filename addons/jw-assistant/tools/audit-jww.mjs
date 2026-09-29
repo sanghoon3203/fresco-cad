@@ -1,6 +1,7 @@
 import { readdir, readFile, writeFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { hash, readJww, patchLine } from '../native/jww.mjs';
+import { buildStructure } from '../native/jww-structure.mjs';
 
 const [root, destination] = process.argv.slice(2);
 if (!root || !destination) throw new Error('Usage: node tools/audit-jww.mjs input-directory report-directory');
@@ -26,7 +27,9 @@ for (const file of files) {
     source = await readFile(file);
     Object.assign(row, { bytes: source.length, sha256: hash(source), magic: source.subarray(0, 8).toString('ascii') });
     const doc = await readJww(source);
+    const structure = buildStructure(doc);
     Object.assign(row, { status: 'PASS', version: doc.version, entities: doc.entities.length,
+      structure: structure.coverage, diagnostics: structure.diagnostics,
       blockDefinitions: doc.blockDefinitions, images: doc.images, types: {}, eligibleLines: 0, lineRejections: {}, invalidNumbers: 0 });
     for (const entity of doc.entities) {
       row.types[entity.type] = (row.types[entity.type] ?? 0) + 1;
@@ -44,7 +47,7 @@ for (const file of files) {
       const repeat = await readJww(source);
       row.repeatStable = JSON.stringify(doc) === JSON.stringify(repeat);
       row.changedEntityIds = doc.entities.filter((e, i) => JSON.stringify(e) !== JSON.stringify(repeat.entities[i])).map(e => e.id);
-      if (!row.repeatStable || row.invalidNumbers) row.status = 'WARN';
+      if (!row.repeatStable || row.invalidNumbers || structure.diagnostics.length || structure.coverage.truncated) row.status = 'WARN';
     } catch (error) { row.status = 'WARN'; row.repeatError = error.code ?? error.message; }
   } catch (error) { row.error = error.code ?? error.message; }
   if (source) {
@@ -64,11 +67,11 @@ await writeFile(path.join(destination, 'audit.json'), JSON.stringify({ date: new
 const escape = value => String(value ?? '—').replaceAll('|', '\\|').replaceAll('\n', ' ');
 const md = ['# JWW 전체 파싱 검사', '', `대상: ${path.resolve(root)}`, '',
   `파일 ${summary.files}개 · 성공 ${summary.pass} · 경고 ${summary.warn} · 실패 ${summary.fail} · 읽기 전후 해시 동일 ${summary.unchanged}`, '',
-  'PASS는 현재 reader로 두 번 읽어 동일한 top-level JSON을 얻었다는 의미다. 전체 정보 보존, Jw_cad 재개방, 수정·저장 성공을 의미하지 않는다.',
-  '블록 내부 객체와 내장 이미지 내용은 현재 JSON에 펼쳐지지 않는다. 편집 가능 선은 현재 좌표 patch 조건 검사 결과이며 실제 수정은 수행하지 않았다.', '',
-  '| 파일 | 파싱 | 내부 버전 | 객체 수 | 선 수 | 편집 후보 선 | 블록 정의 | 이미지 | 반복 일치 | 오류/제외 이유 |',
-  '|---|---|---:|---:|---:|---:|---:|---:|---|---|',
-  ...rows.map(r => `| ${[r.file, r.status, r.version, r.entities, r.types?.JwwSen ?? 0, r.eligibleLines, r.blockDefinitions, r.images, r.repeatStable, r.error ?? JSON.stringify(r.lineRejections)].map(escape).join(' | ')} |`), '',
+  'PASS는 현재 reader로 블록 정의를 포함해 두 번 읽은 JSON이 일치하고 구조 진단이 없다는 뜻이다. 전체 정보 보존, Jw_cad 재개방, 수정·저장 성공을 의미하지 않는다. WARN은 구조 진단 또는 반복 불일치를 확인해야 한다.',
+  '블록 내부 객체·배치 변환을 추출한다. 이미지는 메타데이터만 제공한다. 편집 후보 선은 조건 검사 결과이며 실제 수정은 수행하지 않았다. 블록 실제 배치의 Jw_cad 화면 대조는 별도다.', '',
+  '| 파일 | 파싱 | 내부 버전 | 객체 수 | 선 수 | 편집 후보 선 | 블록 정의 | 블록 내부 | 배치 | 반복 일치 | 오류/제외 이유 |',
+  '|---|---|---:|---:|---:|---:|---:|---:|---:|---|---|',
+  ...rows.map(r => `| ${[r.file, r.status, r.version, r.entities, r.types?.JwwSen ?? 0, r.eligibleLines, r.blockDefinitions, r.structure?.definitionEntities, r.structure?.blockInstances, r.repeatStable, r.error ?? JSON.stringify(r.lineRejections)].map(escape).join(' | ')} |`), '',
   'E_JWW_LINE_ONLY: 현재 편집 범위 밖(구형 레이아웃 또는 그룹/플래그 속성). E_JWW_AMBIGUOUS_RECORD: 동일 바이트 패턴이 복수이거나 일치 구간 없음. E_PATCH_SCALE: 축척 불명확. 이는 파싱 실패와 별개다.', '',
   `탐색 오류: ${JSON.stringify(discoveryErrors)}`, ''];
 await writeFile(path.join(destination, 'report.md'), md.join('\n'));

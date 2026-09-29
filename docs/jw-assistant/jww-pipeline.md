@@ -1,5 +1,7 @@
 # JWW JSON 편집 CLI — P1 구현
 
+현재 inspect 출력은 IR schemaVersion 2다. 블록 정의·배치·내부 객체와 건축 스킬 연결 계약은 [구조 JSON과 스킬 프레임워크](architecture-skills.md)를 참고한다. 수정 Patch는 기존 schemaVersion 1을 유지한다.
+
 2026-09-29. 기존 작업 트리의 JwwHelper reader/좌표 patch를 재사용해 `inspect → JSON Patch → apply → 재파싱 → 새 파일` 경로를 추가했다. 전체 JWW 재직렬화 writer가 아닌 원본 보존형 선 편집 구현이다.
 
 ## 사용
