@@ -1,5 +1,7 @@
 # Fresco CAD — native canvas spike
 
+**2026-09-29: JWW → JSON → Patch → JWW를 주 개발 경로로 전환했습니다.** [현재 제품 계획 v0.3](docs/jw-assistant/product-plan-v3.md). 다음 목표는 제한된 실제 JWW에서 선 하나를 수정해 새 파일로 저장하고 Jw_cad에서 여는 데모입니다. 아래 날짜별 기록은 이전 개발 이력입니다.
+
 **2026-09-23: Jw_cad 애드온 개발을 먼저 진행합니다.** 별도 [Jw Assistant 시제품](addons/jw-assistant/README.md), [요구사항](docs/jw-assistant/requirements.md), [스프린트 보고서](docs/jw-assistant/sprint-00-report.md)를 추가했습니다. 아래는 기존 통합형 Qt/C++ CAD 시제품의 이력입니다.
 
 **2026-09-24: 일본 업무·AI API 조사에 따라 계획을 v0.2로 개정했습니다.** [개정 제품 계획](docs/jw-assistant/product-plan-v2.md) · [개발 로드맵](docs/jw-assistant/roadmap.md) · [조사 스프린트 보고](docs/jw-assistant/sprint-01-research-report.md). API 연결·실제 Jw 쓰기는 아직 구현/검증 전입니다.
