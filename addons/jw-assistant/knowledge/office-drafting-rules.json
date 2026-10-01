@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "id": "office-plan-1-50",
+  "title": "木造在来 1/50 平面詳細図 作図ルール (社内練習データ 住宅A から抽出)",
+  "derivedFrom": {
+    "drawings": ["住宅A 平面図", "住宅A 立面図", "住宅A 断面詳細図", "住宅A 基礎伏図", "住宅A 基礎詳細図"],
+    "environment": "住宅A 1/50 平面詳細 JWF",
+    "reference": "住宅A 平面・立面・断面詳細 PDF",
+    "method": "codec decode + per-layer raster review + line-offset measurement around grid lines (2026-10-01)",
+    "privacy": "Rules only. No client names, addresses or drawing contents are stored here."
+  },
+  "sheet": { "paper": "A3", "widthMm": 420, "heightMm": 297, "origin": "paper centre", "frameGroup": "0", "frameGroupScale": 1 },
+  "groups": {
+    "0": { "role": "図枠・表題欄・日付 (scale 1)", "scale": 1 },
+    "1": { "role": "平面詳細図 1/50", "scale": 50 }
+  },
+  "layerNames": "Groups use names n-0..n-7, n-9, n-A, n-C for numbered layers; fixed names: 8=ハッチ, B=色塗, D=文字, E=寸法, F=補助線",
+  "pens": {
+    "printWidth_hundredthMm": { "1": 8, "2": 12, "3": 6, "4": 7, "5": 10, "6": 15, "7": 7, "8": 8 },
+    "screenRgb": { "1": [0,192,192], "2": [0,0,0], "3": [171,171,171], "4": [128,128,64], "5": [192,0,192], "6": [0,0,255], "7": [150,150,150], "8": [255,136,136] },
+    "meaning": {
+      "2": "太線: 壁の最外面と室内仕上げ面 (切断面の輪郭)",
+      "1": "中線: 建具・外装下地の境界",
+      "4": "細線: 壁の中間層境界・家具",
+      "3": "極細グレー: 補助グリッド",
+      "7": "グレー: 設備機器・通り芯",
+      "8": "ピンク: 断熱材パターン",
+      "9": "補助線色 (印刷しない)"
+    },
+    "lineTypes": { "1": "実線", "2": "点線 (家具・グリッド)", "4": "一点鎖線 (細)", "5": "一点鎖線 (通り芯)", "9": "補助線" }
+  },
+  "textStyles": { "1": 2.1, "2": 2.5, "3": 3.2, "4": 4.0, "5": 5.0, "6": 6.0, "7": 2.2, "8": 3.0, "9": 3.5, "10": 2.8, "font": "ＭＳ ゴシック", "unit": "paper mm" },
+  "module": { "base": 910, "half": 455, "auxGrid": 455 },
+  "layers": {
+    "1:0": { "role": "aux-grid", "ja": "455補助グリッド", "kinds": ["line"], "pen": { "color": 3, "style": 2 }, "rule": "Covers the building extent every 455 mm in both directions." },
+    "1:1": { "role": "wall-face", "ja": "壁 仕上げ面 (太線)", "kinds": ["line"], "pen": { "color": 2, "style": 1 }, "rule": "Outermost exterior face and every interior finished face. Cut walls must read as two thick lines." },
+    "1:2": { "role": "column", "ja": "柱", "kinds": ["block", "line"], "pen": { "color": 2, "style": 1 }, "rule": "105x105 square with an X (block 柱1) at wall corners, junctions and opening jambs on the 910 grid." },
+    "1:3": { "role": "wall-core", "ja": "壁 躯体・下地境界 (細線)", "kinds": ["line"], "pen": { "color": 4, "style": 1 }, "rule": "Stud faces (±52.5 from grid) and exterior sheathing face." },
+    "1:4": { "role": "exterior-layers", "ja": "外壁 下地層 (通気胴縁・付加断熱)", "kinds": ["line"], "pen": { "color": 1, "style": 1 }, "rule": "Exterior-only lines at -62 and -152 from grid." },
+    "1:5": { "role": "openings", "ja": "建具 (窓・扉)", "kinds": ["line", "arc"], "pen": { "color": 1, "style": 1 }, "rule": "Sash frames, door leaves and swing arcs. Wall lines stop at the opening." },
+    "1:6": { "role": "equipment", "ja": "設備機器 (UB・便器・キッチン・洗濯機・AC)", "kinds": ["line", "arc"], "pen": { "color": 7, "style": 1 } },
+    "1:7": { "role": "furniture", "ja": "家具 (ベッド・テーブル・ソファ・収納棚)", "kinds": ["line", "arc"], "pen": { "color": 4, "style": 2 }, "rule": "Movable furniture is dashed so it never competes with walls." },
+    "1:8": { "role": "hatch", "ja": "ハッチ (玄関土間タイル等)", "kinds": ["line"], "pen": { "color": 4, "style": 1 } },
+    "1:9": { "role": "symbols", "ja": "記号 (感知器・換気扇・ガラリ・筋交い・方位)", "kinds": ["line", "arc", "block", "text", "solid"] },
+    "1:A": { "role": "grid-and-insulation", "ja": "通り芯 / 断熱材パターン", "kinds": ["line", "arc", "text"], "pen": { "gridColor": 7, "gridStyle": 5, "insulationColor": 8 }, "rule": "通り芯 one-dot chain at 910 pitch labelled X1.. / Y1.. (3.5 mm text) in circle bubbles; insulation wave pattern inside exterior stud cavity, clipped at openings." },
+    "1:B": { "role": "fill", "ja": "色塗 (ソリッド)", "kinds": ["solid"] },
+    "1:C": { "role": "added-insulation", "ja": "付加断熱ハッチ", "kinds": ["line"], "rule": "Hatch between -62 and -152 band (PF 90) on exterior walls only, clipped at openings and corners." },
+    "1:D": { "role": "text", "ja": "文字 (室名・面積・注記・建具番号)", "kinds": ["text", "line"], "textStyle": { "roomName": 3, "area": 2, "note": 2 }, "rule": "Room name boxed in style 3 (3.2 mm) with area in ㎡ (style 2, 2 decimals) below." },
+    "1:E": { "role": "dimension", "ja": "寸法", "kinds": ["dimension", "line", "text", "point"], "textStyle": 8, "rule": "Three tiers outside the building: grid-to-grid (910/455 pieces), groups, overall. Values in mm with thousands separator." },
+    "1:F": { "role": "aux", "ja": "補助線", "pen": { "color": 9 } }
+  },
+  "wallAssemblies": {
+    "exterior-wood-sided": {
+      "ja": "外壁: 金属サイディング15 / 胴縁18 / 付加断熱PF90 / 石膏板9.5 / 柱105 (GW充填) / 石膏ボード12.5",
+      "linesFromGridMm": [
+        { "offset": -185, "layer": "1:1", "color": 2, "what": "サイディング外面 (太線)" },
+        { "offset": -170, "layer": "1:1", "color": 4, "what": "サイディング裏面" },
+        { "offset": -152, "layer": "1:4", "color": 1, "what": "胴縁/通気層境界" },
+        { "offset": -62, "layer": "1:4", "color": 1, "what": "付加断熱内側" },
+        { "offset": -52.5, "layer": "1:3", "color": 4, "what": "柱外面/面材" },
+        { "offset": 52.5, "layer": "1:3", "color": 4, "what": "柱内面" },
+        { "offset": 65, "layer": "1:1", "color": 2, "what": "石膏ボード室内面 (太線)" }
+      ],
+      "fills": [
+        { "between": [-152, -62], "layer": "1:C", "what": "付加断熱ハッチ" },
+        { "between": [-52.5, 52.5], "layer": "1:A", "color": 8, "what": "充填断熱パターン" }
+      ],
+      "negativeIsOutside": true
+    },
+    "interior": {
+      "ja": "内壁: 柱/間柱105 + 両面石膏ボード12.5 = 130",
+      "linesFromGridMm": [
+        { "offset": -65, "layer": "1:1", "color": 2 }, { "offset": -52.5, "layer": "1:3", "color": 4 },
+        { "offset": 52.5, "layer": "1:3", "color": 4 }, { "offset": 65, "layer": "1:1", "color": 2 }
+      ]
+    }
+  },
+  "finishingRules": [
+    "Wall face lines meet cleanly at corners and T-junctions (包絡処理): no overshoot, no gaps.",
+    "All wall lines, insulation patterns and hatches stop at both jambs of an opening.",
+    "Insulation is drawn only in exterior walls; interior walls stay empty between the thin core lines.",
+    "Furniture (1:7) is dashed color 4; fixed equipment (1:6) is solid gray color 7; neither touches wall lines.",
+    "Never mix roles on one layer: text only on 1:D (except grid labels on 1:A), dimensions only on 1:E.",
+    "Grid and aux grid are drawn first and span the full building with margin; walls are placed on the 910/455 grid."
+  ],
+  "evaluation": {
+    "checks": ["layer-role-purity", "pen-per-layer", "thick-faces-on-walls", "wall-closure", "openings-cut-walls", "insulation-exterior-only", "room-labels-inside-rooms", "dimension-sum-equals-overall", "text-style-sizes", "furniture-dashed", "renders-without-overlap"]
+  }
+}

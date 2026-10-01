@@ -1,0 +1,118 @@
+[
+  {
+    "id": "jwcad-basics",
+    "file": "ja/jwcad-basics.md",
+    "title": "Jw_cad 基礎(レイヤグループ/レイヤ・線色・線種・文字種・点/寸法/ブロック・基準点・実寸と図寸)",
+    "topics": ["jwcad", "layer-group", "layer", "line-color", "line-type", "text-type", "dimension", "block", "zukei", "base-point", "scale", "print-line-width"],
+    "appliesTo": ["edit", "review", "layer-check", "drawing-reading"],
+    "sources": [
+      {"title": "DARE ブログ Jw_cad で使える線種と変更方法", "url": "https://blog.caddare.com/jwcad/line/type", "checked": "2026-10-01"},
+      {"title": "DARE ブログ Jw_cad のレイヤグループ基本知識", "url": "https://blog.caddare.com/jwcad/layer/group", "checked": "2026-10-01"},
+      {"title": "persc Jw_cad レイヤ・線種・線色の使い方完全解説", "url": "https://journal.persc.jp/jwcad-jw-cad-layer/", "checked": "2026-10-01"},
+      {"title": "persc マニュアル 線種の使い分け", "url": "https://manual.persc.jp/jwcad/standards/line-type-usage", "checked": "2026-10-01"},
+      {"title": "persc Jw_cad 縮尺・用紙設定完全ガイド", "url": "https://journal.persc.jp/jwcad-jw-cad-scale/", "checked": "2026-10-01"},
+      {"title": "プラスバイプラス JWCADの線色や線種の基本", "url": "https://www.pluscad.jp/howto/1114/", "checked": "2026-10-01"},
+      {"title": "Jw_win 環境設定ファイル資料", "url": "https://www.tmk-s.com/jww/jwf.html", "checked": "2026-10-01"},
+      {"title": "Jw_cad 超初心者道場 文字の種類を変更する", "url": "https://www.jwdojo.com/drawing/0402.html", "checked": "2026-10-01"},
+      {"title": "CAD研究所 Jw_cad 建築", "url": "https://cad-kenkyujo.com/jwcad-kenchiku/", "checked": "2026-10-01"}
+    ]
+  },
+  {
+    "id": "layer-conventions",
+    "file": "ja/layer-conventions.md",
+    "title": "レイヤ運用の典型パターンとばらつき(Jw_cad・日本の建築実務)",
+    "topics": ["layer", "layer-group", "layer-assignment", "office-standard", "line-style-by-element", "drawing-set-prefix"],
+    "appliesTo": ["layer-check", "edit", "review", "drawing-reading"],
+    "sources": [
+      {"title": "persc Jw_cad レイヤ・線種・線色の使い方完全解説", "url": "https://journal.persc.jp/jwcad-jw-cad-layer/", "checked": "2026-10-01"},
+      {"title": "persc Jw_cad で電気図面・設備図面を描くコツ", "url": "https://persc.jp/blog/jwcad-jw-cad-drawing/", "checked": "2026-10-01"},
+      {"title": "persc Jw_cad 縮尺・用紙設定完全ガイド", "url": "https://journal.persc.jp/jwcad-jw-cad-scale/", "checked": "2026-10-01"},
+      {"title": "おとちゃんぶろぐ jw-cad レイヤの分け方", "url": "https://totsu-blog.com/reiya/", "checked": "2026-10-01"},
+      {"title": "DARE ブログ Jw_cad のレイヤグループ基本知識", "url": "https://blog.caddare.com/jwcad/layer/group", "checked": "2026-10-01"},
+      {"title": "CAD研究所 Jw_cad 建築", "url": "https://cad-kenkyujo.com/jwcad-kenchiku/", "checked": "2026-10-01"},
+      {"title": "堺市 設計図書の作成基準", "url": "https://www.city.sakai.lg.jp/kurashi/jutaku/kenchiku/anshin/itakugyomushorui.files/4-5.pdf", "checked": "2026-10-01"}
+    ]
+  },
+  {
+    "id": "drafting-symbols",
+    "file": "ja/drafting-symbols.md",
+    "title": "日本の建築製図の慣行(JIS 製図・JIS A 0150 平面表示記号・建具記号・図面種類・室名表記)",
+    "topics": ["jis", "line-type-meaning", "line-width", "text-height", "scale", "drawing-types", "dimensioning", "north", "fittings-symbols", "plan-symbols", "room-labels"],
+    "appliesTo": ["drawing-reading", "review", "edit", "layer-check"],
+    "sources": [
+      {"title": "平面表示記号 ja.wikid", "url": "https://ja.wikid.org/%E5%B9%B3%E9%9D%A2%E8%A1%A8%E7%A4%BA%E8%A8%98%E5%8F%B7", "checked": "2026-10-01"},
+      {"title": "堺市 設計図書の作成基準", "url": "https://www.city.sakai.lg.jp/kurashi/jutaku/kenchiku/anshin/itakugyomushorui.files/4-5.pdf", "checked": "2026-10-01"},
+      {"title": "CAD研究所 Jw_cad 建築", "url": "https://cad-kenkyujo.com/jwcad-kenchiku/", "checked": "2026-10-01"},
+      {"title": "JSA Webdesk JIS Z 8317 プレビュー", "url": "https://webdesk.jsa.or.jp/preview/pre_jis_z_08317_001_000_2008_j_ed10_ch.pdf", "checked": "2026-10-01"},
+      {"title": "いえエージェント 間取り図の略語・意味", "url": "https://ieagent.jp/blog/chie/madori-imi-143900", "checked": "2026-10-01"},
+      {"title": "persc マニュアル 線種の使い分け", "url": "https://manual.persc.jp/jwcad/standards/line-type-usage", "checked": "2026-10-01"}
+    ]
+  },
+  {
+    "id": "modules-dimensions",
+    "file": "ja/modules-dimensions.md",
+    "title": "モジュールと寸法(910/455/1000・畳と帖・壁厚・建具・サッシ呼称・階段)",
+    "topics": ["module-910", "module-455", "meter-module", "tatami", "jou-sqm", "wall-thickness", "door-width", "window-size", "sash-naming", "stair", "ceiling-height", "corridor"],
+    "appliesTo": ["edit", "review", "drawing-reading"],
+    "sources": [
+      {"title": "国土交通省 階段基準の合理化", "url": "https://www.mlit.go.jp/common/001225722.pdf", "checked": "2026-10-01"},
+      {"title": "畳1枚の広さの表示基準 用語解説", "url": "https://smtrc.jp/useful/glossary/detail/n/3751", "checked": "2026-10-01"},
+      {"title": "畳のサイズ 京間・中京間・江戸間・団地間", "url": "https://www.chintai.net/news/107424/", "checked": "2026-10-01"},
+      {"title": "REHOUSE 畳の種類と大きさ", "url": "https://www.rehouse.co.jp/relifemode/column/life-column/mr-0574", "checked": "2026-10-01"},
+      {"title": "サッシ寸法早見表(呼称の読み方)", "url": "https://hayamihyou.net/window/", "checked": "2026-10-01"},
+      {"title": "サッシ呼称から取付開口寸法を出す方法", "url": "https://bulbul.tokyo/sash-size/", "checked": "2026-10-01"},
+      {"title": "サッシ寸法 規格表の読み方", "url": "https://kamiya-glass.com/sash-dimension-table/", "checked": "2026-10-01"},
+      {"title": "日本サッシ協会 標準規格寸法 (PDF本文は未取得)", "url": "https://www.jsma.or.jp/Portals/0/images/useful/houreikijun/kikakusunpo(20210426).pdf", "checked": "2026-10-01"}
+    ]
+  },
+  {
+    "id": "building-standards-law",
+    "file": "ja/building-standards-law.md",
+    "title": "建築基準法の要点(採光・換気・天井高・階段・廊下・防火避難・建ぺい率容積率・斜線・接道・天空率)",
+    "topics": ["building-standards-act", "daylight-28", "ventilation", "sick-house", "ceiling-height-21", "stair-23", "corridor-119", "fire-evacuation", "bcr-far", "slant-restriction", "road-contact", "sky-factor", "zoning", "no-final-legal-judgement"],
+    "appliesTo": ["review", "edit"],
+    "sources": [
+      {"title": "e-Gov法令検索 建築基準法", "url": "https://laws.e-gov.go.jp/law/325AC0000000201", "checked": "2026-10-01"},
+      {"title": "e-Gov法令検索 建築基準法施行令", "url": "https://laws.e-gov.go.jp/law/325CO0000000338", "checked": "2026-10-01"},
+      {"title": "国土交通省 階段基準の合理化", "url": "https://www.mlit.go.jp/common/001225722.pdf", "checked": "2026-10-01"},
+      {"title": "国土交通省 シックハウス対策について知っておこう", "url": "https://www.mlit.go.jp/jutakukentiku/build/sickhouse.files/sickhouse_1.pdf", "checked": "2026-10-01"},
+      {"title": "国土交通省告示303号 採光に有効な部分の面積の算定方法", "url": "https://www.mlit.go.jp/notice/noticedata/pdf/201703/00006534.pdf", "checked": "2026-10-01"},
+      {"title": "国土交通省 近畿地方整備局 用途地域", "url": "https://www.kkr.mlit.go.jp/kensei/town/tosi/03yototiiki.html", "checked": "2026-10-01"},
+      {"title": "国土交通省 接道規制のあり方について", "url": "https://www.mlit.go.jp/jutakukentiku/house/content/001894185.pdf", "checked": "2026-10-01"},
+      {"title": "大田区 廊下の幅員 令119条", "url": "https://www.city.ota.tokyo.jp/seikatsu/sumaimachinami/kenchiku/toriatukai.files/01-01-06rouka.pdf", "checked": "2026-10-01"},
+      {"title": "川崎市 用途地域による主な制限", "url": "https://www.city.kawasaki.jp/templates/faq/cmsfiles/contents/0000118/118345/youtochiikiniyoruomonaseigen.pdf", "checked": "2026-10-01"}
+    ]
+  },
+  {
+    "id": "rooms-planning",
+    "file": "ja/rooms-planning.md",
+    "title": "室タイプ別の標準的な広さと配置関係(戸建・小規模住宅)・用途地域の概要",
+    "topics": ["room-types", "genkan", "ldk", "washitsu", "yoshitsu", "wet-areas", "storage", "adjacency", "edit-relationship-check", "zoning-overview"],
+    "appliesTo": ["edit", "review", "drawing-reading"],
+    "sources": [
+      {"title": "いえエージェント 間取り図の略語・意味", "url": "https://ieagent.jp/blog/chie/madori-imi-143900", "checked": "2026-10-01"},
+      {"title": "Realestate Tokyo Guide to Japanese apartment layout terms", "url": "https://www.realestate-tokyo.com/news/rentals/guide-to-japanese-apartment-layout-terms", "checked": "2026-10-01"},
+      {"title": "国土交通省 近畿地方整備局 用途地域", "url": "https://www.kkr.mlit.go.jp/kensei/town/tosi/03yototiiki.html", "checked": "2026-10-01"}
+    ]
+  },
+  {
+    "id": "glossary-ja-ko",
+    "file": "ja/glossary-ja-ko.md",
+    "title": "日韓 建築・製図用語対訳(室・部位・建具・図面・Jw_cad・法規・編集動詞)",
+    "topics": ["glossary", "korean", "japanese", "term-mapping", "edit-verbs", "false-friends"],
+    "appliesTo": ["edit", "review", "layer-check", "drawing-reading"],
+    "sources": [
+      {"title": "いえエージェント 間取り図の略語・意味", "url": "https://ieagent.jp/blog/chie/madori-imi-143900", "checked": "2026-10-01"}
+    ]
+  },
+  {
+    "id": "drafting-rules",
+    "file": "drafting-rules.json",
+    "title": "機械可読ルール集(モジュール・壁厚・建具・サッシ・階段・天井高・廊下・文字高さ・縮尺・線種・レイヤ・法令数値)",
+    "topics": ["rules", "machine-readable", "grid", "wall", "opening", "window", "stair", "corridor", "ceiling", "text", "scale", "linestyle", "layer", "law", "room"],
+    "appliesTo": ["edit", "review", "layer-check", "drawing-reading"],
+    "sources": [
+      {"title": "drafting-rules.json 内の sourceRegistry を参照 (各ルールの sources は registry キー)", "url": "https://laws.e-gov.go.jp/", "checked": "2026-10-01"}
+    ]
+  }
+]

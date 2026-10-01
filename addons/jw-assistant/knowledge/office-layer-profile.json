@@ -1,0 +1,4786 @@
+{
+  "schemaVersion": 1,
+  "kind": "jw-office-layer-profile",
+  "params": {
+    "minSupport": 2,
+    "effectiveMinSupport": 2,
+    "minShare": 0.03,
+    "minEvidence": 10
+  },
+  "drawingCount": 21,
+  "sourceDrawings": [
+    {
+      "name": "APW430_1.jww",
+      "sha256": "81eda2ee6efa6c797211f58d32400d5d47aa9b1beb21a80c49a4c785908f74e8"
+    },
+    {
+      "name": "Test1.jww",
+      "sha256": "de0ecf5991bbf7b66388a3837af2a2318e56eac175592c3e48e608c85d2c16b2"
+    },
+    {
+      "name": "Test2.jww",
+      "sha256": "1318ad46b9a3a5b604f285e95464d97e5dca9452445736dfeaa92a4f97f2ec22"
+    },
+    {
+      "name": "Test3.jww",
+      "sha256": "d35b5d4af27b693168e4df116efcfe85945254204fd34509ef73a56d09e10a05"
+    },
+    {
+      "name": "Test4.jww",
+      "sha256": "c69b814182dc708a4a2332b2076f1216105dbe602b2e52b0da58b385dc330555"
+    },
+    {
+      "name": "Test5.jww",
+      "sha256": "efda4e49944cdd8d44ae2f7f51eeaadf2473844eaee96f4369e78e778ff694f0"
+    },
+    {
+      "name": "Test6.jww",
+      "sha256": "654cad33e7cc37d6cb578ea2751ef3cd35fc8fe5c5d953ef9497a2a78e25671f"
+    },
+    {
+      "name": "Test7.jww",
+      "sha256": "bad4985c88bc5a775751605573ecbb46dbbacb7991204e65734a28c47a3ece36"
+    },
+    {
+      "name": "kadai/RC集合住宅.jww",
+      "sha256": "f220b7c4db209814a8db731372f5014f6550990dda9cbed405bbccce8ad51e07"
+    },
+    {
+      "name": "kadai/muzai1.jww",
+      "sha256": "37ae228385fe3c5fe4cd29a08c3b06d57c8dfeb1355358a2068211885e642eac"
+    },
+    {
+      "name": "kadai/研修.jww",
+      "sha256": "ee1231041c84ca2b5c55f1f9aa5052786a4153e7012564ab4b0b1c158d16933f"
+    },
+    {
+      "name": "kadai/腹部研修.JWW",
+      "sha256": "bc7d19077ba9ac523a18eebbf30334d2b7030ea2b159134be436f96353754407"
+    },
+    {
+      "name": "サンプル.jww",
+      "sha256": "e684df6df8b1efc4d298c320991eafe6fbc2df7b21f047f9754db85683a4e55e"
+    },
+    {
+      "name": "天空率表.jww",
+      "sha256": "8c7239d62504d36a9365047d01ea8f1967243af1c088935b1bb813f9520330d8"
+    },
+    {
+      "name": "敷地図.jww",
+      "sha256": "ae0af586aec5e127eebf1ce394c39c69d111c1bf6abcd748e5ee13b093e808a1"
+    },
+    {
+      "name": "日影図.jww",
+      "sha256": "a574ab02d25d5dcefb4ed4e0d18b192c45c6fa264f58769dedcd7a904d7afb8b"
+    },
+    {
+      "name": "木造平面例.jww",
+      "sha256": "58afae3a813453f50e50560b20832d4b7b5c5d0ba3ec5802dd7d90228e207479"
+    },
+    {
+      "name": "無題.JWW",
+      "sha256": "ccc1b2b9b5d33de490633a52b7e8c6dab74d886a42234783234be37bd07977e1"
+    },
+    {
+      "name": "Ａマンション25d.jww",
+      "sha256": "fa1aac530d78c25f3488b476488ef46d5858d89c173ecfb8a041bee5dae66c1a"
+    },
+    {
+      "name": "Ａマンション平面例.jww",
+      "sha256": "af61b88ff342bd40af834caba10f2dd5c36bb3a3d5be0a2d74648318a47a4113"
+    },
+    {
+      "name": "Ａマンション立面例.jww",
+      "sha256": "b794160ef351a8d6f0779aa8526ed78998b6295b39ffc658e9d71a099b2a8822"
+    }
+  ],
+  "drawingTypes": {
+    "plan": 5,
+    "shadow": 5,
+    "elevation": 3,
+    "unknown": 3,
+    "section": 2,
+    "mep": 1,
+    "site": 1,
+    "sky": 1
+  },
+  "roles": {
+    "grid": {
+      "ja": "通り芯",
+      "ko": "통심(通り芯)",
+      "support": 6,
+      "confidence": 0.84,
+      "layers": [
+        {
+          "layerId": "1:0",
+          "support": 2,
+          "confidence": 0.8,
+          "entityCount": 1806,
+          "names": [
+            {
+              "name": "芯",
+              "count": 2
+            }
+          ],
+          "primary": true,
+          "lowSupport": false
+        },
+        {
+          "layerId": "0:0",
+          "support": 3,
+          "confidence": 0.86,
+          "entityCount": 155,
+          "names": [
+            {
+              "name": "芯",
+              "count": 2
+            },
+            {
+              "name": "Grid",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": false
+        },
+        {
+          "layerId": "0:1",
+          "support": 1,
+          "confidence": 0.87,
+          "entityCount": 10,
+          "names": [
+            {
+              "name": "芯・ＦＬ",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        }
+      ],
+      "names": [
+        {
+          "name": "芯",
+          "count": 4
+        },
+        {
+          "name": "Grid",
+          "count": 1
+        },
+        {
+          "name": "芯・ＦＬ",
+          "count": 1
+        }
+      ],
+      "primaryKinds": [
+        "line",
+        "arc",
+        "text",
+        "point"
+      ],
+      "forbiddenKinds": [
+        "dim",
+        "solid",
+        "block"
+      ],
+      "count": 1971,
+      "kinds": {
+        "line": 1638,
+        "arc": 293,
+        "text": 39,
+        "solid": 1
+      },
+      "hist": {
+        "colors": {
+          "1": 723,
+          "2": 1222,
+          "5": 12,
+          "9": 13,
+          "10": 1
+        },
+        "styles": {
+          "1": 1512,
+          "2": 101,
+          "3": 8,
+          "5": 279,
+          "6": 16,
+          "8": 1,
+          "9": 14
+        },
+        "widths": {
+          "0": 1872,
+          "1": 59
+        },
+        "textHeights": {
+          "3": 33,
+          "2.5": 3,
+          "2.7": 3
+        },
+        "mojiShu": {
+          "0": 24,
+          "1": 12,
+          "2": 3
+        }
+      },
+      "allowed": {
+        "colors": [
+          1,
+          2
+        ],
+        "styles": [
+          1,
+          2,
+          5
+        ],
+        "widths": [
+          0,
+          1
+        ],
+        "textHeights": [
+          2.5,
+          2.7,
+          3
+        ]
+      },
+      "gridStyles": [
+        1,
+        2,
+        5
+      ]
+    },
+    "wall": {
+      "ja": "壁",
+      "ko": "벽",
+      "support": 6,
+      "confidence": 0.84,
+      "layers": [
+        {
+          "layerId": "0:1",
+          "support": 2,
+          "confidence": 0.9,
+          "entityCount": 336,
+          "names": [
+            {
+              "name": "躯体",
+              "count": 2
+            }
+          ],
+          "primary": true,
+          "lowSupport": false
+        },
+        {
+          "layerId": "0:2",
+          "support": 2,
+          "confidence": 0.85,
+          "entityCount": 221,
+          "names": [
+            {
+              "name": "インドア壁",
+              "count": 1
+            },
+            {
+              "name": "間仕切り",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": false
+        },
+        {
+          "layerId": "1:1",
+          "support": 1,
+          "confidence": 0.9,
+          "entityCount": 288,
+          "names": [
+            {
+              "name": "躯体",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "1:2",
+          "support": 1,
+          "confidence": 0.9,
+          "entityCount": 6,
+          "names": [
+            {
+              "name": "間仕切り",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "0:D",
+          "support": 1,
+          "confidence": 0.8,
+          "entityCount": 498,
+          "names": [
+            {
+              "name": "南壁等時",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "0:E",
+          "support": 1,
+          "confidence": 0.8,
+          "entityCount": 335,
+          "names": [
+            {
+              "name": "東壁等時",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "0:6",
+          "support": 1,
+          "confidence": 0.8,
+          "entityCount": 87,
+          "names": [
+            {
+              "name": "南壁面",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "0:7",
+          "support": 1,
+          "confidence": 0.8,
+          "entityCount": 31,
+          "names": [
+            {
+              "name": "東壁面",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "0:9",
+          "support": 1,
+          "confidence": 0.8,
+          "entityCount": 24,
+          "names": [
+            {
+              "name": "南壁日影",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "0:0",
+          "support": 1,
+          "confidence": 0.8,
+          "entityCount": 5,
+          "names": [
+            {
+              "name": "外壁位置",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "0:A",
+          "support": 1,
+          "confidence": 0.8,
+          "entityCount": 5,
+          "names": [
+            {
+              "name": "東壁日影",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "0:B",
+          "support": 1,
+          "confidence": 0.8,
+          "entityCount": 5,
+          "names": [
+            {
+              "name": "西壁日影",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        }
+      ],
+      "names": [
+        {
+          "name": "躯体",
+          "count": 3
+        },
+        {
+          "name": "間仕切り",
+          "count": 2
+        },
+        {
+          "name": "インドア壁",
+          "count": 1
+        },
+        {
+          "name": "南壁日影",
+          "count": 1
+        },
+        {
+          "name": "南壁等時",
+          "count": 1
+        },
+        {
+          "name": "南壁面",
+          "count": 1
+        },
+        {
+          "name": "外壁位置",
+          "count": 1
+        },
+        {
+          "name": "東壁日影",
+          "count": 1
+        }
+      ],
+      "primaryKinds": [
+        "line",
+        "arc",
+        "solid",
+        "block",
+        "point"
+      ],
+      "forbiddenKinds": [
+        "text",
+        "dim"
+      ],
+      "count": 1841,
+      "kinds": {
+        "line": 1680,
+        "solid": 79,
+        "text": 49,
+        "point": 26,
+        "arc": 7
+      },
+      "hist": {
+        "colors": {
+          "1": 74,
+          "2": 832,
+          "4": 24,
+          "5": 832,
+          "10": 79
+        },
+        "styles": {
+          "1": 1659,
+          "5": 21,
+          "9": 7
+        },
+        "widths": {
+          "0": 1687
+        },
+        "textHeights": {
+          "2": 7,
+          "3": 27,
+          "2.5": 15
+        },
+        "mojiShu": {
+          "0": 7,
+          "2": 15,
+          "3": 27
+        }
+      },
+      "allowed": {
+        "colors": [
+          1,
+          2,
+          5,
+          10
+        ],
+        "styles": [
+          1
+        ],
+        "widths": [
+          0
+        ],
+        "textHeights": [
+          2,
+          2.5,
+          3
+        ]
+      }
+    },
+    "structure": {
+      "ja": "柱・梁・基礎",
+      "ko": "구조(기둥·보·기초)",
+      "support": 2,
+      "confidence": 0.68,
+      "layers": [
+        {
+          "layerId": "0:8",
+          "support": 1,
+          "confidence": 0.8,
+          "entityCount": 29,
+          "names": [
+            {
+              "name": "門型柱部",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "0:3",
+          "support": 1,
+          "confidence": 0.55,
+          "entityCount": 5,
+          "names": [
+            {
+              "name": "玄関柱",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        }
+      ],
+      "names": [
+        {
+          "name": "玄関柱",
+          "count": 1
+        },
+        {
+          "name": "門型柱部",
+          "count": 1
+        }
+      ],
+      "primaryKinds": [
+        "line",
+        "arc",
+        "solid",
+        "block",
+        "point"
+      ],
+      "forbiddenKinds": [
+        "text",
+        "dim"
+      ],
+      "count": 34,
+      "kinds": {
+        "text": 18,
+        "line": 14,
+        "arc": 2
+      },
+      "hist": {
+        "colors": {
+          "1": 6,
+          "2": 16,
+          "4": 12
+        },
+        "styles": {
+          "1": 16
+        },
+        "widths": {
+          "0": 16
+        },
+        "textHeights": {
+          "20": 3,
+          "2.5": 12,
+          "0.5": 3
+        },
+        "mojiShu": {
+          "0": 15,
+          "1": 3
+        }
+      },
+      "allowed": {
+        "colors": [
+          1,
+          2,
+          4
+        ],
+        "styles": [
+          1
+        ],
+        "widths": [
+          0
+        ],
+        "textHeights": [
+          0.5,
+          2.5,
+          20
+        ]
+      }
+    },
+    "opening": {
+      "ja": "建具",
+      "ko": "창호",
+      "support": 5,
+      "confidence": 0.89,
+      "layers": [
+        {
+          "layerId": "0:3",
+          "support": 2,
+          "confidence": 0.9,
+          "entityCount": 836,
+          "names": [
+            {
+              "name": "建具",
+              "count": 2
+            }
+          ],
+          "primary": true,
+          "lowSupport": false
+        },
+        {
+          "layerId": "0:4",
+          "support": 1,
+          "confidence": 0.9,
+          "entityCount": 16275,
+          "names": [
+            {
+              "name": "建具",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "1:9",
+          "support": 1,
+          "confidence": 0.9,
+          "entityCount": 783,
+          "names": [
+            {
+              "name": "南サッシ",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "1:3",
+          "support": 1,
+          "confidence": 0.9,
+          "entityCount": 408,
+          "names": [
+            {
+              "name": "建具",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "1:8",
+          "support": 1,
+          "confidence": 0.9,
+          "entityCount": 298,
+          "names": [
+            {
+              "name": "西サッシ",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "1:4",
+          "support": 1,
+          "confidence": 0.9,
+          "entityCount": 8,
+          "names": [
+            {
+              "name": "搭屋建具",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "0:5",
+          "support": 1,
+          "confidence": 0.8,
+          "entityCount": 418,
+          "names": [
+            {
+              "name": "窓",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        }
+      ],
+      "names": [
+        {
+          "name": "建具",
+          "count": 4
+        },
+        {
+          "name": "南サッシ",
+          "count": 1
+        },
+        {
+          "name": "搭屋建具",
+          "count": 1
+        },
+        {
+          "name": "窓",
+          "count": 1
+        },
+        {
+          "name": "西サッシ",
+          "count": 1
+        }
+      ],
+      "primaryKinds": [
+        "line",
+        "arc",
+        "block",
+        "solid",
+        "point"
+      ],
+      "forbiddenKinds": [
+        "text",
+        "dim"
+      ],
+      "count": 19026,
+      "kinds": {
+        "line": 18054,
+        "arc": 906,
+        "text": 56,
+        "block": 5,
+        "point": 5
+      },
+      "hist": {
+        "colors": {
+          "1": 1713,
+          "2": 1060,
+          "3": 543,
+          "4": 9747,
+          "5": 52,
+          "6": 7,
+          "7": 5409,
+          "8": 303,
+          "9": 187
+        },
+        "styles": {
+          "1": 8794,
+          "2": 10014,
+          "3": 10,
+          "4": 23,
+          "5": 24,
+          "7": 35,
+          "9": 60
+        },
+        "widths": {
+          "0": 16041,
+          "6": 2913,
+          "7": 5,
+          "10": 1
+        },
+        "textHeights": {
+          "0.5": 56
+        },
+        "mojiShu": {
+          "1": 56
+        }
+      },
+      "allowed": {
+        "colors": [
+          1,
+          2,
+          4,
+          7
+        ],
+        "styles": [
+          1,
+          2
+        ],
+        "widths": [
+          0,
+          6
+        ],
+        "textHeights": [
+          0.5
+        ]
+      }
+    },
+    "finish": {
+      "ja": "仕上",
+      "ko": "마감",
+      "support": 4,
+      "confidence": 0.9,
+      "layers": [
+        {
+          "layerId": "1:5",
+          "support": 2,
+          "confidence": 0.9,
+          "entityCount": 239,
+          "names": [
+            {
+              "name": "仕上",
+              "count": 2
+            }
+          ],
+          "primary": true,
+          "lowSupport": false
+        },
+        {
+          "layerId": "0:5",
+          "support": 1,
+          "confidence": 0.9,
+          "entityCount": 140,
+          "names": [
+            {
+              "name": "仕上",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "0:2",
+          "support": 1,
+          "confidence": 0.9,
+          "entityCount": 20,
+          "names": [
+            {
+              "name": "仕上",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        }
+      ],
+      "names": [
+        {
+          "name": "仕上",
+          "count": 4
+        }
+      ],
+      "primaryKinds": [
+        "line",
+        "arc",
+        "solid",
+        "block",
+        "point"
+      ],
+      "forbiddenKinds": [
+        "dim"
+      ],
+      "count": 399,
+      "kinds": {
+        "line": 399
+      },
+      "hist": {
+        "colors": {
+          "1": 191,
+          "2": 208
+        },
+        "styles": {
+          "1": 317,
+          "2": 63,
+          "5": 19
+        },
+        "widths": {
+          "0": 399
+        },
+        "textHeights": {},
+        "mojiShu": {}
+      },
+      "allowed": {
+        "colors": [
+          1,
+          2
+        ],
+        "styles": [
+          1,
+          2,
+          5
+        ],
+        "widths": [
+          0
+        ],
+        "textHeights": null
+      }
+    },
+    "stair": {
+      "ja": "階段",
+      "ko": "계단",
+      "support": 2,
+      "confidence": 0.9,
+      "layers": [
+        {
+          "layerId": "0:5",
+          "support": 1,
+          "confidence": 0.9,
+          "entityCount": 75,
+          "names": [
+            {
+              "name": "階段右面",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "0:6",
+          "support": 1,
+          "confidence": 0.9,
+          "entityCount": 7,
+          "names": [
+            {
+              "name": "階段正面",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "2:0",
+          "support": 1,
+          "confidence": 0.9,
+          "entityCount": 2,
+          "names": [
+            {
+              "name": "階段外面",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "2:1",
+          "support": 1,
+          "confidence": 0.9,
+          "entityCount": 2,
+          "names": [
+            {
+              "name": "階段柱",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        }
+      ],
+      "names": [
+        {
+          "name": "階段右面",
+          "count": 1
+        },
+        {
+          "name": "階段外面",
+          "count": 1
+        },
+        {
+          "name": "階段柱",
+          "count": 1
+        },
+        {
+          "name": "階段正面",
+          "count": 1
+        }
+      ],
+      "primaryKinds": [
+        "line",
+        "arc",
+        "solid",
+        "block",
+        "point"
+      ],
+      "forbiddenKinds": [
+        "dim"
+      ],
+      "count": 86,
+      "kinds": {
+        "line": 78,
+        "point": 4,
+        "arc": 2,
+        "text": 2
+      },
+      "hist": {
+        "colors": {
+          "1": 2,
+          "2": 78,
+          "5": 4,
+          "6": 2
+        },
+        "styles": {
+          "1": 78,
+          "9": 2
+        },
+        "widths": {
+          "0": 80
+        },
+        "textHeights": {
+          "0.5": 2
+        },
+        "mojiShu": {
+          "1": 2
+        }
+      },
+      "allowed": {
+        "colors": [
+          2,
+          5
+        ],
+        "styles": [
+          1
+        ],
+        "widths": [
+          0
+        ],
+        "textHeights": null
+      }
+    },
+    "roof": {
+      "ja": "屋根・庇",
+      "ko": "지붕·처마",
+      "support": 4,
+      "confidence": 0.85,
+      "layers": [
+        {
+          "layerId": "0:5",
+          "support": 1,
+          "confidence": 0.9,
+          "entityCount": 31,
+          "names": [
+            {
+              "name": "切妻屋根",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "0:1",
+          "support": 1,
+          "confidence": 0.9,
+          "entityCount": 15,
+          "names": [
+            {
+              "name": "屋根",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "0:4",
+          "support": 1,
+          "confidence": 0.9,
+          "entityCount": 15,
+          "names": [
+            {
+              "name": "屋　根",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "0:D",
+          "support": 1,
+          "confidence": 0.8,
+          "entityCount": 10,
+          "names": [
+            {
+              "name": "玄関庇南",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "0:C",
+          "support": 1,
+          "confidence": 0.8,
+          "entityCount": 8,
+          "names": [
+            {
+              "name": "玄関庇西",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "0:E",
+          "support": 1,
+          "confidence": 0.8,
+          "entityCount": 7,
+          "names": [
+            {
+              "name": "玄関庇東",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        }
+      ],
+      "names": [
+        {
+          "name": "切妻屋根",
+          "count": 1
+        },
+        {
+          "name": "屋　根",
+          "count": 1
+        },
+        {
+          "name": "屋根",
+          "count": 1
+        },
+        {
+          "name": "玄関庇南",
+          "count": 1
+        },
+        {
+          "name": "玄関庇東",
+          "count": 1
+        },
+        {
+          "name": "玄関庇西",
+          "count": 1
+        }
+      ],
+      "primaryKinds": [
+        "line",
+        "arc",
+        "solid",
+        "block",
+        "point"
+      ],
+      "forbiddenKinds": [
+        "dim"
+      ],
+      "count": 86,
+      "kinds": {
+        "line": 56,
+        "text": 22,
+        "point": 8
+      },
+      "hist": {
+        "colors": {
+          "1": 24,
+          "2": 47,
+          "3": 2,
+          "5": 10,
+          "6": 3
+        },
+        "styles": {
+          "1": 53,
+          "9": 3
+        },
+        "widths": {
+          "0": 56
+        },
+        "textHeights": {
+          "9": 1,
+          "15": 1,
+          "2.5": 20
+        },
+        "mojiShu": {
+          "0": 6,
+          "2": 14,
+          "9": 1,
+          "10": 1
+        }
+      },
+      "allowed": {
+        "colors": [
+          1,
+          2,
+          5,
+          6
+        ],
+        "styles": [
+          1,
+          9
+        ],
+        "widths": [
+          0
+        ],
+        "textHeights": [
+          2.5,
+          9,
+          15
+        ]
+      }
+    },
+    "dimension": {
+      "ja": "寸法",
+      "ko": "치수",
+      "support": 2,
+      "confidence": 0.9,
+      "layers": [
+        {
+          "layerId": "0:5",
+          "support": 1,
+          "confidence": 0.9,
+          "entityCount": 62,
+          "names": [
+            {
+              "name": "寸法",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "0:7",
+          "support": 1,
+          "confidence": 0.9,
+          "entityCount": 36,
+          "names": [
+            {
+              "name": "寸法",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        }
+      ],
+      "names": [
+        {
+          "name": "寸法",
+          "count": 2
+        }
+      ],
+      "primaryKinds": [
+        "dim",
+        "line",
+        "text",
+        "point",
+        "arc"
+      ],
+      "forbiddenKinds": [
+        "block",
+        "solid"
+      ],
+      "count": 98,
+      "kinds": {
+        "line": 49,
+        "point": 29,
+        "text": 20
+      },
+      "hist": {
+        "colors": {
+          "1": 98
+        },
+        "styles": {
+          "1": 49
+        },
+        "widths": {
+          "0": 49
+        },
+        "textHeights": {
+          "2.5": 20
+        },
+        "mojiShu": {
+          "2": 20
+        }
+      },
+      "allowed": {
+        "colors": [
+          1
+        ],
+        "styles": [
+          1
+        ],
+        "widths": [
+          0
+        ],
+        "textHeights": [
+          2.5
+        ]
+      }
+    },
+    "text": {
+      "ja": "文字・室名",
+      "ko": "문자·실명",
+      "support": 9,
+      "confidence": 0.72,
+      "layers": [
+        {
+          "layerId": "1:6",
+          "support": 2,
+          "confidence": 0.97,
+          "entityCount": 60,
+          "names": [
+            {
+              "name": "室名",
+              "count": 1
+            },
+            {
+              "name": "文字",
+              "count": 1
+            }
+          ],
+          "primary": true,
+          "lowSupport": false
+        },
+        {
+          "layerId": "0:6",
+          "support": 2,
+          "confidence": 0.78,
+          "entityCount": 182,
+          "names": [
+            {
+              "name": "室名",
+              "count": 1
+            },
+            {
+              "name": "影倍率表",
+              "count": 1
+            }
+          ],
+          "primary": true,
+          "lowSupport": false
+        },
+        {
+          "layerId": "0:4",
+          "support": 2,
+          "confidence": 0.78,
+          "entityCount": 28,
+          "names": [
+            {
+              "name": "室名",
+              "count": 1
+            },
+            {
+              "name": "説明",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": false
+        },
+        {
+          "layerId": "0:0",
+          "support": 1,
+          "confidence": 0.6,
+          "entityCount": 145,
+          "names": [
+            {
+              "name": "0",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "0:7",
+          "support": 1,
+          "confidence": 0.6,
+          "entityCount": 80,
+          "names": [
+            {
+              "name": "日影長さ表",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "D:0",
+          "support": 1,
+          "confidence": 0.6,
+          "entityCount": 49,
+          "names": [],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "D:F",
+          "support": 1,
+          "confidence": 0.6,
+          "entityCount": 20,
+          "names": [],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "0:5",
+          "support": 1,
+          "confidence": 0.6,
+          "entityCount": 11,
+          "names": [
+            {
+              "name": "説明文",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "E:A",
+          "support": 1,
+          "confidence": 0.6,
+          "entityCount": 5,
+          "names": [],
+          "primary": false,
+          "lowSupport": true
+        }
+      ],
+      "names": [
+        {
+          "name": "室名",
+          "count": 3
+        },
+        {
+          "name": "0",
+          "count": 1
+        },
+        {
+          "name": "影倍率表",
+          "count": 1
+        },
+        {
+          "name": "文字",
+          "count": 1
+        },
+        {
+          "name": "日影長さ表",
+          "count": 1
+        },
+        {
+          "name": "説明",
+          "count": 1
+        },
+        {
+          "name": "説明文",
+          "count": 1
+        }
+      ],
+      "primaryKinds": [
+        "text"
+      ],
+      "forbiddenKinds": [
+        "dim",
+        "block"
+      ],
+      "count": 580,
+      "kinds": {
+        "text": 506,
+        "line": 74
+      },
+      "hist": {
+        "colors": {
+          "1": 62,
+          "2": 397,
+          "3": 9,
+          "4": 2,
+          "5": 69,
+          "103": 40,
+          "106": 1
+        },
+        "styles": {
+          "1": 74
+        },
+        "widths": {
+          "0": 74
+        },
+        "textHeights": {
+          "2": 6,
+          "3": 102,
+          "4": 9,
+          "5": 1,
+          "6": 9,
+          "8": 2,
+          "10": 37,
+          "2.5": 207,
+          "1.5": 78,
+          "1.2": 19,
+          "3.5": 13,
+          "3.4": 7,
+          "3.2": 6,
+          "2.2": 4,
+          "1.4": 2,
+          "2.4": 2,
+          "2.6": 2
+        },
+        "mojiShu": {
+          "0": 352,
+          "1": 10,
+          "2": 9,
+          "3": 79,
+          "4": 8,
+          "6": 9,
+          "8": 2,
+          "10": 37
+        }
+      },
+      "allowed": {
+        "colors": [
+          1,
+          2,
+          5,
+          103
+        ],
+        "styles": [
+          1
+        ],
+        "widths": [
+          0
+        ],
+        "textHeights": [
+          1.2,
+          1.5,
+          2.5,
+          3,
+          10
+        ]
+      }
+    },
+    "equipment": {
+      "ja": "設備",
+      "ko": "설비",
+      "support": 3,
+      "confidence": 0.9,
+      "layers": [
+        {
+          "layerId": "0:8",
+          "support": 2,
+          "confidence": 0.9,
+          "entityCount": 184,
+          "names": [
+            {
+              "name": "設備",
+              "count": 1
+            },
+            {
+              "name": "ｴﾚﾍﾞ-ﾀ",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": false
+        },
+        {
+          "layerId": "0:4",
+          "support": 1,
+          "confidence": 0.9,
+          "entityCount": 632,
+          "names": [
+            {
+              "name": "設備機器",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "1:4",
+          "support": 1,
+          "confidence": 0.9,
+          "entityCount": 579,
+          "names": [
+            {
+              "name": "設備機器",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        }
+      ],
+      "names": [
+        {
+          "name": "設備機器",
+          "count": 2
+        },
+        {
+          "name": "設備",
+          "count": 1
+        },
+        {
+          "name": "ｴﾚﾍﾞ-ﾀ",
+          "count": 1
+        }
+      ],
+      "primaryKinds": [
+        "block",
+        "line",
+        "arc",
+        "solid",
+        "point"
+      ],
+      "forbiddenKinds": [
+        "dim"
+      ],
+      "count": 1395,
+      "kinds": {
+        "line": 884,
+        "arc": 511
+      },
+      "hist": {
+        "colors": {
+          "1": 405,
+          "2": 975,
+          "5": 15
+        },
+        "styles": {
+          "1": 1268,
+          "2": 88,
+          "9": 39
+        },
+        "widths": {
+          "0": 1395
+        },
+        "textHeights": {},
+        "mojiShu": {}
+      },
+      "allowed": {
+        "colors": [
+          1,
+          2
+        ],
+        "styles": [
+          1,
+          2
+        ],
+        "widths": [
+          0
+        ],
+        "textHeights": null
+      }
+    },
+    "site": {
+      "ja": "敷地・外構",
+      "ko": "부지·외구",
+      "support": 8,
+      "confidence": 0.89,
+      "layers": [
+        {
+          "layerId": "0:0",
+          "support": 6,
+          "confidence": 0.9,
+          "entityCount": 103,
+          "names": [
+            {
+              "name": "敷地",
+              "count": 5
+            },
+            {
+              "name": "敷地他",
+              "count": 1
+            }
+          ],
+          "primary": true,
+          "lowSupport": false
+        },
+        {
+          "layerId": "0:B",
+          "support": 1,
+          "confidence": 0.9,
+          "entityCount": 1967,
+          "names": [
+            {
+              "name": "道路斜線用－天空率",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "0:D",
+          "support": 1,
+          "confidence": 0.9,
+          "entityCount": 152,
+          "names": [
+            {
+              "name": "道路斜線用－三斜面積",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "0:8",
+          "support": 1,
+          "confidence": 0.9,
+          "entityCount": 21,
+          "names": [
+            {
+              "name": "敷地",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "0:F",
+          "support": 1,
+          "confidence": 0.9,
+          "entityCount": 7,
+          "names": [
+            {
+              "name": "斜路擁壁",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "0:9",
+          "support": 1,
+          "confidence": 0.9,
+          "entityCount": 4,
+          "names": [
+            {
+              "name": "道路斜線制限データ",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "0:1",
+          "support": 1,
+          "confidence": 0.8,
+          "entityCount": 3923,
+          "names": [
+            {
+              "name": "芝",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        }
+      ],
+      "names": [
+        {
+          "name": "敷地",
+          "count": 6
+        },
+        {
+          "name": "敷地他",
+          "count": 1
+        },
+        {
+          "name": "斜路擁壁",
+          "count": 1
+        },
+        {
+          "name": "芝",
+          "count": 1
+        },
+        {
+          "name": "道路斜線制限データ",
+          "count": 1
+        },
+        {
+          "name": "道路斜線用－三斜面積",
+          "count": 1
+        },
+        {
+          "name": "道路斜線用－天空率",
+          "count": 1
+        }
+      ],
+      "primaryKinds": [
+        "line",
+        "arc",
+        "text",
+        "point",
+        "solid"
+      ],
+      "forbiddenKinds": [
+        "block"
+      ],
+      "count": 6177,
+      "kinds": {
+        "line": 3875,
+        "arc": 2136,
+        "text": 147,
+        "point": 19
+      },
+      "hist": {
+        "colors": {
+          "1": 850,
+          "2": 164,
+          "3": 6,
+          "4": 54,
+          "5": 1337,
+          "6": 1,
+          "8": 3761,
+          "9": 3,
+          "112": 1
+        },
+        "styles": {
+          "1": 5957,
+          "2": 30,
+          "5": 8,
+          "6": 15,
+          "9": 1
+        },
+        "widths": {
+          "0": 6010,
+          "7": 1
+        },
+        "textHeights": {
+          "3": 22,
+          "4": 4,
+          "10": 4,
+          "15": 5,
+          "2.5": 112
+        },
+        "mojiShu": {
+          "0": 2,
+          "2": 110,
+          "3": 22,
+          "4": 4,
+          "10": 9
+        }
+      },
+      "allowed": {
+        "colors": [
+          1,
+          5,
+          8
+        ],
+        "styles": [
+          1
+        ],
+        "widths": [
+          0
+        ],
+        "textHeights": [
+          2.5,
+          3,
+          15
+        ]
+      }
+    },
+    "frame": {
+      "ja": "図枠・表題",
+      "ko": "도면틀·표제",
+      "support": 6,
+      "confidence": 0.9,
+      "layers": [
+        {
+          "layerId": "0:8",
+          "support": 1,
+          "confidence": 0.9,
+          "entityCount": 72,
+          "names": [
+            {
+              "name": "方位角倍率図",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "0:4",
+          "support": 1,
+          "confidence": 0.9,
+          "entityCount": 6,
+          "names": [
+            {
+              "name": "方　位",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "0:1",
+          "support": 1,
+          "confidence": 0.9,
+          "entityCount": 5,
+          "names": [
+            {
+              "name": "タイトル",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "0:A",
+          "support": 1,
+          "confidence": 0.9,
+          "entityCount": 5,
+          "names": [
+            {
+              "name": "方位",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "0:2",
+          "support": 1,
+          "confidence": 0.9,
+          "entityCount": 4,
+          "names": [
+            {
+              "name": "方位",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "0:9",
+          "support": 1,
+          "confidence": 0.9,
+          "entityCount": 1,
+          "names": [
+            {
+              "name": "図名",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        }
+      ],
+      "names": [
+        {
+          "name": "方位",
+          "count": 2
+        },
+        {
+          "name": "タイトル",
+          "count": 1
+        },
+        {
+          "name": "図名",
+          "count": 1
+        },
+        {
+          "name": "方　位",
+          "count": 1
+        },
+        {
+          "name": "方位角倍率図",
+          "count": 1
+        }
+      ],
+      "primaryKinds": [
+        "line",
+        "text",
+        "solid",
+        "arc",
+        "block"
+      ],
+      "forbiddenKinds": [
+        "dim"
+      ],
+      "count": 93,
+      "kinds": {
+        "text": 67,
+        "line": 26
+      },
+      "hist": {
+        "colors": {
+          "1": 21,
+          "2": 65,
+          "5": 7
+        },
+        "styles": {
+          "1": 18,
+          "2": 8
+        },
+        "widths": {
+          "0": 26
+        },
+        "textHeights": {
+          "2": 36,
+          "4": 1,
+          "10": 5,
+          "2.5": 25
+        },
+        "mojiShu": {
+          "0": 57,
+          "2": 4,
+          "4": 1,
+          "10": 5
+        }
+      },
+      "allowed": {
+        "colors": [
+          1,
+          2,
+          5
+        ],
+        "styles": [
+          1,
+          2
+        ],
+        "widths": [
+          0
+        ],
+        "textHeights": [
+          2,
+          2.5,
+          10
+        ]
+      }
+    },
+    "elevation": {
+      "ja": "立面・見付",
+      "ko": "입면·견부",
+      "support": 3,
+      "confidence": 0.9,
+      "layers": [
+        {
+          "layerId": "0:2",
+          "support": 2,
+          "confidence": 0.9,
+          "entityCount": 954,
+          "names": [
+            {
+              "name": "南側立面",
+              "count": 1
+            },
+            {
+              "name": "南立面",
+              "count": 1
+            }
+          ],
+          "primary": true,
+          "lowSupport": false
+        },
+        {
+          "layerId": "0:9",
+          "support": 2,
+          "confidence": 0.9,
+          "entityCount": 890,
+          "names": [
+            {
+              "name": "南　面",
+              "count": 1
+            },
+            {
+              "name": "鳥瞰図",
+              "count": 1
+            }
+          ],
+          "primary": true,
+          "lowSupport": false
+        },
+        {
+          "layerId": "0:8",
+          "support": 2,
+          "confidence": 0.9,
+          "entityCount": 607,
+          "names": [
+            {
+              "name": "西　面",
+              "count": 1
+            },
+            {
+              "name": "透視図",
+              "count": 1
+            }
+          ],
+          "primary": true,
+          "lowSupport": false
+        },
+        {
+          "layerId": "0:A",
+          "support": 2,
+          "confidence": 0.9,
+          "entityCount": 553,
+          "names": [
+            {
+              "name": "アイソメ",
+              "count": 1
+            },
+            {
+              "name": "東　面",
+              "count": 1
+            }
+          ],
+          "primary": true,
+          "lowSupport": false
+        },
+        {
+          "layerId": "0:4",
+          "support": 2,
+          "confidence": 0.9,
+          "entityCount": 86,
+          "names": [
+            {
+              "name": "搭屋西面",
+              "count": 1
+            },
+            {
+              "name": "西立面",
+              "count": 1
+            }
+          ],
+          "primary": true,
+          "lowSupport": false
+        },
+        {
+          "layerId": "0:B",
+          "support": 1,
+          "confidence": 0.9,
+          "entityCount": 8,
+          "names": [
+            {
+              "name": "北　面",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "0:5",
+          "support": 1,
+          "confidence": 0.9,
+          "entityCount": 7,
+          "names": [
+            {
+              "name": "搭屋南面",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "0:6",
+          "support": 1,
+          "confidence": 0.9,
+          "entityCount": 6,
+          "names": [
+            {
+              "name": "搭屋東面",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "0:7",
+          "support": 1,
+          "confidence": 0.9,
+          "entityCount": 5,
+          "names": [
+            {
+              "name": "搭屋北面",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "1:5",
+          "support": 1,
+          "confidence": 0.9,
+          "entityCount": 0,
+          "names": [
+            {
+              "name": "搭屋南面",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "1:6",
+          "support": 1,
+          "confidence": 0.9,
+          "entityCount": 0,
+          "names": [
+            {
+              "name": "搭屋東面",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        },
+        {
+          "layerId": "1:7",
+          "support": 1,
+          "confidence": 0.9,
+          "entityCount": 0,
+          "names": [
+            {
+              "name": "搭屋北面",
+              "count": 1
+            }
+          ],
+          "primary": false,
+          "lowSupport": true
+        }
+      ],
+      "names": [
+        {
+          "name": "搭屋北面",
+          "count": 2
+        },
+        {
+          "name": "搭屋南面",
+          "count": 2
+        },
+        {
+          "name": "搭屋東面",
+          "count": 2
+        },
+        {
+          "name": "アイソメ",
+          "count": 1
+        },
+        {
+          "name": "北　面",
+          "count": 1
+        },
+        {
+          "name": "南　面",
+          "count": 1
+        },
+        {
+          "name": "南側立面",
+          "count": 1
+        },
+        {
+          "name": "南立面",
+          "count": 1
+        }
+      ],
+      "primaryKinds": [
+        "line",
+        "arc",
+        "solid",
+        "block",
+        "point",
+        "text"
+      ],
+      "forbiddenKinds": [
+        "dim"
+      ],
+      "count": 3116,
+      "kinds": {
+        "line": 3086,
+        "text": 17,
+        "point": 13
+      },
+      "hist": {
+        "colors": {
+          "1": 442,
+          "2": 2289,
+          "3": 361,
+          "5": 14,
+          "6": 10
+        },
+        "styles": {
+          "1": 3060,
+          "9": 26
+        },
+        "widths": {
+          "0": 3086
+        },
+        "textHeights": {
+          "5": 1,
+          "0.5": 16
+        },
+        "mojiShu": {
+          "1": 16,
+          "5": 1
+        }
+      },
+      "allowed": {
+        "colors": [
+          1,
+          2,
+          3
+        ],
+        "styles": [
+          1
+        ],
+        "widths": [
+          0
+        ],
+        "textHeights": [
+          0.5,
+          5
+        ]
+      }
+    }
+  },
+  "layers": {
+    "0:0": {
+      "role": "site",
+      "confidence": 0.32,
+      "support": 6,
+      "drawings": 17,
+      "usedIn": 17,
+      "names": [
+        {
+          "name": "敷地",
+          "count": 5
+        },
+        {
+          "name": "芯",
+          "count": 2
+        },
+        {
+          "name": "0",
+          "count": 1
+        }
+      ],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "site",
+          "support": 6
+        },
+        {
+          "role": "unknown",
+          "support": 6
+        },
+        {
+          "role": "grid",
+          "support": 3
+        },
+        {
+          "role": "text",
+          "support": 1
+        },
+        {
+          "role": "wall",
+          "support": 1
+        }
+      ],
+      "evidence": [
+        "layer name \"敷地\" contains 敷地",
+        "layer name \"敷地他\" contains 敷地"
+      ],
+      "count": 103,
+      "kinds": {
+        "line": 78,
+        "text": 11,
+        "arc": 8,
+        "point": 6
+      },
+      "hist": {
+        "colors": {
+          "1": 22,
+          "2": 73,
+          "4": 4,
+          "5": 4
+        },
+        "styles": {
+          "1": 47,
+          "2": 20,
+          "5": 8,
+          "6": 11
+        },
+        "widths": {
+          "0": 86
+        },
+        "textHeights": {
+          "10": 4,
+          "2.5": 7
+        },
+        "mojiShu": {
+          "2": 7,
+          "10": 4
+        }
+      },
+      "allowed": {
+        "colors": [
+          1,
+          2,
+          4,
+          5
+        ],
+        "styles": [
+          1,
+          2,
+          5,
+          6
+        ],
+        "widths": [
+          0
+        ],
+        "textHeights": [
+          2.5,
+          10
+        ]
+      },
+      "entityCount": 103
+    },
+    "0:1": {
+      "role": "wall",
+      "confidence": 0.13,
+      "support": 2,
+      "drawings": 14,
+      "usedIn": 14,
+      "names": [
+        {
+          "name": "躯体",
+          "count": 2
+        },
+        {
+          "name": "2Fﾍﾞﾗﾝﾀﾞ",
+          "count": 1
+        },
+        {
+          "name": "YKK_A1",
+          "count": 1
+        }
+      ],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 8
+        },
+        {
+          "role": "wall",
+          "support": 2
+        },
+        {
+          "role": "frame",
+          "support": 1
+        },
+        {
+          "role": "grid",
+          "support": 1
+        },
+        {
+          "role": "roof",
+          "support": 1
+        },
+        {
+          "role": "site",
+          "support": 1
+        }
+      ],
+      "evidence": [
+        "layer name \"躯体\" contains 躯体"
+      ],
+      "count": 336,
+      "kinds": {
+        "line": 283,
+        "solid": 51,
+        "arc": 2
+      },
+      "hist": {
+        "colors": {
+          "2": 285,
+          "10": 51
+        },
+        "styles": {
+          "1": 285
+        },
+        "widths": {
+          "0": 285
+        },
+        "textHeights": {},
+        "mojiShu": {}
+      },
+      "allowed": {
+        "colors": [
+          2,
+          10
+        ],
+        "styles": [
+          1
+        ],
+        "widths": [
+          0
+        ],
+        "textHeights": null
+      },
+      "entityCount": 336
+    },
+    "0:2": {
+      "role": "elevation",
+      "confidence": 0.14,
+      "support": 2,
+      "drawings": 13,
+      "usedIn": 13,
+      "names": [
+        {
+          "name": "3Fﾍﾞﾗﾝﾀﾞ",
+          "count": 1
+        },
+        {
+          "name": "5m10mライン",
+          "count": 1
+        },
+        {
+          "name": "YKK_B1",
+          "count": 1
+        }
+      ],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 7
+        },
+        {
+          "role": "elevation",
+          "support": 2
+        },
+        {
+          "role": "wall",
+          "support": 2
+        },
+        {
+          "role": "finish",
+          "support": 1
+        },
+        {
+          "role": "frame",
+          "support": 1
+        }
+      ],
+      "evidence": [
+        "layer name \"南側立面\" contains 立面",
+        "layer name \"南立面\" contains 立面"
+      ],
+      "count": 954,
+      "kinds": {
+        "line": 951,
+        "point": 2,
+        "text": 1
+      },
+      "hist": {
+        "colors": {
+          "2": 590,
+          "3": 361,
+          "5": 2,
+          "6": 1
+        },
+        "styles": {
+          "1": 945,
+          "9": 6
+        },
+        "widths": {
+          "0": 951
+        },
+        "textHeights": {
+          "5": 1
+        },
+        "mojiShu": {
+          "5": 1
+        }
+      },
+      "allowed": {
+        "colors": [
+          2,
+          3
+        ],
+        "styles": [
+          1
+        ],
+        "widths": [
+          0
+        ],
+        "textHeights": null
+      },
+      "entityCount": 954
+    },
+    "0:3": {
+      "role": "opening",
+      "confidence": 0.15,
+      "support": 2,
+      "drawings": 12,
+      "usedIn": 12,
+      "names": [
+        {
+          "name": "建具",
+          "count": 2
+        },
+        {
+          "name": "4Fﾍﾞﾗﾝﾀﾞ",
+          "count": 1
+        },
+        {
+          "name": "YKK_C1",
+          "count": 1
+        }
+      ],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 9
+        },
+        {
+          "role": "opening",
+          "support": 2
+        },
+        {
+          "role": "structure",
+          "support": 1
+        }
+      ],
+      "evidence": [
+        "layer name \"建具\" contains 建具"
+      ],
+      "count": 836,
+      "kinds": {
+        "line": 812,
+        "arc": 24
+      },
+      "hist": {
+        "colors": {
+          "1": 76,
+          "2": 490,
+          "3": 263,
+          "5": 7
+        },
+        "styles": {
+          "1": 761,
+          "2": 68,
+          "9": 7
+        },
+        "widths": {
+          "0": 836
+        },
+        "textHeights": {},
+        "mojiShu": {}
+      },
+      "allowed": {
+        "colors": [
+          1,
+          2,
+          3
+        ],
+        "styles": [
+          1,
+          2
+        ],
+        "widths": [
+          0
+        ],
+        "textHeights": null
+      },
+      "entityCount": 836
+    },
+    "0:4": {
+      "role": "elevation",
+      "confidence": 0.16,
+      "support": 2,
+      "drawings": 11,
+      "usedIn": 11,
+      "names": [
+        {
+          "name": "YKK_F1",
+          "count": 1
+        },
+        {
+          "name": "天空図建物位置確認",
+          "count": 1
+        },
+        {
+          "name": "室名",
+          "count": 1
+        }
+      ],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 3
+        },
+        {
+          "role": "elevation",
+          "support": 2
+        },
+        {
+          "role": "text",
+          "support": 2
+        },
+        {
+          "role": "equipment",
+          "support": 1
+        },
+        {
+          "role": "frame",
+          "support": 1
+        },
+        {
+          "role": "opening",
+          "support": 1
+        },
+        {
+          "role": "roof",
+          "support": 1
+        }
+      ],
+      "evidence": [
+        "layer name \"搭屋西面\" contains 西面",
+        "layer name \"西立面\" contains 立面"
+      ],
+      "count": 86,
+      "kinds": {
+        "line": 82,
+        "point": 4
+      },
+      "hist": {
+        "colors": {
+          "1": 4,
+          "2": 76,
+          "5": 4,
+          "6": 2
+        },
+        "styles": {
+          "1": 80,
+          "9": 2
+        },
+        "widths": {
+          "0": 82
+        },
+        "textHeights": {},
+        "mojiShu": {}
+      },
+      "allowed": {
+        "colors": [
+          1,
+          2,
+          5
+        ],
+        "styles": [
+          1
+        ],
+        "widths": [
+          0
+        ],
+        "textHeights": null
+      },
+      "entityCount": 86
+    },
+    "0:5": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 10,
+      "drawings": 10,
+      "usedIn": 10,
+      "names": [
+        {
+          "name": "YKK_IN",
+          "count": 1
+        },
+        {
+          "name": "仕上",
+          "count": 1
+        },
+        {
+          "name": "切妻屋根",
+          "count": 1
+        }
+      ],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 3
+        },
+        {
+          "role": "dimension",
+          "support": 1
+        },
+        {
+          "role": "elevation",
+          "support": 1
+        },
+        {
+          "role": "finish",
+          "support": 1
+        },
+        {
+          "role": "opening",
+          "support": 1
+        },
+        {
+          "role": "roof",
+          "support": 1
+        },
+        {
+          "role": "stair",
+          "support": 1
+        },
+        {
+          "role": "text",
+          "support": 1
+        }
+      ],
+      "lowSupport": true,
+      "candidateRole": "opening",
+      "candidateSupport": 1
+    },
+    "0:6": {
+      "role": "text",
+      "confidence": 0.2,
+      "support": 2,
+      "drawings": 8,
+      "usedIn": 7,
+      "names": [
+        {
+          "name": "影倍率表",
+          "count": 2
+        },
+        {
+          "name": "YKK_N1",
+          "count": 1
+        },
+        {
+          "name": "ベランダ",
+          "count": 1
+        }
+      ],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 3
+        },
+        {
+          "role": "text",
+          "support": 2
+        },
+        {
+          "role": "elevation",
+          "support": 1
+        },
+        {
+          "role": "stair",
+          "support": 1
+        },
+        {
+          "role": "wall",
+          "support": 1
+        }
+      ],
+      "evidence": [
+        "layer name \"室名\" contains 室名",
+        "text 109/135, avg 5.8 chars",
+        "text 47/47, room-name texts 40"
+      ],
+      "count": 182,
+      "kinds": {
+        "text": 156,
+        "line": 26
+      },
+      "hist": {
+        "colors": {
+          "1": 30,
+          "2": 152
+        },
+        "styles": {
+          "1": 26
+        },
+        "widths": {
+          "0": 26
+        },
+        "textHeights": {
+          "2": 4,
+          "3": 43,
+          "2.5": 109
+        },
+        "mojiShu": {
+          "0": 109,
+          "1": 4,
+          "3": 43
+        }
+      },
+      "allowed": {
+        "colors": [
+          1,
+          2
+        ],
+        "styles": [
+          1
+        ],
+        "widths": [
+          0
+        ],
+        "textHeights": [
+          2.5,
+          3
+        ]
+      },
+      "entityCount": 182
+    },
+    "0:7": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 5,
+      "drawings": 6,
+      "usedIn": 5,
+      "names": [
+        {
+          "name": "日影長さ表",
+          "count": 2
+        },
+        {
+          "name": "北側廊下",
+          "count": 1
+        },
+        {
+          "name": "寸法",
+          "count": 1
+        }
+      ],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 2
+        },
+        {
+          "role": "dimension",
+          "support": 1
+        },
+        {
+          "role": "elevation",
+          "support": 1
+        },
+        {
+          "role": "text",
+          "support": 1
+        },
+        {
+          "role": "wall",
+          "support": 1
+        }
+      ],
+      "lowSupport": true,
+      "candidateRole": "text",
+      "candidateSupport": 1
+    },
+    "0:8": {
+      "role": "elevation",
+      "confidence": 0.2,
+      "support": 2,
+      "drawings": 9,
+      "usedIn": 9,
+      "names": [
+        {
+          "name": "敷地",
+          "count": 1
+        },
+        {
+          "name": "方位角倍率図",
+          "count": 1
+        },
+        {
+          "name": "日影図",
+          "count": 1
+        }
+      ],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "elevation",
+          "support": 2
+        },
+        {
+          "role": "equipment",
+          "support": 2
+        },
+        {
+          "role": "unknown",
+          "support": 2
+        },
+        {
+          "role": "frame",
+          "support": 1
+        },
+        {
+          "role": "site",
+          "support": 1
+        },
+        {
+          "role": "structure",
+          "support": 1
+        }
+      ],
+      "evidence": [
+        "layer name \"西　面\" contains 西面",
+        "layer name \"透視図\" contains 透視"
+      ],
+      "count": 607,
+      "kinds": {
+        "line": 589,
+        "text": 16,
+        "point": 2
+      },
+      "hist": {
+        "colors": {
+          "1": 88,
+          "2": 515,
+          "5": 2,
+          "6": 2
+        },
+        "styles": {
+          "1": 579,
+          "9": 10
+        },
+        "widths": {
+          "0": 589
+        },
+        "textHeights": {
+          "0.5": 16
+        },
+        "mojiShu": {
+          "1": 16
+        }
+      },
+      "allowed": {
+        "colors": [
+          1,
+          2
+        ],
+        "styles": [
+          1
+        ],
+        "widths": [
+          0
+        ],
+        "textHeights": [
+          0.5
+        ]
+      },
+      "entityCount": 607
+    },
+    "0:9": {
+      "role": "elevation",
+      "confidence": 0.26,
+      "support": 2,
+      "drawings": 7,
+      "usedIn": 7,
+      "names": [
+        {
+          "name": "南　面",
+          "count": 1
+        },
+        {
+          "name": "南壁日影",
+          "count": 1
+        },
+        {
+          "name": "図名",
+          "count": 1
+        }
+      ],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "elevation",
+          "support": 2
+        },
+        {
+          "role": "unknown",
+          "support": 2
+        },
+        {
+          "role": "frame",
+          "support": 1
+        },
+        {
+          "role": "site",
+          "support": 1
+        },
+        {
+          "role": "wall",
+          "support": 1
+        }
+      ],
+      "evidence": [
+        "layer name \"南　面\" contains 南面",
+        "layer name \"鳥瞰図\" contains 鳥瞰"
+      ],
+      "count": 890,
+      "kinds": {
+        "line": 890
+      },
+      "hist": {
+        "colors": {
+          "1": 350,
+          "2": 539,
+          "5": 1
+        },
+        "styles": {
+          "1": 887,
+          "9": 3
+        },
+        "widths": {
+          "0": 890
+        },
+        "textHeights": {},
+        "mojiShu": {}
+      },
+      "allowed": {
+        "colors": [
+          1,
+          2
+        ],
+        "styles": [
+          1
+        ],
+        "widths": [
+          0
+        ],
+        "textHeights": null
+      },
+      "entityCount": 890
+    },
+    "0:A": {
+      "role": "elevation",
+      "confidence": 0.36,
+      "support": 2,
+      "drawings": 5,
+      "usedIn": 5,
+      "names": [
+        {
+          "name": "#lv4",
+          "count": 1
+        },
+        {
+          "name": "アイソメ",
+          "count": 1
+        },
+        {
+          "name": "方位",
+          "count": 1
+        }
+      ],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "elevation",
+          "support": 2
+        },
+        {
+          "role": "frame",
+          "support": 1
+        },
+        {
+          "role": "unknown",
+          "support": 1
+        },
+        {
+          "role": "wall",
+          "support": 1
+        }
+      ],
+      "evidence": [
+        "layer name \"アイソメ\" contains アイソメ",
+        "layer name \"東　面\" contains 東面"
+      ],
+      "count": 553,
+      "kinds": {
+        "line": 552,
+        "point": 1
+      },
+      "hist": {
+        "colors": {
+          "2": 551,
+          "5": 1,
+          "6": 1
+        },
+        "styles": {
+          "1": 551,
+          "9": 1
+        },
+        "widths": {
+          "0": 552
+        },
+        "textHeights": {},
+        "mojiShu": {}
+      },
+      "allowed": {
+        "colors": [
+          2
+        ],
+        "styles": [
+          1
+        ],
+        "widths": [
+          0
+        ],
+        "textHeights": null
+      },
+      "entityCount": 553
+    },
+    "0:B": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 3,
+      "drawings": 3,
+      "usedIn": 3,
+      "names": [
+        {
+          "name": "北　面",
+          "count": 1
+        },
+        {
+          "name": "西壁日影",
+          "count": 1
+        },
+        {
+          "name": "道路斜線用－天空率",
+          "count": 1
+        }
+      ],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "elevation",
+          "support": 1
+        },
+        {
+          "role": "site",
+          "support": 1
+        },
+        {
+          "role": "wall",
+          "support": 1
+        }
+      ],
+      "lowSupport": true,
+      "candidateRole": "site",
+      "candidateSupport": 1
+    },
+    "0:C": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 2,
+      "drawings": 3,
+      "usedIn": 2,
+      "names": [
+        {
+          "name": "#lv1.500",
+          "count": 1
+        },
+        {
+          "name": "玄関庇西",
+          "count": 1
+        },
+        {
+          "name": "等時間図",
+          "count": 1
+        }
+      ],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 2
+        },
+        {
+          "role": "roof",
+          "support": 1
+        }
+      ],
+      "lowSupport": true,
+      "candidateRole": "roof",
+      "candidateSupport": 1
+    },
+    "0:D": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 3,
+      "drawings": 3,
+      "usedIn": 3,
+      "names": [
+        {
+          "name": "南壁等時",
+          "count": 1
+        },
+        {
+          "name": "玄関庇南",
+          "count": 1
+        },
+        {
+          "name": "道路斜線用－三斜面積",
+          "count": 1
+        }
+      ],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "roof",
+          "support": 1
+        },
+        {
+          "role": "site",
+          "support": 1
+        },
+        {
+          "role": "wall",
+          "support": 1
+        }
+      ],
+      "lowSupport": true,
+      "candidateRole": "wall",
+      "candidateSupport": 1
+    },
+    "0:E": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 2,
+      "drawings": 2,
+      "usedIn": 2,
+      "names": [
+        {
+          "name": "東壁等時",
+          "count": 1
+        },
+        {
+          "name": "玄関庇東",
+          "count": 1
+        }
+      ],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "roof",
+          "support": 1
+        },
+        {
+          "role": "wall",
+          "support": 1
+        }
+      ],
+      "lowSupport": true,
+      "candidateRole": "wall",
+      "candidateSupport": 1
+    },
+    "0:F": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 2,
+      "drawings": 2,
+      "usedIn": 2,
+      "names": [
+        {
+          "name": "斜路擁壁",
+          "count": 1
+        }
+      ],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "site",
+          "support": 1
+        },
+        {
+          "role": "unknown",
+          "support": 1
+        }
+      ],
+      "lowSupport": true,
+      "candidateRole": "site",
+      "candidateSupport": 1
+    },
+    "1:0": {
+      "role": "grid",
+      "confidence": 0.8,
+      "support": 2,
+      "drawings": 2,
+      "usedIn": 2,
+      "names": [
+        {
+          "name": "芯",
+          "count": 2
+        }
+      ],
+      "scale": 100,
+      "roles": [
+        {
+          "role": "grid",
+          "support": 2
+        }
+      ],
+      "evidence": [
+        "layer name \"芯\" contains 芯"
+      ],
+      "count": 1806,
+      "kinds": {
+        "line": 1476,
+        "arc": 291,
+        "text": 39
+      },
+      "hist": {
+        "colors": {
+          "1": 601,
+          "2": 1193,
+          "9": 12
+        },
+        "styles": {
+          "1": 1445,
+          "2": 75,
+          "5": 238,
+          "9": 9
+        },
+        "widths": {
+          "0": 1767
+        },
+        "textHeights": {
+          "3": 33,
+          "2.5": 3,
+          "2.7": 3
+        },
+        "mojiShu": {
+          "0": 24,
+          "1": 12,
+          "2": 3
+        }
+      },
+      "allowed": {
+        "colors": [
+          1,
+          2
+        ],
+        "styles": [
+          1,
+          2,
+          5
+        ],
+        "widths": [
+          0
+        ],
+        "textHeights": [
+          2.5,
+          2.7,
+          3
+        ]
+      },
+      "entityCount": 1806
+    },
+    "1:1": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 1,
+      "drawings": 1,
+      "usedIn": 1,
+      "names": [
+        {
+          "name": "躯体",
+          "count": 1
+        }
+      ],
+      "scale": 100,
+      "roles": [
+        {
+          "role": "wall",
+          "support": 1
+        }
+      ],
+      "lowSupport": true,
+      "candidateRole": "wall",
+      "candidateSupport": 1
+    },
+    "1:2": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 2,
+      "drawings": 2,
+      "usedIn": 2,
+      "names": [
+        {
+          "name": "間仕切り",
+          "count": 1
+        }
+      ],
+      "scale": 100,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 1
+        },
+        {
+          "role": "wall",
+          "support": 1
+        }
+      ],
+      "lowSupport": true,
+      "candidateRole": "wall",
+      "candidateSupport": 1
+    },
+    "1:3": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 2,
+      "drawings": 2,
+      "usedIn": 2,
+      "names": [
+        {
+          "name": "建具",
+          "count": 1
+        }
+      ],
+      "scale": 1,
+      "roles": [
+        {
+          "role": "opening",
+          "support": 1
+        },
+        {
+          "role": "unknown",
+          "support": 1
+        }
+      ],
+      "lowSupport": true,
+      "candidateRole": "opening",
+      "candidateSupport": 1
+    },
+    "1:4": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 2,
+      "drawings": 2,
+      "usedIn": 2,
+      "names": [
+        {
+          "name": "搭屋建具",
+          "count": 1
+        },
+        {
+          "name": "設備機器",
+          "count": 1
+        }
+      ],
+      "scale": 100,
+      "roles": [
+        {
+          "role": "equipment",
+          "support": 1
+        },
+        {
+          "role": "opening",
+          "support": 1
+        }
+      ],
+      "lowSupport": true,
+      "candidateRole": "equipment",
+      "candidateSupport": 1
+    },
+    "1:5": {
+      "role": "finish",
+      "confidence": 0.45,
+      "support": 2,
+      "drawings": 4,
+      "usedIn": 3,
+      "names": [
+        {
+          "name": "仕上",
+          "count": 2
+        },
+        {
+          "name": "搭屋南面",
+          "count": 1
+        }
+      ],
+      "scale": 100,
+      "roles": [
+        {
+          "role": "finish",
+          "support": 2
+        },
+        {
+          "role": "elevation",
+          "support": 1
+        },
+        {
+          "role": "unknown",
+          "support": 1
+        }
+      ],
+      "evidence": [
+        "layer name \"仕上\" contains 仕上"
+      ],
+      "count": 239,
+      "kinds": {
+        "line": 239
+      },
+      "hist": {
+        "colors": {
+          "1": 67,
+          "2": 172
+        },
+        "styles": {
+          "1": 157,
+          "2": 63,
+          "5": 19
+        },
+        "widths": {
+          "0": 239
+        },
+        "textHeights": {},
+        "mojiShu": {}
+      },
+      "allowed": {
+        "colors": [
+          1,
+          2
+        ],
+        "styles": [
+          1,
+          2,
+          5
+        ],
+        "widths": [
+          0
+        ],
+        "textHeights": null
+      },
+      "entityCount": 239
+    },
+    "1:6": {
+      "role": "text",
+      "confidence": 0.65,
+      "support": 2,
+      "drawings": 3,
+      "usedIn": 2,
+      "names": [
+        {
+          "name": "室名",
+          "count": 1
+        },
+        {
+          "name": "搭屋東面",
+          "count": 1
+        },
+        {
+          "name": "文字",
+          "count": 1
+        }
+      ],
+      "scale": 100,
+      "roles": [
+        {
+          "role": "text",
+          "support": 2
+        },
+        {
+          "role": "elevation",
+          "support": 1
+        }
+      ],
+      "evidence": [
+        "layer name \"室名\" contains 室名",
+        "layer name \"文字\" contains 文字",
+        "text 18/18, room-name texts 15"
+      ],
+      "count": 60,
+      "kinds": {
+        "text": 60
+      },
+      "hist": {
+        "colors": {
+          "1": 9,
+          "2": 51
+        },
+        "styles": {},
+        "widths": {},
+        "textHeights": {
+          "3": 51,
+          "2.5": 9
+        },
+        "mojiShu": {
+          "0": 15,
+          "2": 9,
+          "3": 36
+        }
+      },
+      "allowed": {
+        "colors": [
+          1,
+          2
+        ],
+        "styles": null,
+        "widths": null,
+        "textHeights": [
+          2.5,
+          3
+        ]
+      },
+      "entityCount": 60
+    },
+    "1:7": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 0,
+      "drawings": 1,
+      "usedIn": 0,
+      "names": [
+        {
+          "name": "搭屋北面",
+          "count": 1
+        }
+      ],
+      "scale": null,
+      "roles": [
+        {
+          "role": "elevation",
+          "support": 1
+        }
+      ],
+      "lowSupport": true,
+      "candidateRole": "elevation",
+      "candidateSupport": 1
+    },
+    "1:8": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 2,
+      "drawings": 2,
+      "usedIn": 2,
+      "names": [
+        {
+          "name": "西サッシ",
+          "count": 1
+        }
+      ],
+      "scale": 100,
+      "roles": [
+        {
+          "role": "opening",
+          "support": 1
+        },
+        {
+          "role": "unknown",
+          "support": 1
+        }
+      ],
+      "lowSupport": true,
+      "candidateRole": "opening",
+      "candidateSupport": 1
+    },
+    "1:9": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 1,
+      "drawings": 1,
+      "usedIn": 1,
+      "names": [
+        {
+          "name": "南サッシ",
+          "count": 1
+        }
+      ],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "opening",
+          "support": 1
+        }
+      ],
+      "lowSupport": true,
+      "candidateRole": "opening",
+      "candidateSupport": 1
+    },
+    "2:0": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 1,
+      "drawings": 1,
+      "usedIn": 1,
+      "names": [
+        {
+          "name": "階段外面",
+          "count": 1
+        }
+      ],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "stair",
+          "support": 1
+        }
+      ],
+      "lowSupport": true,
+      "candidateRole": "stair",
+      "candidateSupport": 1
+    },
+    "2:1": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 1,
+      "drawings": 1,
+      "usedIn": 1,
+      "names": [
+        {
+          "name": "階段柱",
+          "count": 1
+        }
+      ],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "stair",
+          "support": 1
+        }
+      ],
+      "lowSupport": true,
+      "candidateRole": "stair",
+      "candidateSupport": 1
+    },
+    "2:2": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 1,
+      "drawings": 1,
+      "usedIn": 1,
+      "names": [
+        {
+          "name": "螺旋部",
+          "count": 1
+        }
+      ],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 1
+        }
+      ]
+    },
+    "2:3": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 1,
+      "drawings": 1,
+      "usedIn": 1,
+      "names": [
+        {
+          "name": "段板１",
+          "count": 1
+        }
+      ],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 1
+        }
+      ]
+    },
+    "2:4": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 1,
+      "drawings": 1,
+      "usedIn": 1,
+      "names": [
+        {
+          "name": "段板２",
+          "count": 1
+        }
+      ],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 1
+        }
+      ]
+    },
+    "2:5": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 1,
+      "drawings": 1,
+      "usedIn": 1,
+      "names": [
+        {
+          "name": "蹴上",
+          "count": 1
+        }
+      ],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 1
+        }
+      ]
+    },
+    "2:8": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 1,
+      "drawings": 1,
+      "usedIn": 1,
+      "names": [
+        {
+          "name": "手すり",
+          "count": 1
+        }
+      ],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 1
+        }
+      ]
+    },
+    "2:9": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 1,
+      "drawings": 1,
+      "usedIn": 1,
+      "names": [
+        {
+          "name": "縦格子",
+          "count": 1
+        }
+      ],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 1
+        }
+      ]
+    },
+    "2:A": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 0,
+      "drawings": 2,
+      "usedIn": 0,
+      "names": [
+        {
+          "name": "２-Ａﾚｲﾔ",
+          "count": 2
+        }
+      ],
+      "scale": null,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 2
+        }
+      ]
+    },
+    "2:B": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 0,
+      "drawings": 2,
+      "usedIn": 0,
+      "names": [
+        {
+          "name": "２-Ｂﾚｲﾔ",
+          "count": 2
+        }
+      ],
+      "scale": null,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 2
+        }
+      ]
+    },
+    "2:C": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 0,
+      "drawings": 2,
+      "usedIn": 0,
+      "names": [
+        {
+          "name": "２-Ｃﾚｲﾔ",
+          "count": 2
+        }
+      ],
+      "scale": null,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 2
+        }
+      ]
+    },
+    "2:D": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 0,
+      "drawings": 2,
+      "usedIn": 0,
+      "names": [
+        {
+          "name": "２-Ｄﾚｲﾔ",
+          "count": 2
+        }
+      ],
+      "scale": null,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 2
+        }
+      ]
+    },
+    "2:E": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 0,
+      "drawings": 2,
+      "usedIn": 0,
+      "names": [
+        {
+          "name": "２-Ｅﾚｲﾔ",
+          "count": 2
+        }
+      ],
+      "scale": null,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 2
+        }
+      ]
+    },
+    "2:F": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 0,
+      "drawings": 2,
+      "usedIn": 0,
+      "names": [
+        {
+          "name": "２-Ｆﾚｲﾔ",
+          "count": 2
+        }
+      ],
+      "scale": null,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 2
+        }
+      ]
+    },
+    "3:8": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 1,
+      "drawings": 1,
+      "usedIn": 1,
+      "names": [
+        {
+          "name": "樹木",
+          "count": 1
+        }
+      ],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 1
+        }
+      ]
+    },
+    "3:9": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 1,
+      "drawings": 1,
+      "usedIn": 1,
+      "names": [
+        {
+          "name": "植込縁石",
+          "count": 1
+        }
+      ],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 1
+        }
+      ]
+    },
+    "3:A": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 1,
+      "drawings": 1,
+      "usedIn": 1,
+      "names": [
+        {
+          "name": "植込",
+          "count": 1
+        }
+      ],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 1
+        }
+      ]
+    },
+    "8:0": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 1,
+      "drawings": 1,
+      "usedIn": 1,
+      "names": [],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 1
+        }
+      ]
+    },
+    "D:0": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 1,
+      "drawings": 1,
+      "usedIn": 1,
+      "names": [],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "text",
+          "support": 1
+        }
+      ],
+      "lowSupport": true,
+      "candidateRole": "text",
+      "candidateSupport": 1
+    },
+    "D:F": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 1,
+      "drawings": 1,
+      "usedIn": 1,
+      "names": [],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "text",
+          "support": 1
+        }
+      ],
+      "lowSupport": true,
+      "candidateRole": "text",
+      "candidateSupport": 1
+    },
+    "E:0": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 1,
+      "drawings": 1,
+      "usedIn": 1,
+      "names": [],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 1
+        }
+      ]
+    },
+    "E:1": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 1,
+      "drawings": 1,
+      "usedIn": 1,
+      "names": [],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 1
+        }
+      ]
+    },
+    "E:2": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 1,
+      "drawings": 1,
+      "usedIn": 1,
+      "names": [],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 1
+        }
+      ]
+    },
+    "E:3": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 1,
+      "drawings": 1,
+      "usedIn": 1,
+      "names": [],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 1
+        }
+      ]
+    },
+    "E:4": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 1,
+      "drawings": 1,
+      "usedIn": 1,
+      "names": [],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 1
+        }
+      ]
+    },
+    "E:5": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 1,
+      "drawings": 1,
+      "usedIn": 1,
+      "names": [],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 1
+        }
+      ]
+    },
+    "E:6": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 1,
+      "drawings": 1,
+      "usedIn": 1,
+      "names": [],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 1
+        }
+      ]
+    },
+    "E:7": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 1,
+      "drawings": 1,
+      "usedIn": 1,
+      "names": [],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 1
+        }
+      ]
+    },
+    "E:8": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 1,
+      "drawings": 1,
+      "usedIn": 1,
+      "names": [],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 1
+        }
+      ]
+    },
+    "E:9": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 1,
+      "drawings": 1,
+      "usedIn": 1,
+      "names": [],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 1
+        }
+      ]
+    },
+    "E:A": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 1,
+      "drawings": 1,
+      "usedIn": 1,
+      "names": [],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "text",
+          "support": 1
+        }
+      ],
+      "lowSupport": true,
+      "candidateRole": "text",
+      "candidateSupport": 1
+    },
+    "F:0": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 1,
+      "drawings": 3,
+      "usedIn": 1,
+      "names": [
+        {
+          "name": "Ｆ-０ﾚｲﾔ",
+          "count": 2
+        },
+        {
+          "name": "円データ",
+          "count": 1
+        }
+      ],
+      "scale": 200,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 3
+        }
+      ]
+    },
+    "F:1": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 0,
+      "drawings": 2,
+      "usedIn": 0,
+      "names": [
+        {
+          "name": "Ｆ-１ﾚｲﾔ",
+          "count": 2
+        }
+      ],
+      "scale": null,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 2
+        }
+      ]
+    },
+    "F:2": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 0,
+      "drawings": 2,
+      "usedIn": 0,
+      "names": [
+        {
+          "name": "Ｆ-２ﾚｲﾔ",
+          "count": 2
+        }
+      ],
+      "scale": null,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 2
+        }
+      ]
+    },
+    "F:3": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 0,
+      "drawings": 2,
+      "usedIn": 0,
+      "names": [
+        {
+          "name": "Ｆ-３ﾚｲﾔ",
+          "count": 2
+        }
+      ],
+      "scale": null,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 2
+        }
+      ]
+    },
+    "F:4": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 0,
+      "drawings": 2,
+      "usedIn": 0,
+      "names": [
+        {
+          "name": "Ｆ-４ﾚｲﾔ",
+          "count": 2
+        }
+      ],
+      "scale": null,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 2
+        }
+      ]
+    },
+    "F:5": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 0,
+      "drawings": 2,
+      "usedIn": 0,
+      "names": [
+        {
+          "name": "Ｆ-５ﾚｲﾔ",
+          "count": 2
+        }
+      ],
+      "scale": null,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 2
+        }
+      ]
+    },
+    "F:6": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 0,
+      "drawings": 2,
+      "usedIn": 0,
+      "names": [
+        {
+          "name": "Ｆ-６ﾚｲﾔ",
+          "count": 2
+        }
+      ],
+      "scale": null,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 2
+        }
+      ]
+    },
+    "F:7": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 0,
+      "drawings": 2,
+      "usedIn": 0,
+      "names": [
+        {
+          "name": "Ｆ-７ﾚｲﾔ",
+          "count": 2
+        }
+      ],
+      "scale": null,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 2
+        }
+      ]
+    },
+    "F:8": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 0,
+      "drawings": 2,
+      "usedIn": 0,
+      "names": [
+        {
+          "name": "Ｆ-８ﾚｲﾔ",
+          "count": 2
+        }
+      ],
+      "scale": null,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 2
+        }
+      ]
+    },
+    "F:9": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 0,
+      "drawings": 2,
+      "usedIn": 0,
+      "names": [
+        {
+          "name": "Ｆ-９ﾚｲﾔ",
+          "count": 2
+        }
+      ],
+      "scale": null,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 2
+        }
+      ]
+    },
+    "F:A": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 0,
+      "drawings": 2,
+      "usedIn": 0,
+      "names": [
+        {
+          "name": "Ｆ-Ａﾚｲﾔ",
+          "count": 2
+        }
+      ],
+      "scale": null,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 2
+        }
+      ]
+    },
+    "F:B": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 0,
+      "drawings": 2,
+      "usedIn": 0,
+      "names": [
+        {
+          "name": "Ｆ-Ｂﾚｲﾔ",
+          "count": 2
+        }
+      ],
+      "scale": null,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 2
+        }
+      ]
+    },
+    "F:C": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 0,
+      "drawings": 2,
+      "usedIn": 0,
+      "names": [
+        {
+          "name": "Ｆ-Ｃﾚｲﾔ",
+          "count": 2
+        }
+      ],
+      "scale": null,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 2
+        }
+      ]
+    },
+    "F:D": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 0,
+      "drawings": 2,
+      "usedIn": 0,
+      "names": [
+        {
+          "name": "Ｆ-Ｄﾚｲﾔ",
+          "count": 2
+        }
+      ],
+      "scale": null,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 2
+        }
+      ]
+    },
+    "F:E": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 0,
+      "drawings": 2,
+      "usedIn": 0,
+      "names": [
+        {
+          "name": "Ｆ-Ｅﾚｲﾔ",
+          "count": 2
+        }
+      ],
+      "scale": null,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 2
+        }
+      ]
+    },
+    "F:F": {
+      "role": "unknown",
+      "confidence": 0,
+      "support": 0,
+      "drawings": 2,
+      "usedIn": 0,
+      "names": [
+        {
+          "name": "Ｆ-Ｆﾚｲﾔ",
+          "count": 2
+        }
+      ],
+      "scale": null,
+      "roles": [
+        {
+          "role": "unknown",
+          "support": 2
+        }
+      ]
+    }
+  },
+  "usage": {
+    "enabled": true,
+    "minDrawings": 3,
+    "usedLayers": [
+      "0:0",
+      "0:1",
+      "0:2",
+      "0:3",
+      "0:4",
+      "0:5",
+      "0:6",
+      "0:7",
+      "0:8",
+      "0:9",
+      "0:A",
+      "0:B",
+      "0:C",
+      "0:D",
+      "0:E",
+      "0:F",
+      "1:0",
+      "1:1",
+      "1:2",
+      "1:3",
+      "1:4",
+      "1:5",
+      "1:6",
+      "1:8",
+      "1:9",
+      "2:0",
+      "2:1",
+      "2:2",
+      "2:3",
+      "2:4",
+      "2:5",
+      "2:8",
+      "2:9",
+      "3:8",
+      "3:9",
+      "3:A",
+      "8:0",
+      "D:0",
+      "D:F",
+      "E:0",
+      "E:1",
+      "E:2",
+      "E:3",
+      "E:4",
+      "E:5",
+      "E:6",
+      "E:7",
+      "E:8",
+      "E:9",
+      "E:A",
+      "F:0"
+    ]
+  }
+}

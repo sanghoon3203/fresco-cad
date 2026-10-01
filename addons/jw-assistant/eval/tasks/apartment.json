@@ -1,0 +1,112 @@
+[
+  {
+    "id": "apt-move-title", "category": "move", "file": "C:/JWW/Ａマンション平面例.jww",
+    "instruction_ja": "図名「基準階平面図　Ｓ＝１／１００」を下に500mm移動してください。",
+    "instruction_ko": "도면명 텍스트(基準階平面図)를 아래로 500mm 내려줘.",
+    "expect": [
+      { "type": "entityMoved", "selector": { "kind": "text", "textContains": "基準階平面図" }, "dx": 0, "dy": -500 },
+      { "type": "entityCountDelta", "delta": 0 },
+      { "type": "noChangeOutside", "bbox": [-6000, -9200, 2000, -7000] }
+    ]
+  },
+  {
+    "id": "apt-rename-left-room", "category": "change-text", "file": "C:/JWW/Ａマンション平面例.jww",
+    "instruction_ja": "一番左の住戸の「洋室」を「寝室」に書き換えてください。",
+    "instruction_ko": "가장 왼쪽 세대의 '洋室'을 '寝室'로 바꿔줘.",
+    "expect": [
+      { "type": "textExists", "text": "寝室", "layer": "0:6", "near": [-9918, -1923], "radius": 600 },
+      { "type": "textExists", "text": "洋室", "count": 3 },
+      { "type": "entityCountDelta", "kind": "text", "delta": 0 }
+    ]
+  },
+  {
+    "id": "apt-add-up-label", "category": "add-text", "file": "C:/JWW/Ａマンション平面例.jww",
+    "instruction_ja": "「階段」の室名の1000mm下に「UP」という文字を室名レイヤに追加して。",
+    "instruction_ko": "계단(階段) 글자 1000mm 아래에 'UP' 글자를 실명 레이어에 추가해줘.",
+    "expect": [
+      { "type": "textExists", "text": "UP", "layer": "0:6", "near": [-972, -748], "radius": 700 },
+      { "type": "entityCountDelta", "kind": "text", "delta": 1 }
+    ]
+  },
+  {
+    "id": "apt-delete-ps", "category": "delete", "file": "C:/JWW/Ａマンション平面例.jww",
+    "instruction_ja": "ＰＳの文字を全て削除してください。",
+    "instruction_ko": "PS 글자를 전부 지워줘.",
+    "expect": [
+      { "type": "textAbsent", "text": "ＰＳ" },
+      { "type": "entityCountDelta", "kind": "text", "delta": -2 }
+    ]
+  },
+  {
+    "id": "apt-change-dimension-text", "category": "change-text", "file": "C:/JWW/Ａマンション平面例.jww",
+    "instruction_ja": "下側の寸法文字「4,000」を「4,200」に変更してください。",
+    "instruction_ko": "아래쪽 치수 문자 4,000을 4,200으로 고쳐줘.",
+    "expect": [
+      { "type": "textExists", "text": "4,200", "layer": "0:7", "near": [-2302, -6172], "radius": 600 },
+      { "type": "textAbsent", "text": "4,000" },
+      { "type": "entityCountDelta", "kind": "text", "delta": 0 }
+    ]
+  },
+  {
+    "id": "apt-move-grid-line", "category": "move", "file": "C:/JWW/Ａマンション平面例.jww",
+    "instruction_ja": "X=-3990付近の縦の通り芯を右に100mm移動して。",
+    "instruction_ko": "X=-3990 근처의 세로 중심선을 오른쪽으로 100mm 옮겨줘.",
+    "expect": [
+      { "type": "entityMoved", "selector": { "kind": "line", "layer": "0:0", "start": [-3989.8, 5443.6], "end": [-3989.8, -4627.1] }, "dx": 100, "dy": 0 },
+      { "type": "entityCountDelta", "delta": 0 }
+    ]
+  },
+  {
+    "id": "apt-add-grid-line", "category": "add-line", "file": "C:/JWW/Ａマンション平面例.jww",
+    "instruction_ja": "芯レイヤに、(-12754, 500)から(8602, 500)まで水平な通り芯を1本追加して。線の色と線種は既存の通り芯に合わせて。",
+    "instruction_ko": "芯 레이어에 (-12754, 500)부터 (8602, 500)까지 가로 중심선을 하나 추가해줘. 색과 선종은 기존 중심선과 같게.",
+    "expect": [
+      { "type": "lineExists", "start": [-12754, 500], "end": [8602, 500], "layer": "0:0" },
+      { "type": "entityCountDelta", "kind": "line", "layer": "0:0", "delta": 1 }
+    ]
+  },
+  {
+    "id": "apt-delete-short-grid", "category": "delete", "file": "C:/JWW/Ａマンション平面例.jww",
+    "instruction_ja": "y=-863 にある短い水平の通り芯（x=-3990〜10）を削除して。",
+    "instruction_ko": "y=-863에 있는 짧은 가로 중심선(x=-3990~10)을 삭제해줘.",
+    "expect": [
+      { "type": "entityDeleted", "selector": { "kind": "line", "layer": "0:0", "start": [-3989.8, -862.7], "end": [10.2, -862.7] } },
+      { "type": "entityCountDelta", "kind": "line", "layer": "0:0", "delta": -1 }
+    ]
+  },
+  {
+    "id": "apt-layer-getabako", "category": "layer", "file": "C:/JWW/Ａマンション平面例.jww",
+    "instruction_ja": "一番左の住戸の「下駄箱」の文字を設備機器レイヤに変更して。位置はそのまま。",
+    "instruction_ko": "가장 왼쪽 세대의 '下駄箱' 글자를 설비기기(設備機器) 레이어로 바꿔줘. 위치는 그대로.",
+    "expect": [
+      { "type": "layerOf", "selector": { "kind": "text", "text": "下駄箱", "near": [-10592, 3347], "radius": 300 }, "layer": "0:4" },
+      { "type": "entityCountDelta", "delta": 0 }
+    ]
+  },
+  {
+    "id": "apt-clarify-widen", "category": "clarification", "file": "C:/JWW/Ａマンション平面例.jww",
+    "instruction_ja": "洋室を広げて。",
+    "instruction_ko": "방 좀 넓혀줘.",
+    "expect": [{ "type": "clarificationExpected" }]
+  },
+  {
+    "id": "apt-clarify-window", "category": "clarification", "file": "C:/JWW/Ａマンション平面例.jww",
+    "instruction_ja": "窓をちょっとずらしておいて。",
+    "instruction_ko": "창문 좀 옮겨줘.",
+    "expect": [{ "type": "clarificationExpected" }]
+  },
+  {
+    "id": "apt-clarify-which-room", "category": "clarification", "file": "C:/JWW/Ａマンション平面例.jww",
+    "instruction_ja": "洋室の名前を主寝室に変えて。",
+    "instruction_ko": "洋室 이름을 主寝室로 바꿔줘.",
+    "expect": [{ "type": "clarificationExpected" }]
+  },
+  {
+    "id": "apt-ko-toilet-wc", "category": "change-text", "file": "C:/JWW/Ａマンション平面例.jww",
+    "instruction_ko": "가장 왼쪽 세대의 화장실 글자를 'WC'로 바꿔줘.",
+    "expect": [
+      { "type": "textExists", "text": "WC", "layer": "0:6", "near": [-9297, 3489], "radius": 600 },
+      { "type": "textExists", "text": "ﾄｲﾚ", "count": 3 }
+    ]
+  }
+]

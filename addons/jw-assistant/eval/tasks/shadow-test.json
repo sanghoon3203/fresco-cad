@@ -1,0 +1,72 @@
+[
+  {
+    "id": "t1-move-road-label", "category": "move", "file": "C:/JWW/Test1.jww",
+    "instruction_ja": "「道路中心線」の文字を上に1000mm移動して。",
+    "instruction_ko": "'도로중심선(道路中心線)' 글자를 위로 1000mm 옮겨줘.",
+    "expect": [
+      { "type": "entityMoved", "selector": { "kind": "text", "text": "道路中心線" }, "dx": 0, "dy": 1000 },
+      { "type": "entityCountDelta", "delta": 0 }
+    ]
+  },
+  {
+    "id": "t1-delete-gl", "category": "delete", "file": "C:/JWW/Test1.jww",
+    "instruction_ja": "説明レイヤの「ＧＬ」の文字を削除して。",
+    "instruction_ko": "설명 레이어의 'GL' 글자를 지워줘.",
+    "expect": [
+      { "type": "textAbsent", "text": "ＧＬ" },
+      { "type": "entityCountDelta", "kind": "text", "delta": -1 }
+    ]
+  },
+  {
+    "id": "t1-rename-title", "category": "change-text", "file": "C:/JWW/Test1.jww",
+    "instruction_ja": "タイトル「日影図ＴＥＳＴ用データ」を「日影図テスト」に変更して。",
+    "instruction_ko": "제목 '日影図ＴＥＳＴ用データ'를 '日影図テスト'로 바꿔줘.",
+    "expect": [
+      { "type": "textExists", "text": "日影図テスト", "near": [-26948, 14090], "radius": 800 },
+      { "type": "textAbsent", "text": "日影図ＴＥＳＴ用データ" }
+    ]
+  },
+  {
+    "id": "t1-penthouse-to-roof-layer", "category": "layer", "file": "C:/JWW/Test1.jww",
+    "instruction_ja": "塔屋の外形線（4本の線）を屋上レイヤに移して。",
+    "instruction_ko": "탑옥(塔屋) 외곽선 4개를 옥상(屋上) 레이어로 옮겨줘.",
+    "expect": [
+      { "type": "layerOf", "selector": { "kind": "line", "layer": "0:2" }, "layer": "0:1" },
+      { "type": "entityCountDelta", "kind": "line", "layer": "0:2", "delta": -4 }
+    ]
+  },
+  {
+    "id": "t1-move-penthouse-outline", "category": "move", "file": "C:/JWW/Test1.jww",
+    "instruction_ja": "塔屋の外形（4本の線）を左に1000mm移動して。高さの文字は動かさないで。",
+    "instruction_ko": "탑옥(塔屋) 외곽선 4개를 왼쪽으로 1000mm 옮겨줘. 높이 글자는 그대로 둬.",
+    "expect": [
+      { "type": "entityMoved", "selector": { "kind": "line", "layer": "0:2" }, "dx": -1000, "dy": 0 },
+      { "type": "entityCountDelta", "kind": "text", "delta": 0 },
+      { "type": "noChangeOutside", "bbox": [-4500, -14000, 500, -9000] }
+    ]
+  },
+  {
+    "id": "t1-add-ph-label", "category": "add-text", "file": "C:/JWW/Test1.jww",
+    "instruction_ja": "塔屋の四角形の中央に「PH」を塔屋レイヤで記入して。",
+    "instruction_ko": "탑옥 사각형 한가운데에 'PH' 글자를 塔屋 레이어에 넣어줘.",
+    "expect": [
+      { "type": "textExists", "text": "PH", "layer": "0:2", "near": [-1632, -11467], "radius": 1200 },
+      { "type": "entityCountDelta", "kind": "text", "delta": 1 }
+    ]
+  },
+  {
+    "id": "t1-offset-site-line", "category": "add-line", "file": "C:/JWW/Test1.jww",
+    "instruction_ja": "敷地の南側の境界線（y=-17445 の水平線）と平行に、500mm下へ同じ長さの線を敷地レイヤに追加して。",
+    "instruction_ko": "부지 남쪽 경계선(y=-17445 가로선)과 평행하게 500mm 아래에 같은 길이의 선을 부지(敷地) 레이어에 추가해줘.",
+    "expect": [
+      { "type": "lineExists", "start": [-10779.2, -17945.2], "end": [7683, -17945.2], "layer": "0:0", "tol": 3 },
+      { "type": "entityCountDelta", "kind": "line", "layer": "0:0", "delta": 1 }
+    ]
+  },
+  {
+    "id": "t1-clarify-delete-line", "category": "clarification", "file": "C:/JWW/Test1.jww",
+    "instruction_ja": "線を消して。",
+    "instruction_ko": "선 지워줘.",
+    "expect": [{ "type": "clarificationExpected" }]
+  }
+]

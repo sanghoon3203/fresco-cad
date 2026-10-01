@@ -1,0 +1,79 @@
+[
+  {
+    "id": "wood-move-washitsu", "category": "move", "file": "C:/JWW/木造平面例.jww",
+    "instruction_ja": "和室の文字を右に300mm移動して。",
+    "instruction_ko": "다다미방(和室) 글자를 오른쪽으로 300mm 옮겨줘.",
+    "expect": [
+      { "type": "entityMoved", "selector": { "kind": "text", "text": "和室" }, "dx": 300, "dy": 0 },
+      { "type": "entityCountDelta", "delta": 0 }
+    ]
+  },
+  {
+    "id": "wood-rename-living", "category": "change-text", "file": "C:/JWW/木造平面例.jww",
+    "instruction_ja": "「リビングルーム」の表記を「LDK」に変更して。",
+    "instruction_ko": "거실 글자를 LDK로 바꿔줘.",
+    "expect": [
+      { "type": "textExists", "text": "LDK", "near": [-1966, -4382], "radius": 600 },
+      { "type": "textAbsent", "text": "リビングルーム" }
+    ]
+  },
+  {
+    "id": "wood-add-doma", "category": "add-text", "file": "C:/JWW/木造平面例.jww",
+    "instruction_ja": "玄関の文字の500mm下に「土間」と追加して。",
+    "instruction_ko": "현관 글자 500mm 아래에 '土間'을 추가해줘.",
+    "expect": [
+      { "type": "textExists", "text": "土間", "near": [-2598, -1358], "radius": 600 },
+      { "type": "entityCountDelta", "kind": "text", "delta": 1 }
+    ]
+  },
+  {
+    "id": "wood-delete-oshiire", "category": "delete", "file": "C:/JWW/木造平面例.jww",
+    "instruction_ja": "押入の文字を削除して。",
+    "instruction_ko": "벽장(押入) 글자를 삭제해줘.",
+    "expect": [
+      { "type": "textAbsent", "text": "押入" },
+      { "type": "entityCountDelta", "kind": "text", "delta": -1 }
+    ]
+  },
+  {
+    "id": "wood-ko-move-bath", "category": "move", "file": "C:/JWW/木造平面例.jww",
+    "instruction_ko": "욕실 글자를 위로 200mm 올려줘.",
+    "expect": [{ "type": "entityMoved", "selector": { "kind": "text", "text": "浴室" }, "dx": 0, "dy": 200 }]
+  },
+  {
+    "id": "wood-add-line", "category": "add-line", "file": "C:/JWW/木造平面例.jww",
+    "instruction_ja": "(0,0)から(3640,0)まで線を1本引いて。",
+    "instruction_ko": "(0,0)에서 (3640,0)까지 선을 하나 그어줘.",
+    "expect": [
+      { "type": "lineExists", "start": [0, 0], "end": [3640, 0] },
+      { "type": "entityCountDelta", "kind": "line", "delta": 1 }
+    ]
+  },
+  {
+    "id": "wood-move-toilet-diagonal", "category": "move", "file": "C:/JWW/木造平面例.jww",
+    "instruction_ja": "トイレの文字を左に150mm、下に100mm移動して。",
+    "instruction_ko": "화장실 글자를 왼쪽으로 150mm, 아래로 100mm 옮겨줘.",
+    "expect": [{ "type": "entityMoved", "selector": { "kind": "text", "text": "トイレ" }, "dx": -150, "dy": -100 }]
+  },
+  {
+    "id": "wood-move-dk-local", "category": "move", "file": "C:/JWW/木造平面例.jww",
+    "instruction_ja": "ＤＫの文字だけを上に300mm移動して。他は触らないで。",
+    "instruction_ko": "주방(DK) 글자만 위로 300mm 올려줘. 다른 건 건드리지 마.",
+    "expect": [
+      { "type": "entityMoved", "selector": { "kind": "text", "text": "DK" }, "dx": 0, "dy": 300 },
+      { "type": "noChangeOutside", "bbox": [-4500, -4900, -2800, -3600] }
+    ]
+  },
+  {
+    "id": "wood-clarify-wall", "category": "clarification", "file": "C:/JWW/木造平面例.jww",
+    "instruction_ja": "壁を少し厚くして。",
+    "instruction_ko": "벽을 조금 두껍게 해줘.",
+    "expect": [{ "type": "clarificationExpected" }]
+  },
+  {
+    "id": "wood-clarify-room", "category": "clarification", "file": "C:/JWW/木造平面例.jww",
+    "instruction_ja": "部屋をもう一つ追加して。",
+    "instruction_ko": "방 하나 더 추가해줘.",
+    "expect": [{ "type": "clarificationExpected" }]
+  }
+]
