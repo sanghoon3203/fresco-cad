@@ -448,6 +448,7 @@ function render() {
   const brand = element("a", { className: "brand", attributes: { href: "#workspace" } });
   const brandText = element("span"); brandText.append(element("span", { className: "brand-name", text: t("appName") }), element("span", { className: "brand-sub", text: t("tagline") })); brand.append(element("span", { className: "brand-mark", text: "F" }), brandText);
   sidebar.append(brand);
+  sidebar.append(element('a', { className: 'nav-link', text: 'JWW Studio · 編集 / AI', attributes: { href: 'studio.html' } }));
   const nav = element("nav", { attributes: { "aria-label": t("appName") } }); const navList = element("ul", { className: "nav-list" });
   const reviewLink = element("a", { className: "nav-link", text: t("review"), attributes: { href: "#workspace", "aria-current": "page", "data-focus-key": "nav-review" } }); const settingsLink = element("a", { className: "nav-link", text: t("settings"), attributes: { href: "#settings", "data-focus-key": "nav-settings" } }); navList.append(element("li", {}), element("li", {})); navList.children[0].append(reviewLink); navList.children[1].append(settingsLink); nav.append(navList); sidebar.append(nav);
   const sideBottom = element("div", { className: "sidebar-bottom" }); sideBottom.append(element("div", { text: t("disconnected") }), element("div", { text: t("provider") })); sidebar.append(sideBottom);

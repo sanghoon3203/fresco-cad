@@ -6,6 +6,10 @@ import path from 'node:path';
 const root = fileURLToPath(new URL('../', import.meta.url));
 const files = new Map([
   ['/ui/index.html', 'text/html; charset=utf-8'],
+  ['/ui/studio.html', 'text/html; charset=utf-8'],
+  ['/ui/studio.css', 'text/css; charset=utf-8'],
+  ['/ui/studio.mjs', 'text/javascript; charset=utf-8'],
+  ['/ui/studio-canvas.mjs', 'text/javascript; charset=utf-8'],
   ['/ui/field-panel.mjs', 'text/javascript; charset=utf-8'],
   ['/ui/restore-panel.mjs', 'text/javascript; charset=utf-8'],
   ['/ui/project-panel.mjs', 'text/javascript; charset=utf-8'],
