@@ -1,4 +1,5 @@
-// JWW edit engine: validated Patch v2 -> writer (pure-JS codec | JwwHelper DLL rewrite) -> DLL re-read -> compare with an independently planned state.
+// JWW edit engine: validated Patch v2 -> writer (pure-JS codec | JwwHelper DLL rewrite) -> tiered verification (native/verify.mjs):
+// L1 schema/pre-checks, L2 codec checks (preview), L3 DLL re-read vs an independently planned state (save).
 // The codec writer keeps untouched bytes; the DLL writer re-serializes everything (not byte-exact). See docs/jw-assistant/jww-edit.md.
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
@@ -6,11 +7,14 @@ import { mkdtemp, readFile, writeFile, unlink, rmdir } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { hash, readJww } from './jww.mjs';
+import { hash, readJww, readJwwOneShot } from './jww.mjs';
 import { toIR } from './jww-pipeline.mjs';
-import { validatePatchV2 } from '../core/patch-v2.mjs';
-import { decodeJww, encodeJww, SPAN } from './codec/jww-codec.mjs';
+import { decodeJww, encodeJww } from './codec/jww-codec.mjs';
 import { applyOps } from './codec/jww-ops.mjs';
+import { sharedWorker, workerEnabled, withTempFile, isWorkerInfraError } from './jww-worker.mjs';
+import { verifyL1, verifyL2, verifyL3, codecDocument, failedChecks, textWidth, verifyRewrite, byteExactOutsideEdits, HEADER_ALLOWED } from './verify.mjs';
+
+export { textWidth, verifyRewrite, byteExactOutsideEdits, codecDocument };
 
 const execute = promisify(execFile);
 const fail = (code, detail) => { throw Object.assign(new Error(detail ? `${code}: ${detail}` : code), { code, detail }); };
@@ -18,8 +22,6 @@ const lid = p => `${p.m_nGLayer.toString(16).toUpperCase()}:${p.m_nLayer.toStrin
 const rad = d => d * Math.PI / 180;
 const snap = v => Math.abs(v) < 1e-12 ? 0 : v;
 const LIMIT = 1e9, DEFAULT_FONT = 'ＭＳ ゴシック';
-// Header fields the DLL is known to alter on rewrite: version (600 -> 700) and the three saved 3D eye-height presets.
-const HEADER_ALLOWED = new Set(['m_jwwDataVersion', 'm_dEye_H_Ichi_1', 'm_dEye_H_Ichi_2', 'm_dEye_H_Ichi_3']);
 
 // ---- CP932 representability (the native writer re-encodes strings as ANSI) -------------------------------------------
 let encodable;
@@ -38,14 +40,6 @@ function buildEncodable() {
 }
 export const isCp932 = ch => (encodable ??= buildEncodable()).has(ch);
 export const findUnrepresentable = (string, limit = 5) => [...new Set([...string].filter(ch => !isCp932(ch)))].slice(0, limit).map(ch => `U+${ch.codePointAt(0).toString(16).toUpperCase().padStart(4, '0')}`);
-const isHalf = ch => { const c = ch.codePointAt(0); return c < 0x80 || (c >= 0xff61 && c <= 0xff9f); };
-// Jw_cad text extent (fits 1968 of 2003 real corpus texts; 24 have zero length): half-width chars are sizeX/2 and get half the
-// char spacing. `uniformSpacing` is the simpler rule (full spacing for every gap) that the pure-JS codec uses.
-export function textWidth(string, sizeX, kankaku, { uniformSpacing = false } = {}) {
-  const chars = [...string]; let width = 0, gaps = 0;
-  chars.forEach((ch, i) => { const half = isHalf(ch); width += half ? sizeX / 2 : sizeX; if (i < chars.length - 1) gaps += half && !uniformSpacing ? 0.5 : 1; });
-  return width + kankaku * gaps;
-}
 function* stringsOf(document, header) {
   const walk = function* (entity, where) {
     for (const [name, value] of Object.entries(entity.props)) if (typeof value === 'string') yield [`${where}.${name}`, value];
@@ -95,7 +89,15 @@ async function runWriter(bytes, { mode = 'Write', ops = [] } = {}) {
 // Numbers travel as strings so the PowerShell side parses the exact double.
 const wireProps = props => Object.fromEntries(Object.entries(props).map(([k, v]) => [k, typeof v === 'number' ? String(v) : v]));
 const wireOp = op => op.props ? { ...op, props: wireProps(op.props) } : op;
-export const readHeader = async bytes => (await runWriter(bytes, { mode: 'Header' })).header;
+/** DLL header dump (every JwwHeader property). Worker first, one-shot Write-Jww.ps1 -Mode Header as fallback. */
+export async function readHeader(bytes) {
+  if (workerEnabled()) {
+    try { return await withTempFile(bytes, file => sharedWorker().request('header', { path: file })); }
+    catch (error) { if (!isWorkerInfraError(error)) fail('E_JWW_NATIVE_WRITE', error.detail ?? error.message); }
+  }
+  return (await runWriter(bytes, { mode: 'Header' })).header;
+}
+const oneShotRead = async bytes => ({ document: await readJwwOneShot(bytes), header: (await runWriter(bytes, { mode: 'Header' })).header });
 
 // ---- planning: normalized model-mm ops -> native ops + expected document ---------------------------------------------
 const finite = (v, what) => { if (typeof v !== 'number' || !Number.isFinite(v) || Math.abs(v) > LIMIT) fail('E_JWW_VALUE', what); return v; };
@@ -254,76 +256,10 @@ export function planNativeOps(document, ops, { header } = {}) {
   return { nativeOps: native, expected, created };
 }
 
-// ---- verification ----------------------------------------------------------------------------------------------------
-const TAU = 2 * Math.PI;
-const close = (a, b, tol) => a === b || (typeof a === 'number' && typeof b === 'number' && Math.abs(a - b) <= tol * Math.max(1, Math.abs(b)));
-// Text end points approximate Jw_cad's own rule: accept anything on the text baseline whose length lies between the
-// half-spacing rule (fits the corpus) and the uniform-spacing rule (codec). A wrong direction or scaled extent is rejected.
-function endOk(g) {
-  const dx = g.m_end_x - g.m_start_x, dy = g.m_end_y - g.m_start_y, a = rad(g.m_degKakudo), len = Math.hypot(dx, dy);
-  const along = dx * Math.cos(a) + dy * Math.sin(a), across = -dx * Math.sin(a) + dy * Math.cos(a);
-  return Math.abs(across) <= 1e-9 * Math.max(1, len) && along >= textWidth(g.m_string, g.m_dSizeX, g.m_dKankaku) - 1e-9
-    && along <= textWidth(g.m_string, g.m_dSizeX, g.m_dKankaku, { uniformSpacing: true }) + 1e-9;
-}
-const sameAngle = (a, b) => typeof a === 'number' && typeof b === 'number' && Math.abs(((((a - b) % TAU) + TAU + 1e-9) % TAU) - 1e-9) <= 1e-9;
-/**
- * Compare a re-read document (DLL reader) with the expected state. `codec` mode: the header must be identical (no DLL
- * quirks allowed), touched geometry is compared to 1e-12 and approximate text ends / equivalent arc start angles are accepted.
- */
-export function verifyRewrite(before, expected, after, { headerBefore, headerAfter, codec = false } = {}) {
-  const problems = [], add = text => { if (problems.length < 12) problems.push(text); };
-  for (const key of ['layers', 'blocks', 'imageMetadata']) if (JSON.stringify(before[key]) !== JSON.stringify(after[key])) add(`${key} changed`);
-  if (before.blockDefinitions !== after.blockDefinitions || before.images !== after.images) add('block/image count changed');
-  if (codec ? after.version !== before.version : !(after.version >= before.version)) add(`version ${before.version} -> ${after.version}`);
-  if (after.entities.length !== expected.length) add(`entity count ${after.entities.length}, expected ${expected.length}`);
-  const newIds = new Map();
-  expected.forEach((item, i) => { if (item.from) newIds.set(item.from, { id: `e${i}`, touched: item.touched }); });
-  expected.forEach((item, i) => {
-    const got = after.entities[i], where = `e${i}${item.from ? `(was ${item.from})` : '(added)'}`;
-    if (!got) return;
-    if (got.type !== item.type) return add(`${where} type ${got.type}, expected ${item.type}`);
-    const names = new Set([...Object.keys(item.props), ...Object.keys(got.props)]), loose = codec && item.touched;
-    for (const name of names) {
-      const a = got.props[name] ?? null, b = item.props[name] ?? null;
-      if ((name in got.props) !== (name in item.props)) { add(`${where}.${name} present=${name in got.props}, expected ${name in item.props}`); continue; }
-      if (a === b) continue;
-      if (loose && item.endApprox && (name === 'm_end_x' || name === 'm_end_y')) continue;
-      if (loose && close(a, b, 1e-12)) continue;
-      if (loose && item.type === 'JwwEnko' && name === 'm_radKaishiKaku' && sameAngle(a, b)) continue;
-      add(`${where}.${name} = ${JSON.stringify(a)}, expected ${JSON.stringify(b)}`);
-    }
-    if (loose && item.endApprox && !endOk(got.props)) add(`${where} text end (${got.props.m_end_x}, ${got.props.m_end_y}) is not on the baseline with a Jw_cad-like length`);
-    if (item.from && !item.touched && JSON.stringify(got.components) !== JSON.stringify(item.components)) add(`${where} components changed`);
-  });
-  const fixId = d => { if (!d.entityId) return d; const [root, ...rest] = d.entityId.split('/'), n = newIds.get(root); return n && !n.touched ? { ...d, entityId: [n.id, ...rest].join('/') } : null; };
-  const untouched = new Set([...newIds.values()].filter(n => !n.touched).map(n => n.id));
-  const wanted = (before.diagnostics ?? []).map(fixId).filter(Boolean).map(d => JSON.stringify(d)).sort();
-  const got = (after.diagnostics ?? []).filter(d => !d.entityId || untouched.has(d.entityId.split('/')[0])).map(d => JSON.stringify(d)).sort();
-  if (JSON.stringify(wanted) !== JSON.stringify(got)) add('diagnostics changed');
-  if (headerBefore && headerAfter) {
-    for (const name of new Set([...Object.keys(headerBefore), ...Object.keys(headerAfter)])) {
-      if (name === 'acp' || (!codec && HEADER_ALLOWED.has(name))) continue;
-      if (JSON.stringify(headerBefore[name]) !== JSON.stringify(headerAfter[name])) add(`header ${name} changed`);
-    }
-  }
-  return problems;
-}
 const diffBytes = (a, b) => { let n = Math.abs(a.length - b.length); for (let i = 0, m = Math.min(a.length, b.length); i < m; i++) if (a[i] !== b[i]) n++; return n; };
 
-// Are the header, every untouched entity record (ignoring MFC class tags) and the blocks/images tail unchanged?
-// null = not checkable (partial decode). Entities are matched through the plan's `from` ids.
-export function byteExactOutsideEdits(bytes, output, expected) {
-  const a = decodeJww(bytes), b = decodeJww(output);
-  if (a.partial || b.partial) return null;
-  if (Buffer.compare(bytes.subarray(...a.spans.header), output.subarray(...b.spans.header)) !== 0) return false;
-  if (Buffer.compare(bytes.subarray(a.spans.blocks[0]), output.subarray(b.spans.blocks[0])) !== 0) return false;
-  const body = (buf, e) => { const [from, to, kind] = e[SPAN]; return buf.subarray(from + (kind === 'new' ? 6 + e.cls.length : 2), to); };
-  return expected.every((item, i) => !item.from || item.touched
-    || Buffer.compare(body(bytes, a.entities[Number(item.from.slice(1))]), body(output, b.entities[i])) === 0);
-}
-
 // ---- public API ------------------------------------------------------------------------------------------------------
-const WRITERS = ['codec', 'dll'];
+const WRITERS = ['codec', 'dll'], LEVELS = ['preview', 'save'];
 export async function probeRewriteSafety(bytes, { document, returnBytes = false, writer = 'codec' } = {}) {
   if (!WRITERS.includes(writer)) fail('E_JWW_WRITER', writer);
   const before = document ?? await readJww(bytes), reasons = [], notes = [];
@@ -332,7 +268,7 @@ export async function probeRewriteSafety(bytes, { document, returnBytes = false,
     try {
       const doc = decodeJww(bytes);
       if (doc.partial) reasons.push(`codec partial decode: ${doc.partial.message}`);
-      else { output = encodeJww(doc); headerBefore = (await runWriter(bytes, { mode: 'Header' })).header; }
+      else { output = encodeJww(doc); headerBefore = await readHeader(bytes); }
     } catch (error) { reasons.push(`codec failed: ${error.message}`); }
   } else {
     reasons.push(...staticRewriteProblems(bytes, before));
@@ -343,7 +279,7 @@ export async function probeRewriteSafety(bytes, { document, returnBytes = false,
     byteExact = Buffer.compare(bytes, output) === 0; differingBytes = diffBytes(bytes, output);
     if (!byteExact || writer === 'dll') {
       try {
-        const after = await readJww(output), headerAfter = (await runWriter(output, { mode: 'Header' })).header;
+        const after = await readJww(output), headerAfter = await readHeader(output);
         reasons.push(...verifyRewrite(before, before.entities.map(e => ({ from: e.id, type: e.type, props: e.props, touched: false, components: e.components })), after, { headerBefore, headerAfter, codec: writer === 'codec' }));
         if (writer === 'dll') for (const name of HEADER_ALLOWED) if (JSON.stringify(headerBefore[name]) !== JSON.stringify(headerAfter[name])) notes.push(`header ${name} ${JSON.stringify(headerBefore[name])} -> ${JSON.stringify(headerAfter[name])}`);
       } catch (error) { reasons.push(`re-read failed: ${error.message}`); }
@@ -353,37 +289,88 @@ export async function probeRewriteSafety(bytes, { document, returnBytes = false,
 }
 
 /**
- * Apply a Patch v2. writer 'codec' (default): pure-JS decode -> applyOps -> encode; 'dll': JwwHelper full rewrite.
- * Either way the output is re-read with the DLL reader and compared with the state this module plans independently.
+ * Apply a Patch v2 with tiered verification (docs/jw-assistant/verification.md).
+ *   level 'preview': L1 (schema + engine pre-checks) + L2 (codec checks of the output bytes). No DLL call at all.
+ *   level 'save' (default): L1 + L2 + L3 (independent JwwHelper re-read compared with the state planned from the DLL read
+ *   of the source). Only a 'save' result may be written as a finished file.
+ * writer 'codec' (default): pure-JS decode -> applyOps -> encode; 'dll': JwwHelper full rewrite (no L2 is possible for a
+ * non-byte-exact rewrite, so the DLL writer always runs L3, also for previews).
+ * The receipt lists every level that ran: receipt.verification = [{ level, ok, durationMs, checks }].
  */
-export async function applyPatchV2(bytes, patch, { ir, document, writer = 'codec' } = {}) {
+export async function applyPatchV2(bytes, patch, { ir, document, writer = 'codec', level = 'save' } = {}) {
   if (!Buffer.isBuffer(bytes)) fail('E_JWW_FORMAT');
   if (!WRITERS.includes(writer)) fail('E_JWW_WRITER', writer);
-  const sourceHash = hash(bytes), before = document ?? await readJww(bytes), dll = writer === 'dll';
+  if (!LEVELS.includes(level)) fail('E_JWW_LEVEL', level);
+  const sourceHash = hash(bytes), dll = writer === 'dll', verification = [];
+  const failWith = (error, extra = {}) => { throw Object.assign(error, { verification: [...verification] }, extra); };
+  const verifyError = (lvl, result) => Object.assign(new Error(`E_JWW_EDIT_VERIFY: ${lvl} ${failedChecks(result)}`), { code: 'E_JWW_EDIT_VERIFY', detail: `${lvl} ${failedChecks(result)}` });
   if (ir && ir.sourceHash !== sourceHash) fail('E_PATCH_STALE', 'ir does not describe these bytes');
-  const normalized = validatePatchV2(patch, ir ?? toIR(bytes, before));
-  if (!normalized.ops.length) fail('E_PATCH_NO_OPS', 'clarification-only patch');
-  if (dll) { const early = staticRewriteProblems(bytes, before); if (early.length) fail('E_JWW_REWRITE_UNSAFE', early.join('; ')); }
-  const headerBefore = !dll || normalized.ops.some(op => op.op === 'add' && op.entity.kind === 'text') ? await readHeader(bytes) : null;
-  const plan = planNativeOps(before, normalized.ops, { header: headerBefore });
-  let output, summary = null;
-  if (dll) {
-    ({ bytes: output, summary } = await runWriter(bytes, { ops: plan.nativeOps }));
-    const bad = staticRewriteProblems(bytes, { entities: [], layers: [], blocks: [] }, summary.header).filter(r => r.includes('header.'));
-    if (bad.length) fail('E_JWW_REWRITE_UNSAFE', bad.join('; '));
-  } else {
-    const source = decodeJww(bytes);
+
+  // ---- L1: schema + engine pre-checks ----
+  let source = null, codecBefore = null, before = dll ? document ?? await readJww(bytes) : null, codecPlan = null;
+  if (!dll) {
+    source = decodeJww(bytes);
     if (source.partial) fail('E_JWW_CODEC_PARTIAL', source.partial.message);
-    output = encodeJww(applyOps(source, normalized.ops).doc);
+    codecBefore = codecDocument(source);
   }
-  const after = await readJww(output), headerAfter = await readHeader(output);
-  const problems = verifyRewrite(before, plan.expected, after, { headerBefore: dll ? summary.header : headerBefore, headerAfter, codec: !dll });
-  if (!dll && Buffer.compare(encodeJww(decodeJww(output)), output) !== 0) problems.push('codec re-encode of the output is not stable');
-  if (problems.length) {
-    if (dll) { const probe = await probeRewriteSafety(bytes, { document: before, writer: 'dll' }); if (!probe.safe) fail('E_JWW_REWRITE_UNSAFE', probe.reasons.join('; ')); }
-    fail('E_JWW_EDIT_VERIFY', problems.join('; '));
+  const l1 = await verifyL1(patch, ir ?? toIR(bytes, before ?? codecBefore), { prechecks: [
+    ['ops-present', normalized => { if (!normalized.ops.length) fail('E_PATCH_NO_OPS', 'clarification-only patch'); return `${normalized.ops.length} op(s)`; }],
+    ...(dll ? [['rewrite-safe', () => { const early = staticRewriteProblems(bytes, before); if (early.length) fail('E_JWW_REWRITE_UNSAFE', early.join('; ')); return 'no static rewrite blockers'; }]]
+      : [['engine-plan', normalized => { codecPlan = planNativeOps(codecBefore, normalized.ops, { header: source.header }); return `${codecPlan.expected.filter(i => i.touched).length} entities touched`; }]])
+  ] });
+  verification.push(l1.result);
+  if (l1.error) failWith(l1.error);
+  const normalized = l1.normalized;
+
+  // ---- codec writer + L2 ----
+  let output = null, summary = null;
+  if (!dll) {
+    const t0 = performance.now();
+    try { output = encodeJww(applyOps(source, normalized.ops).doc); } catch (error) { failWith(error); }
+    const l2 = await verifyL2(bytes, output, codecPlan, { source, sourceView: codecBefore, prior: [{ id: 'apply-encode', ok: true, detail: `${output.length} bytes in ${Math.round(performance.now() - t0)} ms` }] });
+    l2.result.durationMs = Math.round((performance.now() - t0) * 10) / 10; // includes applyOps + encode
+    verification.push(l2.result);
+    if (l2.error || !l2.result.ok) failWith(verifyError('L2', l2.result), { level: 'L2' });
   }
-  return { bytes: output, ir: toIR(output, after),
-    receipt: { sourceHash, outputHash: hash(output), ops: normalized.ops, created: plan.created, verified: true, byteExact: Buffer.compare(bytes, output) === 0,
-      byteExactOutsideEdits: dll ? null : byteExactOutsideEdits(bytes, output, plan.expected), writer } };
+
+  // ---- L3: independent DLL re-read (save level, and always for the DLL writer) ----
+  let plan = codecPlan, after = null;
+  if (dll || level === 'save') {
+    before ??= document ?? await readJww(bytes);
+    const headerBefore = await readHeader(bytes);
+    plan = planNativeOps(before, normalized.ops, { header: headerBefore });
+    if (dll) {
+      ({ bytes: output, summary } = await runWriter(bytes, { ops: plan.nativeOps }));
+      const bad = staticRewriteProblems(bytes, { entities: [], layers: [], blocks: [] }, summary.header).filter(r => r.includes('header.'));
+      if (bad.length) fail('E_JWW_REWRITE_UNSAFE', bad.join('; '));
+    }
+    const l3 = await verifyL3(output, plan, { before, headerBefore: dll ? summary.header : headerBefore, codec: !dll, fallback: oneShotRead });
+    verification.push(l3.result);
+    if (l3.error || !l3.result.ok) {
+      if (dll) {
+        const probe = await probeRewriteSafety(bytes, { document: before, writer: 'dll' });
+        if (!probe.safe) failWith(Object.assign(new Error(`E_JWW_REWRITE_UNSAFE: ${probe.reasons.join('; ')}`), { code: 'E_JWW_REWRITE_UNSAFE', detail: probe.reasons.join('; ') }));
+      }
+      failWith(verifyError('L3', l3.result), { level: 'L3' });
+    }
+    if (dll) after = await readJww(output);
+  }
+  // The returned IR comes from the codec view of the output (no DLL call); the DLL writer's output is DLL-read instead.
+  const outView = after ?? codecDocument(decodeJww(output));
+  const l2 = verification.find(v => v.level === 'L2');
+  return { bytes: output, ir: toIR(output, outView),
+    receipt: { sourceHash, outputHash: hash(output), ops: normalized.ops, created: plan.created, verified: true, level: dll ? 'save' : level,
+      verifiedLevels: verification.map(v => v.level), finalized: dll || level === 'save', verification,
+      byteExact: Buffer.compare(bytes, output) === 0,
+      byteExactOutsideEdits: l2 ? l2.checks.find(c => c.id === 'byte-exact-outside-edits').ok : null, writer } };
+}
+
+/**
+ * Re-verify a previewed output for saving: applyPatchV2 at level 'save' (deterministic, so the bytes must be identical to
+ * the preview) and return its result. Throws E_JWW_SAVE_MISMATCH if they differ, or the L1-L3 error (with .verification).
+ */
+export async function finalizePatchV2(bytes, patch, output, options = {}) {
+  const result = await applyPatchV2(bytes, patch, { ...options, level: 'save' });
+  if (Buffer.compare(result.bytes, output) !== 0) fail('E_JWW_SAVE_MISMATCH', 'the previewed bytes differ from the save-level rewrite');
+  return result;
 }

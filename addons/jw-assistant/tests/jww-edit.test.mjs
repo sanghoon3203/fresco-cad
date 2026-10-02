@@ -12,8 +12,9 @@ const noPen = { color: null, style: null, width: null };
 const textOf = (at, text, extra = {}) => ({ kind: 'text', layer: '0:4', at, text, height: null, width: null, spacing: null, angle: null, style: null, color: null, ...extra });
 const patchFor = (bytes, ops) => ({ schemaVersion: 2, sourceHash: hash(bytes), units: 'model-mm', ops, rationale: 'test', needsClarification: null });
 const diffCount = (a, b) => { let n = 0; for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) n++; return n; };
-// Writers differ on the exact text end (half-spacing rule vs uniform spacing); both must lie on the baseline within these bounds.
-const inRange = (along, text, sx, kan) => assert.ok(along >= textWidth(text, sx, kan) - 1e-9 && along <= textWidth(text, sx, kan, { uniformSpacing: true }) + 1e-9, `extent ${along}`);
+// Writers differ on the exact text end (half-spacing rule vs uniform spacing); both must lie on the baseline within these bounds
+// (in either order: a negative character spacing makes the uniform rule the shorter one).
+const inRange = (along, text, sx, kan) => { const a = textWidth(text, sx, kan), b = textWidth(text, sx, kan, { uniformSpacing: true }); assert.ok(along >= Math.min(a, b) - 1e-9 && along <= Math.max(a, b) + 1e-9, `extent ${along}`); };
 const approx = (a, b, msg) => assert.ok(Math.abs(a - b) <= 1e-9 * Math.max(1, Math.abs(b)), `${msg ?? ''} ${a} vs ${b}`);
 const header = { m_nMojiShu: 10, m_dMojiSizeX: 10, m_dMojiSizeY: 10, m_dMojiKankaku: 1, m_nMojiColor: 5,
   m_adMojiX: [2, 2.5, 3, 4, 5, 6, 7, 8, 9, 10], m_adMojiY: [2, 2.5, 3, 4, 5, 6, 7, 8, 9, 10], m_adMojiD: [0, 0, 0.5, 0.5, 0.5, 1, 1, 1, 1, 1], m_anMojiCol: [1, 1, 2, 2, 3, 3, 4, 4, 5, 5] };
