@@ -14,10 +14,11 @@ import { decodeJww, semanticView } from '../native/codec/jww-codec.mjs';
 import { flattenDrawing } from '../native/render/flatten.mjs';
 import { validatePatchV2 } from '../core/patch-v2.mjs';
 import { checkLayers, checkPatchLayers, applyLayerCorrections, roleFromName, ROLES } from '../core/layer-profile.mjs';
-import { applyPatchV2 } from '../native/jww-edit.mjs';
+import { applyPatchV2, finalizePatchV2 } from '../native/jww-edit.mjs';
 import { runEdit } from '../ai/edit-loop.mjs';
 import { loadSettings, saveSettings, defaultSettingsPath } from '../ai/settings.mjs';
 import { createMockProvider } from '../eval/mock.mjs';
+import { createProvider } from '../ai/edit-loop.mjs';
 
 // ---- Studio v2 helpers (pure; exported for tests) --------------------------------------------------------------------
 const KNOWLEDGE = new URL('../knowledge/', import.meta.url);
@@ -153,7 +154,9 @@ export function mockEditScript({ selection = [], layers = [] } = {}) {
 
 const STUDIO_ASSETS = new Map([
   ['/ui/motion.mjs', 'motion.mjs'], ['/ui/studio/i18n.mjs', 'studio/i18n.mjs'], ['/ui/studio/toast.mjs', 'studio/toast.mjs'],
-  ['/ui/studio/ops.mjs', 'studio/ops.mjs'], ['/ui/studio/sheet.mjs', 'studio/sheet.mjs']
+  ['/ui/studio/ops.mjs', 'studio/ops.mjs'], ['/ui/studio/sheet.mjs', 'studio/sheet.mjs'],
+  // Studio wave 2 (interaction components)
+  ...['progress', 'odometer', 'morph', 'scrub', 'minimap', 'history', 'menu', 'tooltip', 'pill', 'strings2', 'dragmove'].map(n => [`/ui/studio/${n}.mjs`, `studio/${n}.mjs`])
 ]);
 const GET_ROUTES = new Set(['/api/bootstrap', '/api/status', '/api/v2/bootstrap', '/api/v2/files', '/api/v2/scene', '/api/v2/entity', '/api/v2/settings', '/api/v2/generator']);
 const MIME = { '.mjs': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.html': 'text/html; charset=utf-8' };
@@ -390,7 +393,9 @@ export async function studioServer({ drawingRoot = process.env.FRESCO_DRAWING_RO
     }
     return out;
   }
-  function makePreview(s, bytes, patch, normalized, outIR, checkIR) {
+  // Verification levels for the UI: [{ level: 'L1'|'L2'|'L3', ok, durationMs }] (docs/jw-assistant/verification.md).
+  const levelsOf = receipt => (receipt?.verification ?? []).map(({ level, ok, durationMs }) => ({ level, ok, durationMs }));
+  function makePreview(s, bytes, patch, normalized, outIR, checkIR, receipt = null) {
     const built = buildScene(bytes, { profile, rules });
     const diff = diffScenes(s.scene, built.scene, normalized.ops);
     let layerCheck = null, corrections = [];
@@ -405,17 +410,18 @@ export async function studioServer({ drawingRoot = process.env.FRESCO_DRAWING_RO
       } catch (error) { layerCheck = { error: error.code ?? 'E_LAYER_CHECK' }; }
     }
     const id = randomUUID();
-    s.pending = { id, bytes, built, ir: outIR ?? null, patch, normalized, corrections, baseHash: s.hash };
-    return { previewId: id, patch, ops: normalized.ops, rationale: patch.rationale ?? '', diff, layerCheck, outputHash: hash(bytes) };
+    s.pending = { id, bytes, built, ir: outIR ?? null, patch, normalized, corrections, baseHash: s.hash, baseBytes: s.bytes };
+    return { previewId: id, patch, ops: normalized.ops, rationale: patch.rationale ?? '', diff, layerCheck, outputHash: hash(bytes),
+      verificationLevel: receipt?.level ?? null, verification: levelsOf(receipt) };
   }
   async function applyManual(s, patch) {
     if (!patch || typeof patch !== 'object') fail('E_PATCH_SCHEMA');
     const normalized = validatePatchV2(patch, s.lite);
     if (!normalized.ops.length) fail('E_PATCH_EMPTY');
     const bytes = s.bytes, document = await docOf(s);
-    const applied = await applyPatchV2(bytes, patch, { ir: s.lite, document });
+    const applied = await applyPatchV2(bytes, patch, { ir: s.lite, document, level: 'preview' });
     if (s.bytes !== bytes) fail('E_JWW_EXTERNAL_CHANGE');
-    return { status: 'applied', provider: 'manual', attempts: [], ...makePreview(s, applied.bytes, patch, normalized, applied.ir, s.lite) };
+    return { status: 'applied', provider: 'manual', attempts: [], ...makePreview(s, applied.bytes, patch, normalized, applied.ir, s.lite, applied.receipt) };
   }
   function openSession(name, bytes, { working = false, savedPath = null } = {}) {
     while (studio.size >= 8) studio.delete(studio.keys().next().value);
@@ -480,6 +486,10 @@ export async function studioServer({ drawingRoot = process.env.FRESCO_DRAWING_RO
     if (p === 'accept') {
       const pending = s.pending;
       if (!pending || pending.id !== data.previewId || pending.baseHash !== s.hash) fail('E_PREVIEW_STALE');
+      // Save level: L1+L2+L3 (independent DLL re-read). The file is only written when every level passes.
+      let saved;
+      try { saved = await finalizePatchV2(pending.baseBytes, pending.patch, pending.bytes, { ir: s.lite, document: await docOf(s) }); }
+      catch (error) { if (!error.code?.startsWith('E_')) error.code = 'E_JWW_SAVE_VERIFY'; else if (error.code === 'E_JWW_EDIT_VERIFY') error.code = 'E_JWW_SAVE_VERIFY'; throw error; }
       // Never overwrite: every accepted change is a new file next to the working copies.
       const stem = path.basename(s.name, path.extname(s.name)).replace(/-edit-\d+-[0-9a-f]{6}$/u, '').slice(0, 80);
       const target = path.join(workRoot, `${stem}-edit-${String(++s.edits).padStart(2, '0')}-${randomUUID().slice(0, 6)}.jww`);
@@ -493,7 +503,7 @@ export async function studioServer({ drawingRoot = process.env.FRESCO_DRAWING_RO
       if (pending.ir) s.irP = Promise.resolve(pending.ir);
       s.name = path.basename(target); s.savedPath = target;
       await listFiles();
-      return { ...payload(s), savedPath: target, outputHash: s.hash };
+      return { ...payload(s), savedPath: target, outputHash: s.hash, verificationLevel: 'save', verification: levelsOf(saved.receipt) };
     }
     if (p === 'patch') { if (data.baseHash !== s.hash) fail('E_JWW_EXTERNAL_CHANGE'); return applyManual(s, data.patch); }
     if (p === 'fix-layers') {
@@ -523,16 +533,108 @@ export async function studioServer({ drawingRoot = process.env.FRESCO_DRAWING_RO
       const runSettings = mock ? { ...settings, dataPolicy: { ...settings.dataPolicy, sendRealDrawings: true, redactText: false }, experience: { ...settings.experience, enabled: false } } : settings;
       const result = await runEdit({ bytes, instruction, settings: runSettings,
         provider: mock ? createMockProvider({ script: mockEditScript({ selection, layers: ir.layers.map(l => l.id) }) }) : provider,
-        deps: { env, fetch: aiFetch, loadIR: async () => ir, applyPatchV2: (b, patch, o) => applyPatchV2(b, patch, { ...o, document }), ...(mock ? { experience: false } : {}) } });
+        deps: { env, fetch: aiFetch, loadIR: async () => ir, applyPatchV2: (b, patch, o) => applyPatchV2(b, patch, { ...o, document, level: 'preview' }), ...(mock ? { experience: false } : {}) } });
       if (s.bytes !== bytes) fail('E_JWW_EXTERNAL_CHANGE');
       const common = { status: result.status, provider: mock ? 'mock' : result.provider, model: result.model, demo: mock, runId: result.runId, latencyMs: result.latencyMs,
         attempts: result.attempts.map(a => ({ attempt: a.attempt, status: a.status, error: a.error, toolCalls: a.toolCalls, latencyMs: a.latencyMs })),
         usage: result.usage, costEstimate: result.costEstimate, warnings: result.warnings ?? [] };
       if (result.status === 'clarification') return { ...common, question: result.question };
       if (result.status !== 'applied') return { ...common, error: result.error };
-      return { ...common, ...makePreview(s, result.outputBytes, result.patch, result.normalizedPatch, result.outputIR, ir) };
+      return { ...common, ...makePreview(s, result.outputBytes, result.patch, result.normalizedPatch, result.outputIR, ir, result.receipt) };
     }
     fail('E_NOT_FOUND');
+  }
+
+  // ---- Studio v2: streaming edit (wave 2) -------------------------------------------------------------------------------
+  // Same contract as POST /api/v2/edit, but the response is NDJSON: progress events while runEdit works, then
+  // { t:'result', result } with exactly the body /edit would return. runEdit (ai/, read-only here) has no event hook,
+  // so the stages are observed through its documented deps: loadIR, the provider's propose()/runTool, applyPatchV2.
+  // Kept separate from the /edit handler on purpose (that handler is shared with other work).
+  const RETRY_LAYER = { search: 'propose', propose: 'propose', l1: 'l1', l2: 'l2' };
+  const toolDetail = input => {
+    if (!input || typeof input !== 'object') return '';
+    const bits = [];
+    if (typeof input.query === 'string') bits.push(`"${input.query.slice(0, 40)}"`);
+    if (typeof input.layerId === 'string') bits.push(input.layerId);
+    if (Array.isArray(input.ids)) bits.push(`${input.ids.length} id`);
+    if (Array.isArray(input.kinds) && input.kinds.length) bits.push(input.kinds.slice(0, 3).join('/'));
+    return bits.join(' · ').slice(0, 80);
+  };
+  async function streamEditRun(s, data, emit) {
+    if (data.baseHash !== s.hash) fail('E_JWW_EXTERNAL_CHANGE');
+    if (typeof data.instruction !== 'string' || !data.instruction.trim() || data.instruction.length > 2000) fail('E_AI_INSTRUCTION');
+    const selection = data.selection ?? [];
+    if (!Array.isArray(selection) || selection.length > 500 || selection.some(id => typeof id !== 'string' || !s.ids.has(id))) fail('E_SELECTION');
+    const settings = await loadSettings({ file: settingsFile, env }), keys = keyStatus(), max = settings.loop.maxAttempts;
+    let provider = data.provider ?? 'auto';
+    if (!['auto', 'mock', 'claude', 'claude-fast', 'openai'].includes(provider)) fail('E_AI_PROVIDER');
+    if (provider === 'auto') provider = keys[keyFamily(settings.providers.default)] ? settings.providers.default : 'mock';
+    if (provider !== 'mock' && !keys[keyFamily(provider)]) {
+      return { status: 'failed', provider, attempts: [], error: { code: 'E_AI_KEY_REQUIRED', detail: keyFamily(provider) === 'openai' ? 'OPENAI_API_KEY' : 'ANTHROPIC_API_KEY' } };
+    }
+    s.pending = null;
+    emit({ t: 'step', id: 'load', state: 'run', max });
+    const bytes = s.bytes, [ir, document] = await Promise.all([irOf(s), docOf(s)]);
+    if (s.bytes !== bytes || ir.sourceHash !== s.hash) fail('E_JWW_EXTERNAL_CHANGE');
+    emit({ t: 'step', id: 'load', state: 'ok', info: { entities: ir.entities.length, layers: new Set(ir.entities.map(e => e.layerId)).size } });
+    const mock = provider === 'mock';
+    const instruction = selection.length && !mock ? `${data.instruction}\n\n(選択中の要素 / selected ids: ${selection.slice(0, 50).join(', ')})` : data.instruction;
+    const runSettings = mock ? { ...settings, dataPolicy: { ...settings.dataPolicy, sendRealDrawings: true, redactText: false }, experience: { ...settings.experience, enabled: false } } : settings;
+    // The demo reads its targets with the same read-only tool a real model would use, so the timeline shows a real call.
+    const script = mockEditScript({ selection, layers: ir.layers.map(l => l.id) });
+    const base = mock ? createMockProvider({ script: ctx => { if (selection.length) ctx.runTool('entity_details', { ids: selection.slice(0, 50) }); return script(ctx); } })
+      : createProvider(provider, { settings: runSettings, env, fetcher: aiFetch });
+    let attempt = 0, phase = 'search';
+    const retryFrom = feedback => {
+      const code = /code: (E_[A-Z0-9_]+)/u.exec(feedback ?? '')?.[1] ?? 'E_UNKNOWN', detail = /detail: (.*)/u.exec(feedback ?? '')?.[1]?.slice(0, 300) ?? null;
+      emit({ t: 'retry', attempt, code, detail, layer: RETRY_LAYER[phase] ?? 'propose' });
+    };
+    const observed = {
+      name: base.name, model: base.model,
+      async propose(args) {
+        if (attempt > 0 && args.feedback) retryFrom(args.feedback);
+        attempt++; phase = 'search';
+        emit({ t: 'step', id: 'search', state: 'run', attempt, max });
+        const runTool = (name, input) => { const r = args.runTool(name, input); emit({ t: 'tool', attempt, name: String(name).slice(0, 40), detail: toolDetail(input) }); return r; };
+        let out;
+        try { out = await base.propose({ ...args, runTool }); }
+        catch (error) { phase = 'propose'; throw error; }
+        const ops = Array.isArray(out?.patch?.ops) ? out.patch.ops : [], ask = !!out?.patch?.needsClarification;
+        emit({ t: 'step', id: 'search', state: 'ok', attempt });
+        emit({ t: 'step', id: 'propose', state: ask ? 'ask' : 'ok', attempt, info: { ops: ops.length, kinds: [...new Set(ops.map(o => String(o?.op)))].slice(0, 6) } });
+        phase = 'l1';
+        if (!ask) emit({ t: 'step', id: 'l1', state: 'run', attempt });
+        return out;
+      }
+    };
+    const result = await runEdit({ bytes, instruction, settings: runSettings, provider: observed,
+      deps: { env, fetch: aiFetch, loadIR: async () => ir, ...(mock ? { experience: false } : {}),
+        applyPatchV2: async (b, patch, o) => {
+          emit({ t: 'step', id: 'l1', state: 'ok', attempt }); emit({ t: 'step', id: 'l2', state: 'run', attempt }); phase = 'l2';
+          return applyPatchV2(b, patch, { ...o, document });
+        } } });
+    if (s.bytes !== bytes) fail('E_JWW_EXTERNAL_CHANGE');
+    if (result.status === 'applied') emit({ t: 'step', id: 'l2', state: 'ok', attempt });
+    else if (result.status === 'failed' && attempt) emit({ t: 'step', id: RETRY_LAYER[phase] ?? 'propose', state: 'fail', attempt });
+    const common = { status: result.status, provider: mock ? 'mock' : result.provider, model: result.model, demo: mock, runId: result.runId, latencyMs: result.latencyMs,
+      attempts: result.attempts.map(a => ({ attempt: a.attempt, status: a.status, error: a.error, toolCalls: a.toolCalls, latencyMs: a.latencyMs })),
+      usage: result.usage, costEstimate: result.costEstimate, warnings: result.warnings ?? [] };
+    if (result.status === 'clarification') return { ...common, question: result.question };
+    if (result.status !== 'applied') return { ...common, error: result.error };
+    return { ...common, ...makePreview(s, result.outputBytes, result.patch, result.normalizedPatch, result.outputIR, ir) };
+  }
+  async function streamEdit(req, res, setBusy) {
+    res.writeHead(200, { 'Content-Type': 'application/x-ndjson; charset=utf-8', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff', 'X-Accel-Buffering': 'no' });
+    let open = true; res.on('close', () => { open = false; });
+    const emit = ev => { if (open) res.write(`${JSON.stringify(ev)}\n`); };
+    setBusy(true);
+    try {
+      const data = await bodyOf(req);
+      emit({ t: 'result', result: await streamEditRun(v2(data.sessionId), data, emit) });
+    } catch (error) {
+      const code = typeof error.code === 'string' && /^E_[A-Z_0-9]+$/u.test(error.code) ? error.code : 'E_STUDIO_OPERATION';
+      emit({ t: 'error', code, ...(code.startsWith('E_PATCH') && typeof error.detail === 'string' ? { detail: error.detail.slice(0, 200) } : {}) });
+    } finally { setBusy(false); res.end(); }
   }
   return createServer(async (req, res) => {
     const address = `127.0.0.1:${req.socket.localPort}`, origin = `http://${address}`;
@@ -544,6 +646,11 @@ export async function studioServer({ drawingRoot = process.env.FRESCO_DRAWING_RO
     if (req.headers.host !== address || (req.headers.origin && req.headers.origin !== origin)) return send(403, { error: 'E_ORIGIN' });
     if (!['GET', 'POST'].includes(req.method)) return send(405, { error: 'E_METHOD' });
     if (req.method === 'POST' && (req.headers.origin !== origin || req.headers['x-fresco-token'] !== token)) return send(403, { error: 'E_TOKEN' });
+    if (url.pathname === '/api/v2/edit-stream') {
+      if (req.method !== 'POST') return send(405, { error: 'E_METHOD' });
+      if (mutationBusy) return send(409, { error: 'E_BUSY' });
+      return streamEdit(req, res, busy => { mutationBusy = busy; });
+    }
     if (req.method === 'GET' && url.pathname === '/api/download') {
       try { const value = session(url.searchParams.get('session')); const bytes = await readFile(value.path);
         res.setHeader('Content-Type', 'application/octet-stream'); res.setHeader('Content-Disposition', `attachment; filename="drawing.jww"; filename*=UTF-8''${encodeURIComponent(path.basename(value.path))}`); res.writeHead(200); res.end(bytes);

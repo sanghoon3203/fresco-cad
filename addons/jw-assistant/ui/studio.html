@@ -59,6 +59,8 @@
 
   <main class="stage" id="stage">
     <canvas class="layer-base" id="canvas-base" aria-hidden="true"></canvas>
+    <canvas class="layer-compare" id="canvas-compare-a" aria-hidden="true"></canvas>
+    <canvas class="layer-compare" id="canvas-compare-b" aria-hidden="true"></canvas>
     <canvas class="layer-overlay" id="canvas-overlay" tabindex="0" role="application" aria-describedby="canvas-help"></canvas>
     <p class="vh" id="canvas-help" data-i18n="canvasLabel"></p>
     <div class="empty" id="empty">
@@ -69,6 +71,7 @@
       <div class="empty-actions"><button class="btn" id="empty-search" type="button" data-i18n="searchFiles"></button><button class="btn primary" id="empty-generate" type="button" data-i18n="generator" hidden></button></div>
     </div>
     <div class="loading" id="loading" hidden><div class="shimmer-bar"></div><span data-i18n="loading"></span></div>
+    <div class="focus-chip" id="focus-chip" hidden role="status"></div>
     <div class="hud" id="hud" hidden><span id="hud-cursor"></span><span class="hud-sep"></span><span id="hud-scale"></span></div>
   </main>
 
@@ -79,7 +82,7 @@
       <div class="file-list" id="file-list" role="list"></div>
     </section>
     <section class="side-section grow" aria-labelledby="layers-h">
-      <div class="section-head"><h2 id="layers-h" data-i18n="layers"></h2><button class="text-btn" id="layers-all" type="button" data-i18n="showAll" hidden></button></div>
+      <div class="section-head"><h2 id="layers-h" data-i18n="layers"></h2><div class="head-tools"><button class="text-btn" id="layers-all" type="button" data-i18n="showAll" hidden></button><div class="segmented mini" role="radiogroup" id="layer-sort" hidden><button type="button" role="radio" aria-checked="true" data-sort="id" data-i18n="sortId"></button><button type="button" role="radio" aria-checked="false" data-sort="count" data-i18n="sortCount"></button></div></div></div>
       <div class="layer-list" id="layer-list"></div>
     </section>
   </aside>
@@ -98,18 +101,19 @@
       <div class="notice-text"><strong data-i18n="keyNotSetTitle"></strong><span data-i18n="keyNotSetBody"></span></div>
       <button class="text-btn" id="notice-dismiss" type="button" data-i18n="dismiss"></button>
     </div>
-    <section class="sheet proposal material" id="proposal" hidden aria-live="polite" tabindex="-1"></section>
     <form class="commandbar material" id="commandbar" autocomplete="off">
       <button class="provider-pill" id="provider-btn" type="button" aria-haspopup="menu" aria-expanded="false"><span class="dot" id="provider-dot"></span><span id="provider-label"></span></button>
       <span class="sel-chip" id="sel-chip" hidden></span>
       <label class="cmd-input"><span class="vh" data-i18n="send"></span><input id="command" type="text" maxlength="2000" enterkeyhint="send"></label>
       <span class="status-text" id="work-status" aria-live="polite"></span>
       <kbd class="cmd-kbd" id="cmd-kbd">⌘K</kbd>
-      <button class="send-btn" id="send" type="submit" disabled><svg><use href="#i-send"/></svg><span class="vh" data-i18n="send"></span></button>
+      <button class="send-btn" id="send" type="submit" disabled><svg class="send-arrow"><use href="#i-send"/></svg><svg class="saved-check"><use href="#i-check"/></svg><span class="vh" data-i18n="send"></span></button>
     </form>
+    <section class="sheet proposal" id="proposal" hidden aria-live="polite" tabindex="-1"><div class="p-content" id="proposal-content"></div></section>
     <div class="menu material" id="provider-menu" role="menu" hidden data-popover></div>
   </div>
 
+  <div class="drag-chip" id="drag-chip" hidden aria-hidden="true"><span class="dx"></span><span class="dy"></span><span class="snap"></span></div>
   <ol class="toaster" id="toaster" aria-live="polite"></ol>
 
   <section class="sheet popover material" id="settings" hidden data-popover role="dialog" aria-labelledby="settings-h" tabindex="-1"></section>

@@ -1,3 +1,4 @@
+import { STRINGS2 } from './strings2.mjs';
 // Studio strings. Japanese is the default; English is kept as a toggle. Korean instructions are accepted as input.
 export const STRINGS = {
   ja: {
@@ -95,6 +96,7 @@ export const STRINGS = {
     canvasLabel: 'JWW drawing canvas. Arrow keys pan, + and − zoom, F fits.', selectionAnnounce: '{n} selected', cursor: 'X {x} · Y {y} mm', zoomLabel: '{z}% (1:1 = 100%)'
   }
 };
+for (const k of ['ja', 'en']) Object.assign(STRINGS[k], STRINGS2[k]);
 
 let lang = 'ja';
 export function setLang(value) { lang = value === 'en' ? 'en' : 'ja'; return lang; }

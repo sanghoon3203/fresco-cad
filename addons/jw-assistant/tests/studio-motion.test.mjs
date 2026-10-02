@@ -95,3 +95,85 @@ test('animate() on a plain object re-targets the running spring and resolves whe
   assert.equal(obj.x, 50); await jumped.finished;
   setReducedMotion(false);
 });
+
+// ---- wave 2: snapping, scrubbing, odometer, progress ---------------------------------------------------------------
+import { detent, nearestStep, magneticSnap, projectSnap, scrubRate, scrubValue } from '../ui/motion.mjs';
+import { moveSnap, releaseTarget, MODULE_MM } from '../ui/studio/dragmove.mjs';
+import { odometerPlan } from '../ui/studio/odometer.mjs';
+import { emptyProgress, reduceProgress } from '../ui/studio/progress.mjs';
+
+test('detent: identity outside, exact at the centre, continuous at the edge, monotone and sticky inside', () => {
+  assert.equal(detent(15, 10, 4), 15); assert.equal(detent(10, 10, 4), 10);
+  assert.ok(Math.abs(detent(14 - 1e-9, 10, 4) - 14) < 1e-6 && Math.abs(detent(6 + 1e-9, 10, 4) - 6) < 1e-6);
+  let prev = -Infinity;
+  for (let x = 5; x <= 15; x += 0.01) { const y = detent(x, 10, 4); assert.ok(y >= prev - 1e-12, `not monotone at ${x}`); prev = y; }
+  assert.ok(Math.abs(detent(11, 10, 4) - 10) < 0.1, 'sticky core: 1 unit off presents within 0.1');
+});
+
+test('magneticSnap picks the nearest step/candidate in reach and reports engagement', () => {
+  assert.equal(nearestStep(1300, 455), 1365);
+  const far = magneticSnap(700, { step: 455, radius: 100 }); assert.equal(far.target, null); assert.equal(far.value, 700);
+  const near = magneticSnap(905, { step: 455, radius: 100 }); assert.equal(near.target, 910); assert.ok(near.engaged); assert.ok(Math.abs(near.value - 910) < 0.1);
+  const cand = magneticSnap(905, { step: 455, candidates: [903], radius: 100 }); assert.equal(cand.target, 903);
+  const edge = magneticSnap(960, { step: 455, radius: 100 }); assert.equal(edge.target, 910); assert.equal(edge.engaged, false);
+});
+
+test('projectSnap: momentum projection then snap to the step nearest the projection, clamped', () => {
+  assert.deepEqual(projectSnap(2.2, 0, { step: 1, reach: 1 }), { value: 2, projected: 2.2, snapped: true });
+  const flick = projectSnap(3, -10, { step: 1, min: 0, max: 5, rate: 0.99, reach: 1 }); // projects about 3 - 0.99
+  assert.equal(flick.value, 2); assert.ok(flick.projected < 3);
+  assert.equal(projectSnap(1, -1000, { step: 1, min: 0, max: 5, rate: 0.99, reach: 1 }).value, 0, 'clamped at the first node');
+  const free = projectSnap(0, 1000, { min: -50, max: 50 }); assert.equal(free.value, 50); assert.equal(free.snapped, false);
+});
+
+test('scrub rate and rubber-banded scrub values', () => {
+  assert.equal(scrubRate(1, { shift: true }), 10); assert.ok(Math.abs(scrubRate(1, { alt: true }) - 0.1) < 1e-12);
+  assert.deepEqual(scrubValue(10, 5, { perPx: 2 }), { value: 20, raw: 20, over: 0 });
+  const over = scrubValue(90, 60, { perPx: 1, max: 100, dimension: 160 });
+  assert.equal(over.over, 1); assert.ok(over.value > 100 && over.value < 150, 'resists past the limit'); assert.equal(over.raw, 150);
+  const under = scrubValue(1, -100, { perPx: 0.05, min: 0.5 }); assert.equal(under.over, -1); assert.ok(under.value < 0.5 && under.value > -4.5);
+  const more = scrubValue(90, 600, { perPx: 1, max: 100, dimension: 160 }); assert.ok(more.value > over.value && more.value < 100 + 160, 'bounded by the dimension');
+});
+
+test('moveSnap: 455 module on the translation, endpoints win, Alt is free, release target', () => {
+  const scale = 100, zoom = 8; // 1 paper mm = 100 model mm, 8 px per paper mm: snap radius 10px = 1.25 paper mm
+  const g = moveSnap({ raw: [4.5, 0.02], scale, zoom }); // 450 model mm, near 455
+  assert.equal(g.snap.kind, 'grid'); assert.ok(g.snap.axes.x && g.snap.axes.y); assert.deepEqual(g.snap.target, [MODULE_MM / scale, 0]);
+  assert.ok(g.engaged); assert.deepEqual(releaseTarget(g, scale), [4.55, 0]);
+  assert.equal(moveSnap({ raw: [9.08, 0], scale, zoom }).snap.major.x, true, '910 is a major module');
+  const free = moveSnap({ raw: [4.5, 0.02], scale, zoom, free: true }); assert.equal(free.snap, null); assert.deepEqual(free.d, [4.5, 0.02]);
+  const e = moveSnap({ raw: [3, 1], ref: [10, 10], endpoints: [[13.2, 11.1], [40, 40]], scale, zoom });
+  assert.equal(e.snap.kind, 'endpoint'); assert.deepEqual(e.snap.point, [13.2, 11.1]); assert.deepEqual(releaseTarget(e, scale).map(v => +v.toFixed(6)), [3.2, 1.1]);
+  const open = moveSnap({ raw: [2.7, 1.3], scale, zoom }); assert.equal(open.snap, null); assert.deepEqual(releaseTarget(open, scale), [2.7, 1.3]);
+  assert.deepEqual(open.model, [270, 130]);
+});
+
+test('odometer plan rolls digits in the direction of change and wraps like a counter', () => {
+  const up = odometerPlan('1,819', '1,820');
+  assert.equal(up.map(c => c.ch).join(''), '1,820');
+  assert.deepEqual(up.at(-1), { ch: '0', digit: true, from: 9, to: 10 }, 'ones wrap 9 to 0 forward');
+  assert.deepEqual(up.at(-2), { ch: '2', digit: true, from: 1, to: 2 });
+  assert.equal(up[0].from, up[0].to, 'unchanged digits do not roll');
+  const down = odometerPlan('780', '779'); assert.deepEqual(down.at(-1), { ch: '9', digit: true, from: 10, to: 9 }); assert.deepEqual(down.at(-2), { ch: '7', digit: true, from: 18, to: 17 });
+  const grow = odometerPlan('99', '100'); assert.equal(grow[0].from, null, 'a new leading digit appears');
+  assert.equal(odometerPlan('3,640 mm', '3,640 mm').every(c => !c.digit || c.from === c.to), true);
+});
+
+test('progress reducer: ordered steps, tool calls, retry with the validator error, final state', () => {
+  const evs = [
+    { t: 'step', id: 'load', state: 'run', max: 3 }, { t: 'step', id: 'load', state: 'ok', info: { entities: 10, layers: 2 } },
+    { t: 'step', id: 'search', state: 'run', attempt: 1 }, { t: 'tool', attempt: 1, name: 'find_text', detail: 'window' },
+    { t: 'step', id: 'search', state: 'ok', attempt: 1 }, { t: 'step', id: 'propose', state: 'ok', attempt: 1, info: { ops: 1 } }, { t: 'step', id: 'l1', state: 'run', attempt: 1 },
+    { t: 'retry', attempt: 1, code: 'E_PATCH_ENTITY', detail: 'ops[0].ids[0]=e999', layer: 'l1' },
+    { t: 'step', id: 'search', state: 'run', attempt: 2 }, { t: 'step', id: 'search', state: 'ok', attempt: 2 }, { t: 'step', id: 'propose', state: 'ok', attempt: 2, info: { ops: 1 } },
+    { t: 'step', id: 'l1', state: 'run', attempt: 2 }, { t: 'step', id: 'l1', state: 'ok', attempt: 2 }, { t: 'step', id: 'l2', state: 'run', attempt: 2 },
+    { t: 'result', result: { status: 'applied' } }
+  ];
+  const p = evs.reduce(reduceProgress, emptyProgress());
+  assert.deepEqual(p.steps.map(s => `${s.id}${s.attempt || ''}:${s.state}`), ['load:ok', 'search1:ok', 'propose1:ok', 'l11:fail', 'retry1:ok', 'search2:ok', 'propose2:ok', 'l12:ok', 'l22:ok', 'done2:ok']);
+  assert.equal(p.steps[1].tools[0].name, 'find_text'); assert.equal(p.steps[1].count, 1);
+  assert.equal(p.steps[3].error.code, 'E_PATCH_ENTITY'); assert.equal(p.steps[4].error.detail, 'ops[0].ids[0]=e999');
+  assert.equal(p.done, true); assert.equal(p.status, 'applied'); assert.equal(p.attempt, 2); assert.equal(p.max, 3);
+  const failed = [{ t: 'step', id: 'load', state: 'run' }, { t: 'error', code: 'E_JWW_EXTERNAL_CHANGE' }].reduce(reduceProgress, emptyProgress());
+  assert.deepEqual(failed.steps.map(s => s.state), ['fail', 'fail']); assert.equal(failed.steps[0].error.code, 'E_JWW_EXTERNAL_CHANGE');
+});

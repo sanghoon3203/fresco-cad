@@ -6,6 +6,15 @@ import { t, setLang, getLang } from './studio/i18n.mjs';
 import { createToaster } from './studio/toast.mjs';
 import { describeOp, summarizeOps } from './studio/ops.mjs';
 import { showSheet, hideSheet, isOpen, topSheet } from './studio/sheet.mjs';
+import { emptyProgress, reduceProgress, readNdjson } from './studio/progress.mjs';
+import { setOdometer } from './studio/odometer.mjs';
+import { createMorph } from './studio/morph.mjs';
+import { scrubbable } from './studio/scrub.mjs';
+import { createMinimap } from './studio/minimap.mjs';
+import { createHistory } from './studio/history.mjs';
+import { openContextMenu, closeContextMenu, contextMenuOpen } from './studio/menu.mjs';
+import { initTooltips } from './studio/tooltip.mjs';
+import { attachPill } from './studio/pill.mjs';
 
 const $ = id => document.getElementById(id);
 const h = (tag, props = {}, ...children) => {
@@ -26,8 +35,11 @@ const fmtNum = (v, d = 0) => (Number.isFinite(v) ? v.toLocaleString(getLang() ==
 const state = {
   token: '', files: [], rootConfigured: false, ai: null, pens: null, generator: false,
   doc: null, selection: new Set(), hidden: new Set(), proposal: null, busy: false, lastInstruction: '', provider: store.get('fresco-studio-provider', 'auto'),
-  tab: 'selection', fileFilter: '', openingId: null, details: null, checkLayer: null
+  tab: 'selection', fileFilter: '', openingId: null, details: null, checkLayer: null,
+  // wave 2
+  progress: null, focus: false, history: [], layerSort: store.get('fresco-studio-layer-sort', 'id'), odo: new Map()
 };
+let minimap = null, history = null, morph = null; // created after the canvas view (they read it)
 const toast = createToaster($('toaster'));
 const app = $('app'), stage = $('stage');
 
@@ -52,6 +64,8 @@ function applyLang() {
   $('file-search').placeholder = t('searchFiles');
   $('cmd-kbd').textContent = isMac ? '⌘K' : 'Ctrl K';
   $('canvas-overlay').setAttribute('aria-label', t('canvasLabel'));
+  for (const b of document.querySelectorAll('.icon-btn')) { const vh = b.querySelector('.vh[data-i18n]'); if (vh) b.dataset.tip = t(vh.dataset.i18n); }
+  $('layer-sort').setAttribute('aria-label', t('sortLabel'));
   renderAll();
 }
 function applyMotionPref() { const v = readStoredReducedMotion(); setReducedMotion(v); document.body.classList.toggle('reduce-motion', v); }
@@ -61,9 +75,14 @@ const view = new DrawingView({
   base: $('canvas-base'), overlay: $('canvas-overlay'), host: stage,
   insets: () => ({ l: app.classList.contains('no-sidebar') ? 16 : 296, t: 68, r: app.classList.contains('no-inspector') ? 16 : 328, b: Math.max(92, innerHeight - $('dock').getBoundingClientRect().top + 16) }),
   onSelect: (indices, mode) => select(indices, mode),
-  onCamera: cam => { $('zoom-readout').textContent = `${fmtNum(cam.z / 3.7795 * 100)}%`; $('zoom-readout').title = t('zoomLabel', { z: fmtNum(cam.z / 3.7795 * 100) }); },
-  onPointer: p => updateCursor(p)
+  onCamera: cam => { $('zoom-readout').textContent = `${fmtNum(cam.z / 3.7795 * 100)}%`; $('zoom-readout').dataset.tip = t('zoomLabel', { z: fmtNum(cam.z / 3.7795 * 100) }); minimap?.update(); },
+  onPointer: p => updateCursor(p),
+  canMove: () => !!state.doc && !state.busy && !state.proposal && !history?.previewing,
+  onMoveDrag: info => updateDragChip(info),
+  onMoveCommit: ({ ids, dx, dy }) => commitDragMove(ids, dx, dy),
+  onContext: (x, y) => openCanvasMenu(x, y, false)
 });
+view.compares = [{ canvas: $('canvas-compare-a') }, { canvas: $('canvas-compare-b') }];
 function updateCursor(p) {
   if (!p || !state.doc) { $('hud-cursor').textContent = ''; return; }
   // paper → model: use the scale of the dominant layer group (the HUD is a guide; the inspector shows exact values)
@@ -107,14 +126,20 @@ async function refreshFiles() { const r = await api('v2/files'); state.files = r
 
 async function openFile(f) {
   if (state.busy || state.openingId) return;
-  state.openingId = f.id; renderFiles(); $('loading').hidden = false;
+  state.openingId = f.id; renderFiles(); $('loading').hidden = false; showSkeletons();
   try {
     const r = await api('v2/open', { fileId: f.id });
     if (state.doc) api('v2/close', { sessionId: state.doc.sessionId }).catch(() => {});
     receiveDoc(r, { fileId: f.id });
     toast.success(t('opened', { name: r.name }), { description: `${fmtNum(r.scene.ents.length)} ${getLang() === 'en' ? 'entities' : '要素'}` });
-  } catch (e) { toast.error(t('openFailed'), { description: errorText(e.code) }); }
+  } catch (e) { toast.error(t('openFailed'), { description: errorText(e.code) }); renderLayers(); renderInspector(); }
   finally { state.openingId = null; $('loading').hidden = true; renderFiles(); }
+}
+/** Skeleton shimmer while a drawing opens: the layer list and inspector keep their shape instead of blanking. */
+function showSkeletons() {
+  const row = w => h('div', { class: 'skel-row' }, h('span', { class: 'skel sq' }), h('span', { class: 'skel', style: null, dataset: { w } }), h('span', { class: 'skel sm' }));
+  $('layer-list').replaceChildren(...['72', '54', '86', '60', '78', '48', '66', '58'].map(row));
+  if (state.tab === 'selection') $('insp-selection').replaceChildren(h('div', { class: 'skel-block' }, h('span', { class: 'skel title' }), h('span', { class: 'skel', dataset: { w: '80' } }), h('span', { class: 'skel', dataset: { w: '64' } }), h('span', { class: 'skel', dataset: { w: '72' } })));
 }
 function receiveDoc(r, { fileId = state.doc?.fileId, keepCamera = false, keepSelectionIds = null } = {}) {
   const scene = r.scene, counts = new Map();
@@ -122,10 +147,14 @@ function receiveDoc(r, { fileId = state.doc?.fileId, keepCamera = false, keepSel
   const mainScale = [...counts].sort((a, b) => b[1] - a[1])[0]?.[0] ?? 1;
   const firstOpen = !state.doc || state.doc.sessionId !== r.sessionId;
   state.doc = { ...r, fileId, mainScale, idIndex: new Map(scene.ents.map((e, i) => [e.id, i])) };
-  if (firstOpen) state.hidden = new Set(scene.layers.map((l, i) => (l.state === 0 && l.count ? i : -1)).filter(i => i >= 0));
+  if (firstOpen) { state.hidden = new Set(scene.layers.map((l, i) => (l.state === 0 && l.count ? i : -1)).filter(i => i >= 0)); state.history = []; state.odo.clear(); }
   clearProposal({ silent: true });
+  endHistoryPreview();
   view.setScene(scene, { keepCamera });
   view.setHiddenLayers(state.hidden);
+  if (state.focus && !keepSelectionIds?.length) setFocus(false);
+  minimap.setScene(scene);
+  history.set(state.history);
   const sel = keepSelectionIds ? keepSelectionIds.map(id => state.doc.idIndex.get(id)).filter(i => i !== undefined) : [];
   select(sel, 'replace', { quiet: true });
   $('empty').hidden = true; $('canvas-tools').hidden = false; $('hud').hidden = false;
@@ -136,40 +165,68 @@ function receiveDoc(r, { fileId = state.doc?.fileId, keepCamera = false, keepSel
 }
 
 // ---- layers ---------------------------------------------------------------------------------------------------------------
-function renderLayers() {
-  const list = $('layer-list'); list.replaceChildren();
+function renderLayers({ flip = false, ripple = null } = {}) {
+  const list = $('layer-list');
+  // FLIP: remember where each row was, so a re-sort glides rows to their new places (transform only)
+  const before = flip && !prefersReducedMotion() ? new Map([...list.querySelectorAll('.layer-row')].map(r => [r.dataset.i, r.getBoundingClientRect().top])) : null;
+  list.replaceChildren();
   const scene = state.doc?.scene;
+  $('layer-sort').hidden = !scene;
   if (!scene) { $('layers-all').hidden = true; return; }
   $('layers-all').hidden = !state.hidden.size;
   const byGroup = new Map();
   scene.layers.forEach((l, i) => { if (!l.count) return; const g = l.id.split(':')[0]; (byGroup.get(g) ?? byGroup.set(g, []).get(g)).push([l, i]); });
+  if (state.layerSort === 'count') for (const rows of byGroup.values()) rows.sort((a, b) => b[0].count - a[0].count);
   let n = 0;
   for (const [g, rows] of byGroup) {
     const first = rows[0][0];
     list.append(h('div', { class: 'group-head' }, h('b', { text: `${t('group')} ${g}` }), first.groupName ? first.groupName : '', `· 1:${fmtNum(first.scale)}`));
     for (const [l, i] of rows) {
       const on = !state.hidden.has(i);
-      const box = h('button', { class: 'check', type: 'button', role: 'checkbox', 'aria-checked': String(on), 'aria-label': `${l.id} ${l.name || ''}`, title: t('soloHint'),
+      const box = h('button', { class: 'check', type: 'button', role: 'checkbox', 'aria-checked': String(on), 'aria-label': `${l.id} ${l.name || ''}`, 'data-tip': t('soloHint'),
         onclick: e => toggleLayer(i, e.altKey, box) }, h('span', { class: 'box' }, icon('check')));
+      const solo = h('button', { class: 'solo-btn', type: 'button', 'aria-label': `${t('soloBtn')} ${l.id}`, 'data-tip': t('soloBtn'), onclick: () => toggleLayer(i, true, box) }, 'S');
       const role = l.roleJa ? `${l.roleJa}${l.roleSource === 'profile' ? ` · ${t('roleFromProfile')}` : ''}` : l.ruleJa ? `${l.ruleJa} · ${t('ruleLayer')}` : '';
       const c = l.check, badge = c && (c.error || c.warning) ? h('button', { class: `badge ${c.error ? 'error' : 'warning'}`, type: 'button', title: t('checkSummary', { e: c.error ?? 0, w: c.warning ?? 0, i: c.info ?? 0 }),
         onclick: () => { state.checkLayer = l.id; setTab('check'); } }, String((c.error ?? 0) + (c.warning ?? 0))) : null;
-      const row = h('div', { class: `layer-row${on ? '' : ' off'}` }, box,
+      const row = h('div', { class: `layer-row${on ? '' : ' off'}`, dataset: { i: String(i) } }, box,
         h('div', { class: 'l-main' }, h('span', { class: 'l-name' }, h('span', { class: 'lid', text: l.id }), l.name || t('unnamed')), role ? h('span', { class: 'l-role', text: role }) : null),
-        h('div', { class: 'l-side' }, badge, h('span', { class: 'l-count', text: fmtNum(l.count) })));
+        h('div', { class: 'l-side' }, solo, badge, h('span', { class: 'l-count', text: fmtNum(l.count) })));
       if (!list.dataset.entered && n < 14) { row.classList.add('stagger'); row.style.animationDelay = `${n * 24}ms`; }
       n++; list.append(row);
     }
   }
   list.dataset.entered = '1';
+  if (before) for (const row of list.querySelectorAll('.layer-row')) {
+    const was = before.get(row.dataset.i); if (was === undefined) continue;
+    const dy = was - row.getBoundingClientRect().top; if (Math.abs(dy) < 1) continue;
+    row.__motion = undefined; animate(row, { y: dy }, { immediate: true }); animate(row, { y: 0 }, { damping: 0.9, response: 0.36 });
+  }
+  if (ripple !== null && !prefersReducedMotion()) {
+    // solo: the change spreads outward from the row you clicked (12 ms per row, capped) — cause → effect
+    const rows = [...list.querySelectorAll('.layer-row')], at = rows.findIndex(r => r.dataset.i === String(ripple));
+    rows.forEach((r, k) => {
+      const b = r.querySelector('.box'); b.__motion = undefined;
+      const delay = Math.min(220, Math.abs(k - at) * 12);
+      animate(b, { scale: k === at ? 0.8 : 0.9 }, { immediate: true });
+      setTimeout(() => animate(b, { scale: 1 }, SPRINGS.check), delay);
+    });
+  }
+}
+function setLayerSort(mode, { keyboard = false } = {}) {
+  if (state.layerSort === mode) return;
+  state.layerSort = mode; store.set('fresco-studio-layer-sort', mode);
+  for (const b of $('layer-sort').querySelectorAll('[role=radio]')) b.setAttribute('aria-checked', String(b.dataset.sort === mode));
+  $('layer-sort').__pill?.sync({ instant: keyboard });
+  renderLayers({ flip: !keyboard });
 }
 function toggleLayer(i, solo, box) {
   const used = state.doc.scene.layers.map((l, k) => (l.count ? k : -1)).filter(k => k >= 0);
   if (solo) state.hidden = new Set(used.filter(k => k !== i));
   else if (state.hidden.has(i)) state.hidden.delete(i); else state.hidden.add(i);
-  view.setHiddenLayers(state.hidden);
+  view.setHiddenLayers(state.hidden); minimap.redraw();
   const on = !state.hidden.has(i);
-  if (solo) renderLayers();
+  if (solo) renderLayers({ ripple: i });
   else {
     box.setAttribute('aria-checked', String(on)); box.closest('.layer-row').classList.toggle('off', !on); $('layers-all').hidden = !state.hidden.size;
     // springy checkmark: the tick lands with a little life; unticking is quick and quiet
@@ -178,7 +235,8 @@ function toggleLayer(i, solo, box) {
     const b = box.querySelector('.box'); b.__motion = undefined; if (!prefersReducedMotion()) { animate(b, { scale: 0.86 }, { immediate: true }); animate(b, { scale: 1 }, SPRINGS.check); }
   }
 }
-$('layers-all').addEventListener('click', () => { state.hidden.clear(); view.setHiddenLayers(state.hidden); renderLayers(); });
+$('layers-all').addEventListener('click', () => { state.hidden.clear(); view.setHiddenLayers(state.hidden); minimap.redraw(); renderLayers(); });
+$('layer-sort').addEventListener('click', e => { const b = e.target.closest('[data-sort]'); if (b) setLayerSort(b.dataset.sort, { keyboard: e.detail === 0 }); });
 
 // ---- selection & inspector -------------------------------------------------------------------------------------------
 function select(indices, mode = 'replace', { quiet = false } = {}) {
@@ -186,6 +244,7 @@ function select(indices, mode = 'replace', { quiet = false } = {}) {
   for (const i of indices) { if (mode === 'toggle' && next.has(i)) next.delete(i); else next.add(i); }
   if (next.size > 500) next = new Set([...next].slice(0, 500));
   state.selection = next; view.setSelection(next);
+  if (state.focus && !next.size) setFocus(false);
   state.details = null;
   if (!quiet) $('live').textContent = t('selectionAnnounce', { n: next.size });
   if (state.tab !== 'selection' && next.size && !quiet) setTab('selection');
@@ -197,25 +256,38 @@ async function loadDetails(i) {
   try { const d = await api(`v2/entity?session=${encodeURIComponent(doc.sessionId)}&id=${encodeURIComponent(id)}`); if (state.selection.size === 1 && state.selection.has(i) && state.doc === doc) { state.details = d; renderInspector(); } }
   catch {}
 }
-function setTab(tab) {
+function setTab(tab, { keyboard = false } = {}) {
+  const changed = state.tab !== tab;
   state.tab = tab;
   for (const b of $('insp-tabs').querySelectorAll('[role=tab]')) b.setAttribute('aria-selected', String(b.dataset.tab === tab));
+  if (changed) $('insp-tabs').__pill?.sync({ instant: keyboard });
   $('insp-selection').hidden = tab !== 'selection'; $('insp-check').hidden = tab !== 'check';
   if (tab === 'check') renderCheck();
 }
-$('insp-tabs').addEventListener('click', e => { const b = e.target.closest('[role=tab]'); if (b) { if (b.dataset.tab === 'check') state.checkLayer = null; setTab(b.dataset.tab); } });
-$('insp-tabs').addEventListener('keydown', e => { if (['ArrowLeft', 'ArrowRight'].includes(e.key)) { const next = state.tab === 'selection' ? 'check' : 'selection'; setTab(next); $(`tab-${next}`).focus(); } });
+$('insp-tabs').addEventListener('click', e => { const b = e.target.closest('[role=tab]'); if (b) { if (b.dataset.tab === 'check') state.checkLayer = null; setTab(b.dataset.tab, { keyboard: e.detail === 0 }); } });
+$('insp-tabs').addEventListener('keydown', e => { if (['ArrowLeft', 'ArrowRight'].includes(e.key)) { const next = state.tab === 'selection' ? 'check' : 'selection'; setTab(next, { keyboard: true }); $(`tab-${next}`).focus(); } });
 
 const layerOptions = (current) => {
   const sel = h('select', { class: 'select', 'aria-label': t('layer') });
   state.doc.scene.layers.forEach(l => { if (l.count || l.name || l.id === current) sel.append(h('option', { value: l.id, text: `${l.id}  ${l.name || l.roleJa || ''}`.trim(), selected: l.id === current })); });
   return sel;
 };
-const numInput = (value, axis, onCommit, label) => {
+const numInput = (value, axis, onCommit, label, scrub = {}) => {
   const input = h('input', { class: 'input', type: 'number', step: 'any', value: Number.isFinite(value) ? String(value) : '', 'aria-label': label });
   input.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); onCommit(); } });
-  return axis ? h('label', { class: 'axis', 'data-axis': axis }, input) : input;
+  if (!axis) return input;
+  const handle = h('span', { class: 'axis-handle', text: axis, 'data-tip': t('scrubHint') });
+  scrubbable(handle, input, { perPx: 1, decimals: 1, ...scrub });
+  return h('label', { class: 'axis' }, handle, input);
 };
+/** A read-only number that rolls (odometer) when it changes from elsewhere — keyed so re-renders know the old text. */
+const odoDd = (key, text) => {
+  const dd = h('dd', { text }), prev = state.odo.get(key); state.odo.set(key, text);
+  if (prev !== undefined && prev !== text) queueMicrotask(() => setOdometer(dd, text, { animateFrom: prev }));
+  return dd;
+};
+/** Scrub a plain field by its label (radius, text height). */
+const scrubLabel = (labelText, input, opts) => { const s = h('span', { text: labelText, 'data-tip': t('scrubHint') }); scrubbable(s, input, opts); return s; };
 function renderInspector() {
   const body = $('insp-selection'); body.replaceChildren();
   const doc = state.doc;
@@ -225,7 +297,7 @@ function renderInspector() {
     const used = scene.layers.filter(l => l.count).length, b = scene.bbox;
     const s = scene.check?.summary;
     body.append(h('div', { class: 'insp-head' }, h('span', { class: 'kind-icon' }, icon('doc')), h('h3', { text: doc.name })));
-    body.append(h('dl', { class: 'kv' }, h('dt', { text: t('entityCount') }), h('dd', { text: fmtNum(scene.ents.length) }), h('dt', { text: t('layerCount') }), h('dd', { text: fmtNum(used) }),
+    body.append(h('dl', { class: 'kv' }, h('dt', { text: t('entityCount') }), odoDd('ents', fmtNum(scene.ents.length)), h('dt', { text: t('layerCount') }), odoDd('layers', fmtNum(used)),
       h('dt', { text: t('scale') }), h('dd', { text: `1:${fmtNum(doc.mainScale)}` }), b ? h('dt', { text: t('paper') }) : null, b ? h('dd', { text: `${fmtNum(b[2] - b[0])} × ${fmtNum(b[3] - b[1])} mm` }) : null,
       s ? h('dt', { text: t('inspectorCheck') }) : null, s ? h('dd', { text: t('checkSummary', { e: s.error, w: s.warning, i: s.info }) }) : null));
     body.append(h('div', { class: 'empty-insp' }, h('h3', { text: t('nothingSelected') }), h('p', { class: 'note', text: t('nothingSelectedBody') })));
@@ -250,14 +322,14 @@ function renderInspector() {
     if (d.end && d.editable.includes('end')) pointRow(t('end'), 'end');
     if (d.center) pointRow(t('center'), 'center');
     if (d.at && d.editable.includes('at')) pointRow(t('at'), 'at');
-    if (Number.isFinite(d.radius)) { const r = numInput(d.radius, null, () => { const v = Number(r.value); if (v > 0) modify(e.id, { radius: v }); }, t('radius')); geo.append(h('div', { class: 'field' }, h('span', { text: t('radius') }), r)); }
+    if (Number.isFinite(d.radius)) { const r = numInput(d.radius, null, () => { const v = Number(r.value); if (v > 0) modify(e.id, { radius: v }); }, t('radius')); geo.append(h('div', { class: 'field' }, scrubLabel(t('radius'), r, { perPx: 1, min: 0.1, decimals: 1 }), r)); }
     if (d.kind === 'text') {
       const tx = h('input', { class: 'input', type: 'text', value: d.text ?? '', 'aria-label': t('text') });
       tx.addEventListener('keydown', ev => { if (ev.key === 'Enter' && tx.value.trim()) modify(e.id, { text: tx.value }); });
       const ht = numInput(d.height, null, () => { const v = Number(ht.value); if (v > 0) modify(e.id, { height: v }); }, t('height'));
-      geo.append(h('div', { class: 'field' }, h('span', { text: t('text') }), tx), h('div', { class: 'field' }, h('span', { text: t('height') }), ht));
+      geo.append(h('div', { class: 'field' }, h('span', { text: t('text') }), tx), h('div', { class: 'field' }, scrubLabel(t('height'), ht, { perPx: 0.05, min: 0.5, max: 100, decimals: 2 }), ht));
     }
-    if (Number.isFinite(d.length)) geo.append(h('dl', { class: 'kv' }, h('dt', { text: t('length') }), h('dd', { text: `${fmtNum(d.length, 1)} mm` })));
+    if (Number.isFinite(d.length)) geo.append(h('dl', { class: 'kv' }, h('dt', { text: t('length') }), odoDd(`len:${e.id}`, `${fmtNum(d.length, 1)} mm`)));
     if (d.kind === 'block') geo.append(h('dl', { class: 'kv' }, h('dt', { text: t('blockName') }), h('dd', { text: d.name ?? `#${d.number}` }), h('dt', { text: t('at') }), h('dd', { text: d.at.map(v => fmtNum(v)).join(', ') })));
     if (!d.editable.length) geo.append(h('p', { class: 'note', text: t('readOnly') }));
     else geo.append(h('p', { class: 'note', text: t('editHint') }));
@@ -351,48 +423,150 @@ $('provider-menu').addEventListener('keydown', e => {
   if (e.key === 'ArrowUp') { e.preventDefault(); items[(i - 1 + items.length) % items.length]?.focus(); }
 });
 
-let workTimer = 0;
+let workTimer = 0, workT0 = 0;
 function setBusy(busy, mock) {
   state.busy = busy; $('commandbar').classList.toggle('working', busy);
   clearInterval(workTimer);
   if (busy) {
-    const t0 = performance.now(), label = mock ? t('workingMock') : t('working');
-    const tick = () => { $('work-status').textContent = `${label} ${t('elapsed', { s: Math.floor((performance.now() - t0) / 1000) })}`; };
+    workT0 = performance.now(); const label = mock ? t('workingMock') : t('working');
+    const tick = () => {
+      const s = t('elapsed', { s: Math.floor((performance.now() - workT0) / 1000) });
+      $('work-status').textContent = `${label} ${s}`;
+      const el = document.getElementById('p-elapsed'); if (el) el.textContent = s;
+    };
     tick(); workTimer = setInterval(tick, 1000);
   } else $('work-status').textContent = '';
   renderCommand();
 }
+
+// ---- live progress timeline (streamed from /api/v2/edit-stream) -----------------------------------------------------------
+// Events are applied in order with a 45 ms stagger so a burst (the mock answers instantly) still reads as a sequence;
+// a slow step (reading a 21k-entity drawing) simply stays "running" for as long as it really takes.
+let progQ = [], progTimer = 0, progWaiters = [];
+function pushProgress(ev) { progQ.push(ev); if (!progTimer) drainProgress(); }
+function drainProgress() {
+  const ev = progQ.shift();
+  if (!ev) { progTimer = 0; for (const r of progWaiters.splice(0)) r(); return; }
+  state.progress = reduceProgress(state.progress ?? emptyProgress(), ev);
+  renderTimeline(document.getElementById('p-timeline'), { animateIn: true });
+  progTimer = setTimeout(drainProgress, prefersReducedMotion() ? 0 : 45);
+}
+const progressDrained = () => (progTimer || progQ.length ? new Promise(r => progWaiters.push(r)) : Promise.resolve());
+const STEP_ICON = { run: '', ok: 'check', fail: 'x', ask: 'help' };
+function stepMeta(s) {
+  if (s.id === 'load' && s.info) return t('stepLoadInfo', { e: fmtNum(s.info.entities), l: fmtNum(s.info.layers) });
+  if (s.id === 'search') { const last = s.tools.at(-1); return s.count ? `${t('stepTools', { n: s.count })}${last ? ` · ${last.name}${last.detail ? ` ${last.detail}` : ''}` : ''}` : ''; }
+  if (s.id === 'propose' && s.info) return `${t('stepOps', { n: s.info.ops })}${s.info.kinds?.length ? ` · ${s.info.kinds.join(', ')}` : ''}`;
+  return '';
+}
+function renderTimeline(ol, { animateIn = false } = {}) {
+  if (!ol || !state.progress) return;
+  const p = state.progress, reduced = prefersReducedMotion();
+  let grew = false;
+  for (const s of p.steps) {
+    let li = ol.querySelector(`[data-key="${s.key}"]`);
+    const label = s.id === 'retry' ? `${t('step.retry')} — ${t('stepAttempt', { n: s.attempt + 1 })}` : s.id === 'done' ? t(p.status === 'applied' ? 'step.done' : p.status === 'clarification' ? 'step.ask' : 'step.failed')
+      : `${t(`step.${s.id}`)}${s.attempt > 1 && s.id === 'search' ? ` · ${t('stepAttempt', { n: s.attempt })}` : ''}`;
+    if (!li) {
+      li = h('li', { class: `tl-step tl-${s.id}`, dataset: { key: s.key } }, h('span', { class: 'tl-dot' }), h('div', { class: 'tl-body' }, h('span', { class: 'tl-label' }), h('span', { class: 'tl-meta' })));
+      ol.append(li); grew = true;
+      if (animateIn) { li.__motion = undefined; animate(li, reduced ? { opacity: 0 } : { opacity: 0, y: 8 }, { immediate: true }); animate(li, { opacity: 1, y: 0 }, { damping: 0.9, response: 0.3 }); }
+    }
+    li.querySelector('.tl-label').textContent = label;
+    li.querySelector('.tl-meta').textContent = stepMeta(s);
+    if (li.dataset.state !== s.state) {
+      const dot = li.querySelector('.tl-dot'), had = li.dataset.state;
+      li.dataset.state = s.state; dot.replaceChildren(...(STEP_ICON[s.state] ? [icon(STEP_ICON[s.state])] : []));
+      if (had && s.state !== 'run' && animateIn && !reduced) { dot.__motion = undefined; animate(dot, { scale: 0.5 }, { immediate: true }); animate(dot, { scale: 1 }, SPRINGS.check); }
+    }
+    const err = s.error;
+    let box = li.querySelector('.tl-error');
+    if (err && !box) { box = h('div', { class: 'tl-error' }); li.querySelector('.tl-body').append(box); grew = true; }
+    if (box && err) box.textContent = `${err.code} — ${errorText(err.code, err.detail)}${err.detail && s.id === 'retry' ? `\n${err.detail}` : ''}`;
+  }
+  if (grew) morph?.resize();
+}
+function startProgress(title, mock) {
+  state.progress = emptyProgress(); progQ = []; clearTimeout(progTimer); progTimer = 0;
+  const content = $('proposal-content');
+  content.replaceChildren(
+    h('div', { class: 'p-head' }, h('span', { class: 'p-icon work' }, h('span', { class: 'toast-spinner' })), h('h3', { text: t('progressTitle') }),
+      h('div', { class: 'p-meta' }, h('span', { text: mock ? t('providerMock') : providers().find(x => x[0] === effectiveProvider())?.[1] ?? '' }), h('span', { id: 'p-elapsed', text: '' }))),
+    h('p', { class: 'p-instruction', text: title }),
+    h('ol', { class: 'timeline', id: 'p-timeline', 'aria-live': 'polite' }));
+  openCard();
+}
+function openCard() { if (morph.open) morph.resize(); else morph.show(); $('proposal').classList.add('is-open'); }
+
 async function runEdit(instruction, { provider } = {}) {
   if (!state.doc || state.busy) return;
   state.lastInstruction = instruction;
   const chosen = provider ?? state.provider, mock = (provider ?? effectiveProvider()) === 'mock';
-  clearProposal({ silent: true }); setBusy(true, mock);
+  clearProposal({ silent: true, keepCard: true }); setBusy(true, mock);
+  startProgress(instruction, mock);
+  let result = null;
+  const body = { sessionId: state.doc.sessionId, baseHash: state.doc.hash, instruction, provider: chosen, selection: [...state.selection].map(i => state.doc.scene.ents[i].id) };
   try {
-    const r = await api('v2/edit', { sessionId: state.doc.sessionId, baseHash: state.doc.hash, instruction, provider: chosen, selection: [...state.selection].map(i => state.doc.scene.ents[i].id) });
-    showProposal({ ...r, instruction });
-    if (r.status === 'applied') $('command').value = '';
-  } catch (e) { showProposal({ status: 'failed', error: { code: e.code }, attempts: [], instruction }); }
-  finally { setBusy(false); }
+    const res = await fetch('/api/v2/edit-stream', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Fresco-Token': state.token }, body: JSON.stringify(body) });
+    if (!res.ok || !res.body) { const b = await res.json().catch(() => ({ error: 'E_STUDIO_OPERATION' })); throw Object.assign(new Error(b.error), { code: b.error }); }
+    await readNdjson(res.body, ev => {
+      if (ev.t === 'result') result = ev.result;
+      if (ev.t === 'error') result = { status: 'failed', error: { code: ev.code, detail: ev.detail }, attempts: [] };
+      pushProgress(ev);
+    });
+    if (!result) throw Object.assign(new Error('E_STUDIO_OPERATION'), { code: 'E_STUDIO_OPERATION' });
+  } catch (e) {
+    result = { status: 'failed', error: { code: e.code ?? 'E_STUDIO_OPERATION' }, attempts: [] };
+    pushProgress({ t: 'error', code: result.error.code });
+  }
+  await progressDrained();
+  setBusy(false);
+  showProposal({ ...result, instruction });
+  if (result.status === 'applied') $('command').value = '';
 }
-async function manualPatch(ops) {
-  if (!state.doc || state.busy) return;
+async function manualPatch(ops, { keepCamera = false } = {}) {
+  if (!state.doc || state.busy) return false;
   setBusy(true, true);
+  startProgress(t('manual'), true);
+  pushProgress({ t: 'step', id: 'propose', state: 'ok', attempt: 1, info: { ops: ops.length, kinds: [...new Set(ops.map(o => o.op))] } });
+  pushProgress({ t: 'step', id: 'l1', state: 'run', attempt: 1 });
+  let r = null, ok = false;
   try {
     const patch = { schemaVersion: 2, sourceHash: state.doc.hash, units: 'model-mm', rationale: t('manual'), needsClarification: null, ops };
-    showProposal({ ...(await api('v2/patch', { sessionId: state.doc.sessionId, baseHash: state.doc.hash, patch })), manual: true });
-  } catch (e) { toast.error(errorText(e.code), e.detail ? { description: e.detail } : {}); }
-  finally { setBusy(false); }
+    r = { ...(await api('v2/patch', { sessionId: state.doc.sessionId, baseHash: state.doc.hash, patch })), manual: true, keepCamera };
+    pushProgress({ t: 'step', id: 'l1', state: 'ok', attempt: 1 }); pushProgress({ t: 'step', id: 'l2', state: 'ok', attempt: 1 });
+    pushProgress({ t: 'result', result: r }); ok = true;
+  } catch (e) {
+    r = { status: 'failed', manual: true, error: { code: e.code ?? 'E_STUDIO_OPERATION', detail: e.detail }, attempts: [] };
+    pushProgress({ t: 'error', code: r.error.code, detail: e.detail });
+  }
+  await progressDrained();
+  setBusy(false);
+  showProposal(r);
+  return ok;
 }
 
-// ---- proposal sheet -----------------------------------------------------------------------------------------------------
+// ---- proposal card (morphs out of the command bar) ---------------------------------------------------------------------
+function stepsSummary() {
+  const p = state.progress; if (!p?.steps.length) return null;
+  const real = p.steps.filter(s => s.id !== 'done');
+  const det = h('details', { class: 'p-steps' }, h('summary', {}, `${t('progressTitle')} · ${real.length}`, p.attempt > 1 ? ` · ${t('attempts', { n: p.attempt, max: p.max || state.ai?.maxAttempts || 3 })}` : ''),
+    h('ol', { class: 'timeline' }));
+  renderTimeline(det.querySelector('ol'));
+  det.addEventListener('toggle', () => morph.resize());
+  if (p.steps.some(s => s.id === 'retry')) det.open = true; // a retry is worth seeing without a click
+  return det;
+}
 function showProposal(p) {
-  state.proposal = p; const sheet = $('proposal'), lang = getLang();
+  state.proposal = p; const sheet = $('proposal-content'), lang = getLang();
   sheet.replaceChildren();
+  view.clearMove();
   const meta = h('div', { class: 'p-meta' });
   if (p.attempts?.length) meta.append(h('span', { text: t('attempts', { n: p.attempts.length, max: state.ai?.maxAttempts ?? 3 }) }));
   if (p.provider && !p.manual) meta.append(h('span', { text: p.provider === 'mock' ? t('providerMock') : p.model ?? p.provider }));
   if (!p.manual && p.status !== 'failed' || p.costEstimate) meta.append(h('span', { text: p.demo || p.provider === 'mock' ? t('costMock') : Number.isFinite(p.costEstimate?.usd) ? t('cost', { usd: p.costEstimate.usd.toFixed(3) }) : t('cost0') }));
   if (Number.isFinite(p.latencyMs)) meta.append(h('span', { text: `${(p.latencyMs / 1000).toFixed(1)} s` }));
+  const steps = stepsSummary();
   if (p.status === 'applied') {
     sheet.append(h('div', { class: 'p-head' }, h('span', { class: 'p-icon ok' }, icon('check')), h('h3', { text: p.manual ? t('manual') : t('proposal') }), meta));
     if (p.rationale && !p.manual) sheet.append(h('p', { class: 'p-rationale', text: p.rationale }));
@@ -411,11 +585,12 @@ function showProposal(p) {
       if (lc.corrections?.length) { const c = lc.corrections[0]; box.append(h('div', {}, h('button', { class: 'btn small', type: 'button', text: t('applySuggested', { to: `${c.to}${c.roleJa ? ` ${c.roleJa}` : ''}` }), onclick: fixLayers }))); }
       sheet.append(box);
     }
+    if (steps) sheet.append(steps);
     sheet.append(h('div', { class: 'p-actions' }, h('span', { class: 'hint', text: isMac ? t('acceptHint') : t('acceptHint').replace('⌘↵', 'Ctrl+Enter') }),
       h('button', { class: 'btn', type: 'button', text: t('reject'), onclick: () => reject() }),
       h('button', { class: 'btn primary', type: 'button', id: 'accept-btn', onclick: () => accept() }, t('accept'))));
     stage.classList.add('diffing'); view.setDiff(p.diff);
-    if (p.diff.bbox) {
+    if (p.diff.bbox && !p.keepCamera) {
       // frame the change with context: about 60% of the drawing around it
       const b = p.diff.bbox, d = view.bbox ?? b, mw = (d[2] - d[0]) * 0.6, mh = (d[3] - d[1]) * 0.6, cx = (b[0] + b[2]) / 2, cy = (b[1] + b[3]) / 2;
       const w = Math.max(b[2] - b[0], mw) / 2, hh = Math.max(b[3] - b[1], mh) / 2;
@@ -427,41 +602,29 @@ function showProposal(p) {
     const input = h('input', { class: 'input', type: 'text', placeholder: t('replyPlaceholder'), 'aria-label': t('replyPlaceholder') });
     const send = () => input.value.trim() && runEdit(`${p.instruction}\n（確認への回答: ${p.question} → ${input.value.trim()}）`);
     input.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); send(); } });
-    sheet.append(h('div', { class: 'reply' }, input, h('button', { class: 'btn primary', type: 'button', text: t('reply'), onclick: send })),
-      h('div', { class: 'p-actions' }, h('span', { class: 'hint' }), h('button', { class: 'btn', type: 'button', text: t('dismiss'), onclick: () => clearProposal() })));
+    sheet.append(h('div', { class: 'reply' }, input, h('button', { class: 'btn primary', type: 'button', text: t('reply'), onclick: send })));
+    if (steps) sheet.append(steps);
+    sheet.append(h('div', { class: 'p-actions' }, h('span', { class: 'hint' }), h('button', { class: 'btn', type: 'button', text: t('dismiss'), onclick: () => clearProposal() })));
   } else {
     const code = p.error?.code ?? 'E_STUDIO_OPERATION';
     sheet.append(h('div', { class: 'p-head' }, h('span', { class: 'p-icon bad' }, icon('x')), h('h3', { text: code === 'E_AI_KEY_REQUIRED' ? t('keyNotSetTitle') : t('failed') }), meta));
     sheet.append(h('p', { class: 'p-rationale', text: code === 'E_AI_KEY_REQUIRED' ? t('keyNotSetBody') : errorText(code, p.error?.detail) }));
-    if (p.attempts?.length > 1) sheet.append(h('ol', { class: 'attempt-list' }, p.attempts.map(a => h('li', { text: `${a.status}${a.error ? ` · ${a.error.code}` : ''}` }))));
+    if (steps && code !== 'E_AI_KEY_REQUIRED') { steps.open = true; sheet.append(steps); }
     const actions = h('div', { class: 'p-actions' }, h('span', { class: 'hint' }), h('button', { class: 'btn', type: 'button', text: t('dismiss'), onclick: () => clearProposal() }));
     if (code === 'E_AI_KEY_REQUIRED') actions.append(h('button', { class: 'btn primary', type: 'button', text: t('tryMock'), onclick: () => runEdit(p.instruction, { provider: 'mock' }) }));
     else if (p.instruction) actions.append(h('button', { class: 'btn primary', type: 'button', text: t('retry'), onclick: () => runEdit(p.instruction) }));
     sheet.append(actions);
-    // failure feedback once, on the causal frame: a single nudge of the bar
-    const bar = $('commandbar'); bar.__motion = undefined;
-    if (!prefersReducedMotion()) animate(bar, { x: 0 }, { ...SPRINGS.flick, velocity: { x: -900 } });
+    // failure feedback once, on the causal frame: a single nudge of the card
+    morph.nudge(-900);
   }
-  const wasOpen = isOpen(sheet);
-  if (!wasOpen) {
-    sheet.style.transformOrigin = '50% 100%'; sheet.hidden = false; sheet.__motion = undefined;
-    if (prefersReducedMotion()) { animate(sheet, { opacity: 0 }, { immediate: true }); animate(sheet, { opacity: 1 }, SPRINGS.snappy); }
-    else { animate(sheet, { y: 14, scale: 0.97, opacity: 0 }, { immediate: true }); animate(sheet, { y: 0, scale: 1, opacity: 1 }, SPRINGS.sheet); }
-    sheet.classList.add('is-open'); markOpen(sheet);
-  }
+  openCard();
   renderCommand();
   if (p.status === 'clarification') requestAnimationFrame(() => sheet.querySelector('input')?.focus());
 }
-const proposalOpen = new Set(); const markOpen = s => proposalOpen.add(s);
-function clearProposal({ silent = false } = {}) {
+function clearProposal({ silent = false, keepCard = false } = {}) {
   const had = state.proposal; state.proposal = null;
   stage.classList.remove('diffing'); view.setDiff(null);
-  const sheet = $('proposal');
-  if (proposalOpen.has(sheet)) {
-    proposalOpen.delete(sheet); sheet.classList.remove('is-open');
-    const done = () => { if (!proposalOpen.has(sheet)) sheet.hidden = true; };
-    (prefersReducedMotion() ? animate(sheet, { opacity: 0 }, SPRINGS.snappy) : animate(sheet, { y: 14, scale: 0.97, opacity: 0 }, SPRINGS.snappy)).finished.then(done);
-  }
+  if (!keepCard && morph.open) { $('proposal').classList.remove('is-open'); morph.hide(); }
   if (had?.previewId && !silent && state.doc) api('v2/reject', { sessionId: state.doc.sessionId }).catch(() => {});
   renderCommand();
 }
@@ -469,26 +632,60 @@ function reject() { if (!state.proposal) return; clearProposal(); toast.info(t('
 async function accept() {
   const p = state.proposal; if (!p?.previewId || state.busy) return;
   const btn = $('accept-btn'); if (btn) btn.disabled = true;
-  const keep = [...state.selection].map(i => state.doc.scene.ents[i].id);
+  const keep = [...state.selection].map(i => state.doc.scene.ents[i].id), before = state.doc.scene;
   try {
     const r = await api('v2/accept', { sessionId: state.doc.sessionId, previewId: p.previewId });
+    const file = r.savedPath.split(/[\\/]/u).pop();
+    state.history = [...state.history, { label: summarizeOps(p.ops, getLang()) || t('manual'), time: new Date().toLocaleTimeString(getLang() === 'en' ? 'en-US' : 'ja-JP', { hour: '2-digit', minute: '2-digit' }),
+      file, before, after: r.scene, bbox: p.diff?.bbox ?? null }].slice(-20);
     receiveDoc(r, { keepCamera: true, keepSelectionIds: keep });
     await refreshFiles();
-    toast.success(t('saved'), { description: r.savedPath.split(/[\/]/u).pop(), action: { label: t('undo'), onClick: undo } });
-    const chip = $('doc-chip'); chip.__motion = undefined;
-    if (!prefersReducedMotion()) { animate(chip, { scale: 0.8 }, { immediate: true }); animate(chip, { scale: 1 }, SPRINGS.check); }
+    toast.success(t('saved'), { description: file, action: { label: t('undo'), onClick: undo } });
+    settleSaved();
   } catch (e) { if (btn) btn.disabled = false; toast.error(errorText(e.code)); }
 }
-async function undo() {
-  if (!state.doc?.canUndo || state.busy) { toast.info(t('nothingToUndo')); return; }
-  try { const r = await api('v2/undo', { sessionId: state.doc.sessionId }); receiveDoc(r, { keepCamera: true }); toast.info(t('undone')); }
-  catch (e) { toast.error(errorText(e.code)); }
+/** Success "settle": the card has folded back into the bar; the send button becomes a check that lands once. */
+function settleSaved() {
+  const chip = $('doc-chip'); chip.__motion = undefined;
+  const send = $('send'); send.classList.add('saved');
+  if (!prefersReducedMotion()) {
+    animate(chip, { scale: 0.8 }, { immediate: true }); animate(chip, { scale: 1 }, SPRINGS.check);
+    const svg = send.querySelector('.saved-check'); if (svg) { svg.__motion = undefined; animate(svg, { scale: 0.4, opacity: 0 }, { immediate: true }); animate(svg, { scale: 1, opacity: 1 }, SPRINGS.check); }
+  }
+  clearTimeout(settleSaved.timer); settleSaved.timer = setTimeout(() => send.classList.remove('saved'), 1400);
+}
+async function undo({ quiet = false } = {}) {
+  if (!state.doc?.canUndo || state.busy) { if (!quiet) toast.info(t('nothingToUndo')); return false; }
+  try {
+    const r = await api('v2/undo', { sessionId: state.doc.sessionId });
+    state.history = state.history.slice(0, -1);
+    receiveDoc(r, { keepCamera: true }); if (!quiet) toast.info(t('undone')); return true;
+  } catch (e) { toast.error(errorText(e.code)); return false; }
 }
 async function fixLayers() {
   const p = state.proposal; if (!p?.previewId) return;
   setBusy(true, true);
-  try { showProposal({ ...(await api('v2/fix-layers', { sessionId: state.doc.sessionId, previewId: p.previewId })), manual: true }); }
+  try { showProposal({ ...(await api('v2/fix-layers', { sessionId: state.doc.sessionId, previewId: p.previewId })), manual: true, keepCamera: true }); }
   catch (e) { toast.error(errorText(e.code)); } finally { setBusy(false); }
+}
+
+// ---- direct manipulation: Δ chip + commit ------------------------------------------------------------------------------
+function updateDragChip(info) {
+  const chip = $('drag-chip');
+  if (!info) { chip.hidden = true; return; }
+  const [dx, dy] = info.model, f = v => `${v > 0 ? '+' : v < 0 ? '−' : '±'}${fmtNum(Math.abs(v), 1)}`;
+  chip.hidden = false;
+  chip.querySelector('.dx').textContent = `Δx ${f(dx)}`; chip.querySelector('.dy').textContent = `Δy ${f(dy)}`;
+  const tag = chip.querySelector('.snap'), s = info.snap;
+  tag.textContent = info.free ? t('dragFree') : s?.kind === 'endpoint' ? t('dragEnd') : s?.kind === 'grid' ? ((s.axes.x && s.major.x) || (s.axes.y && s.major.y) ? t('dragGridMajor') : t('dragGrid')) : '';
+  tag.hidden = !tag.textContent; chip.classList.toggle('engaged', !!info.engaged);
+  // follows the cursor 1:1 (no spring: it is part of the gesture), offset so it never sits under the pointer
+  const r = stage.getBoundingClientRect(), x = Math.min(innerWidth - 180, info.clientX + 16), y = Math.max(r.top + 60, info.clientY - 40);
+  chip.style.transform = `translate3d(${Math.round(x)}px, ${Math.round(y)}px, 0)`;
+}
+async function commitDragMove(ids, dx, dy) {
+  const ok = await manualPatch([{ op: 'translate', ids: ids.map(i => state.doc.scene.ents[i].id), dx, dy }], { keepCamera: true });
+  if (!ok) view.clearMove();
 }
 
 // ---- settings, shortcuts, generator ----------------------------------------------------------------------------------------
@@ -501,7 +698,8 @@ function switchEl(on, label, onChange) {
 function segmentedEl(options, value, onChange, label) {
   const seg = h('div', { class: 'segmented', role: 'radiogroup', 'aria-label': label });
   for (const [v, text] of options) seg.append(h('button', { type: 'button', role: 'radio', 'aria-checked': String(v === value), onclick: e => {
-    for (const b of seg.children) b.setAttribute('aria-checked', String(b === e.currentTarget)); onChange(v); } }, text));
+    for (const b of seg.querySelectorAll('[role=radio]')) b.setAttribute('aria-checked', String(b === e.currentTarget)); seg.__pill?.sync({ instant: e.detail === 0 }); onChange(v); } }, text));
+  attachPill(seg);
   return seg;
 }
 function renderSettings() {
@@ -528,7 +726,7 @@ function renderSettings() {
 }
 function renderShortcuts() {
   const s = $('shortcuts'); s.replaceChildren(h('div', { class: 'pop-head' }, h('h2', { id: 'shortcuts-h', text: t('shortcuts') }), h('button', { class: 'icon-btn small', type: 'button', 'data-close': '', onclick: () => hideSheet(s) }, icon('x'))),
-    h('dl', { class: 'sc-list' }, t('shortcutsList').flatMap(([k, d]) => [h('dt', {}, h('kbd', { text: isMac ? k.split(' / ')[0] : (k.split(' / ')[1] ?? k) })), h('dd', { text: d })])));
+    h('dl', { class: 'sc-list' }, [...t('shortcutsList'), ...t('shortcutsList2')].flatMap(([k, d]) => [h('dt', {}, h('kbd', { text: isMac ? k.split(' / ')[0] : (k.split(' / ')[1] ?? k) })), h('dd', { text: d })])));
 }
 async function renderGenerator() {
   const s = $('generator'); s.replaceChildren(h('div', { class: 'pop-head' }, h('h2', { id: 'generator-h', text: t('generatorTitle') }), h('button', { class: 'icon-btn small', type: 'button', 'data-close': '', onclick: () => hideSheet(s) }, icon('x'))),
@@ -568,8 +766,9 @@ function layoutChrome() {
 }
 $('toggle-sidebar').addEventListener('click', () => setPanel('sidebar', app.classList.contains('no-sidebar')));
 $('toggle-inspector').addEventListener('click', () => setPanel('inspector', app.classList.contains('no-inspector')));
-$('tool-seg').addEventListener('click', e => { const b = e.target.closest('[data-tool]'); if (b) setTool(b.dataset.tool); });
-function setTool(tool) { view.setTool(tool); for (const b of $('tool-seg').children) b.setAttribute('aria-checked', String(b.dataset.tool === tool)); }
+$('tool-seg').addEventListener('click', e => { const b = e.target.closest('[data-tool]'); if (b) setTool(b.dataset.tool, { keyboard: e.detail === 0 }); });
+// tool changes from V/H are keyboard-initiated: the pill jumps (no animation); a click slides it
+function setTool(tool, { keyboard = true } = {}) { view.setTool(tool); for (const b of $('tool-seg').querySelectorAll('[data-tool]')) b.setAttribute('aria-checked', String(b.dataset.tool === tool)); $('tool-seg').__pill?.sync({ instant: keyboard }); }
 $('zoom-in').addEventListener('click', () => view.zoomAt(1.4, undefined, undefined, { animate: true }));
 $('zoom-out').addEventListener('click', () => view.zoomAt(1 / 1.4, undefined, undefined, { animate: true }));
 $('fit').addEventListener('click', () => view.fitAll());
@@ -579,6 +778,101 @@ $('empty-search').addEventListener('click', () => { setPanel('sidebar', true); $
 $('empty-generate').addEventListener('click', e => toggleSheet('generator', renderGenerator, e.currentTarget, e.detail === 0));
 $('file-search').addEventListener('input', e => { state.fileFilter = e.target.value; renderFiles(); });
 
+// ---- wave 2: context menu, focus mode, history scrubber, minimap ---------------------------------------------------------
+function selectionScreenCenter() {
+  const b = view.boundsOf(state.selection), r = $('canvas-overlay').getBoundingClientRect();
+  if (!b) return [r.left + r.width / 2, r.top + r.height / 2];
+  const [x, y] = view.toScreen((b[0] + b[2]) / 2, (b[1] + b[3]) / 2);
+  return [r.left + Math.max(40, Math.min(r.width - 40, x)), r.top + Math.max(80, Math.min(r.height - 120, y))];
+}
+function openCanvasMenu(x, y, keyboard) {
+  if (!state.doc) return;
+  if (keyboard) [x, y] = selectionScreenCenter();
+  const sel = [...state.selection], scene = state.doc.scene, one = sel.length ? scene.ents[sel[0]] : null;
+  const layerIdx = one ? one.l : -1, layer = layerIdx >= 0 ? scene.layers[layerIdx] : null, has = sel.length > 0, free = !state.busy && !state.proposal;
+  const items = [
+    { label: t('ctxZoomSel'), kbd: '⇧F', disabled: !has, onSelect: () => view.fitSelection() },
+    { label: t('ctxFitAll'), kbd: 'F', onSelect: () => view.fitAll() },
+    { label: state.focus ? t('ctxFocusOff') : t('ctxFocus'), kbd: '.', disabled: !has && !state.focus, onSelect: () => setFocus(!state.focus) },
+    'sep',
+    { label: t('ctxSelectLayer'), disabled: !layer, onSelect: () => { const idx = scene.ents.map((e, i) => (e.l === layerIdx ? i : -1)).filter(i => i >= 0); select(idx, 'replace'); } },
+    { label: t('ctxSolo'), disabled: !layer, onSelect: () => toggleLayer(layerIdx, true, null) },
+    { label: t('ctxHideLayer'), disabled: !layer, onSelect: () => { state.hidden.add(layerIdx); view.setHiddenLayers(state.hidden); minimap.redraw(); select([], 'replace', { quiet: true }); renderLayers(); } },
+    { label: t('ctxShowAll'), disabled: !state.hidden.size, onSelect: () => { state.hidden.clear(); view.setHiddenLayers(state.hidden); minimap.redraw(); renderLayers(); } },
+    'sep',
+    { label: t('ctxAsk'), kbd: isMac ? '⌘K' : 'Ctrl K', disabled: !free, onSelect: () => { const c = $('command'); c.focus(); c.select(); } },
+    { label: t('ctxMove'), disabled: !has || !free, onSelect: () => { setPanel('inspector', true); setTab('selection', { keyboard: true }); requestAnimationFrame(() => $('insp-selection').querySelector('.group:last-child input')?.focus()); } },
+    { label: t('ctxCopyId'), disabled: sel.length !== 1, onSelect: () => navigator.clipboard?.writeText(one.id).then(() => toast.info(t('copied'), { description: one.id })).catch(() => {}) },
+    { label: t('ctxDelete'), danger: true, disabled: !has || !free, onSelect: () => manualPatch([{ op: 'delete', ids: sel.map(i => scene.ents[i].id) }], { keepCamera: true }) }
+  ];
+  openContextMenu(x, y, items, { keyboard, label: t('ctxLabel') });
+}
+/** Focus mode: dim everything but the selection (base layer fades; the selection stays crisp on the overlay). */
+function setFocus(on) {
+  on = !!on && state.selection.size > 0;
+  if (state.focus === on) return;
+  state.focus = on; stage.classList.toggle('focus-mode', on);
+  const chip = $('focus-chip'); chip.textContent = t('focusOn');
+  if (on) { chip.hidden = false; chip.__motion = undefined; animate(chip, prefersReducedMotion() ? { opacity: 0 } : { opacity: 0, y: -6 }, { immediate: true }); animate(chip, { opacity: 1, y: 0 }, SPRINGS.default); }
+  else animate(chip, { opacity: 0 }, SPRINGS.snappy).finished.then(done => { if (done && !state.focus) chip.hidden = true; });
+  $('live').textContent = on ? t('focusOn') : '';
+}
+
+// history: state k = scene after the k-th accepted edit (0 = as opened); the current state is history.length
+const stateScene = k => (k >= state.history.length ? state.doc?.scene : k === 0 ? state.history[0].before : state.history[k - 1].after);
+function renderHistoryThumb(canvas, k, w, hgt) {
+  const scene = stateScene(k), ctx = canvas.getContext('2d'), d = globalThis.devicePixelRatio || 1;
+  ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, canvas.width, canvas.height);
+  if (!scene?.bbox) return;
+  const b = scene.bbox, s = Math.min((w - 12) / (b[2] - b[0] || 1), (hgt - 12) / (b[3] - b[1] || 1)), ox = (w - (b[2] - b[0]) * s) / 2, oy = (hgt - (b[3] - b[1]) * s) / 2;
+  ctx.setTransform(d * s, 0, 0, -d * s, d * (ox - b[0] * s), d * (hgt - oy + b[1] * s));
+  const path = new Path2D();
+  for (const p of scene.prims) { if (p.t === 4 || state.hidden.has(p.l) || p.p.length < 4) continue; path.moveTo(p.p[0], p.p[1]); for (let i = 2; i < p.p.length; i += 2) path.lineTo(p.p[i], p.p[i + 1]); }
+  ctx.strokeStyle = view.palette.fg; ctx.globalAlpha = 0.6; ctx.lineWidth = 0.7 / s; ctx.stroke(path);
+  const bb = k > 0 ? state.history[k - 1]?.bbox : null;
+  if (bb) { // where that edit happened
+    const pad = 6 / s; ctx.globalAlpha = 1; ctx.strokeStyle = view.accent; ctx.lineWidth = 1.5 / s;
+    ctx.strokeRect(bb[0] - pad, bb[1] - pad, bb[2] - bb[0] + pad * 2, bb[3] - bb[1] + pad * 2);
+  }
+}
+let scrubbing = false;
+/** Scrub position p ∈ [0, n]: cross-fade the two neighbouring states on the canvas (opacity only, no per-frame redraw). */
+function scrubHistory(p) {
+  const n = state.history.length, base = $('canvas-base'), A = $('canvas-compare-a'), B = $('canvas-compare-b');
+  if (!state.doc || p >= n - 1e-3) {
+    if (scrubbing) { scrubbing = false; stage.classList.remove('history-scrub'); base.style.opacity = ''; A.style.opacity = B.style.opacity = '0'; view.setCompareLayer(0, null); view.setCompareLayer(1, null); }
+    return;
+  }
+  if (!scrubbing) { scrubbing = true; stage.classList.add('history-scrub'); }
+  const lo = Math.floor(p), hi = Math.min(n, lo + 1), f = p - lo;
+  // lower state on A; the upper state is either the live base canvas (hi = n) or B
+  view.setCompareLayer(0, stateScene(lo));
+  if (hi >= n) { view.setCompareLayer(1, null); base.style.opacity = String(f); B.style.opacity = '0'; }
+  else { view.setCompareLayer(1, stateScene(hi)); base.style.opacity = '0'; B.style.opacity = String(f); }
+  A.style.opacity = String(1 - f);
+}
+function endHistoryPreview() { if (history?.previewing) history.endPreview(); else scrubHistory(Infinity); }
+async function restoreHistory(k) {
+  const n = state.history.length; if (k >= n || state.busy) return;
+  clearProposal();
+  const id = toast.loading(t('restoring'));
+  let ok = true;
+  for (let i = n; i > k && ok; i--) ok = await undo({ quiet: true });
+  scrubHistory(Infinity);
+  toast.dismiss(id);
+  if (ok) toast.info(t('restored', { k }));
+}
+
+function initWave2() {
+  morph = createMorph({ card: $('proposal'), bar: $('commandbar'), content: $('proposal-content') });
+  minimap = createMinimap({ host: stage, view, label: t('minimap') });
+  history = createHistory({ host: stage, t, renderThumb: renderHistoryThumb, onScrub: scrubHistory, onRestore: restoreHistory, onPreviewEnd: () => scrubHistory(Infinity) });
+  initTooltips(document);
+  for (const id of ['tool-seg', 'insp-tabs', 'layer-sort']) attachPill($(id));
+  for (const b of $('layer-sort').querySelectorAll('[role=radio]')) b.setAttribute('aria-checked', String(b.dataset.sort === state.layerSort));
+}
+initWave2();
+
 // ---- keyboard ---------------------------------------------------------------------------------------------------------------
 const typing = el => el && (el.matches('input, textarea, select') || el.isContentEditable);
 document.addEventListener('keydown', e => {
@@ -586,11 +880,16 @@ document.addEventListener('keydown', e => {
   if (mod && e.key.toLowerCase() === 'k') { e.preventDefault(); const c = $('command'); if (!c.disabled) { c.focus(); c.select(); } return; }
   if (mod && e.key === 'Enter' && state.proposal?.previewId) { e.preventDefault(); accept(); return; }
   if (mod && e.key.toLowerCase() === 'z' && !typing(document.activeElement)) { e.preventDefault(); undo(); return; }
+  if ((e.key === 'ContextMenu' || (e.shiftKey && e.key === 'F10')) && state.doc && !typing(document.activeElement)) { e.preventDefault(); openCanvasMenu(0, 0, true); return; }
   if (e.key === 'Escape') {
+    if (contextMenuOpen()) { closeContextMenu(); return; }
+    if (view.drag?.mode === 'move') { view.abortMove(); return; }
     const top = topSheet();
     if (top) { hideSheet(top); return; }
+    if (history.previewing) { endHistoryPreview(); return; }
     if (state.proposal) { e.preventDefault(); reject(); return; }
     if (typing(document.activeElement)) { document.activeElement.blur(); return; }
+    if (state.focus) { setFocus(false); return; }
     if (state.selection.size) { select([], 'replace'); return; }
     return;
   }
@@ -599,6 +898,7 @@ document.addEventListener('keydown', e => {
   if (!state.doc) { if (e.key === '?') toggleSheet('shortcuts', renderShortcuts, $('open-shortcuts'), true); return; }
   const k = e.key;
   if (k === '?') { toggleSheet('shortcuts', renderShortcuts, $('open-shortcuts'), true); return; }
+  if (k === '.') { setFocus(!state.focus); return; }
   if (k === 'f' || k === 'F') { e.shiftKey ? view.fitSelection() : view.fitAll(); return; }
   if (k === 'v' || k === 'V') { setTool('select'); return; }
   if (k === 'h' || k === 'H') { setTool('pan'); return; }

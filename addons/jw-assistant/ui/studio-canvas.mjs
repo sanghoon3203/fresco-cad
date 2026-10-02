@@ -3,6 +3,7 @@
 // springs (centre x/y, log zoom) so fits and wheel zooms are interruptible; drags track 1:1, release hands velocity to
 // momentum (Apple projection, d≈0.998) and rubber-bands at the limits.
 import { Spring, VelocityTracker, rubberband, frameLoop, prefersReducedMotion } from './motion.mjs';
+import { moveSnap, releaseTarget } from './studio/dragmove.mjs';
 
 // ---- legacy helpers (IR v2 display; kept for tests and the v1 flow) --------------------------------------------------
 const point = (m, x, y) => [m[0]*x + m[2]*y + m[4], m[1]*x + m[3]*y + m[5]];
@@ -98,6 +99,27 @@ function tracePrim(path, p, dx = 0, dy = 0) {
   if (p.t === 3) path.closePath();
 }
 
+/** Batch a scene's primitives by pen × line type × tile (Path2D) for fast culled drawing. skip: Sets of entity indices. */
+export function batchScene(s, { hidden = new Set(), skip = [], bbox = s?.bbox } = {}) {
+  const out = { batches: [], texts: [], solids: [] };
+  if (!s) return out;
+  const skips = skip.filter(x => x?.size), b = bbox ?? [0, 0, 1, 1], T = 12;
+  const tw = Math.max((b[2] - b[0]) / T, 1e-6), th = Math.max((b[3] - b[1]) / T, 1e-6), map = new Map();
+  for (const p of s.prims) {
+    if (hidden.has(p.l) || (skips.length && skips.some(x => x.has(p.e)))) continue;
+    p._b ??= primBounds(p);
+    if (p.t === 4) { out.texts.push(p); continue; }
+    if (p.t === 3) { out.solids.push(p); continue; }
+    const cx = Math.min(T - 1, Math.max(0, Math.floor(((p._b[0] + p._b[2]) / 2 - b[0]) / tw))), cy = Math.min(T - 1, Math.max(0, Math.floor(((p._b[1] + p._b[3]) / 2 - b[1]) / th)));
+    const style = p.s >= 2 && p.s <= 9 ? p.s : 1, key = `${p.c}|${style}|${p.t === 2 ? 'p' : 'l'}|${cx},${cy}`;
+    let batch = map.get(key);
+    if (!batch) { batch = { color: p.c, style, point: p.t === 2, path: new Path2D(), bbox: null, count: 0 }; map.set(key, batch); }
+    tracePrim(batch.path, p); batch.bbox = union(batch.bbox, p._b); batch.count++;
+  }
+  out.batches = [...map.values()].sort((a, b2) => a.style - b2.style || a.color - b2.color);
+  return out;
+}
+
 export class DrawingView {
   /**
    * opts: base, overlay (canvases), host (element sized like the viewport), insets() -> {l,t,r,b} px of chrome over
@@ -105,7 +127,11 @@ export class DrawingView {
    * onPointer({x, y}|null) model-free paper coordinates of the cursor.
    */
   constructor(opts) {
-    Object.assign(this, { onHover() {}, onSelect() {}, onCamera() {}, onPointer() {}, insets: () => ({ l: 0, t: 0, r: 0, b: 0 }) }, opts);
+    Object.assign(this, { onHover() {}, onSelect() {}, onCamera() {}, onPointer() {}, onMoveDrag() {}, onMoveCommit() {}, onContext() {}, canMove: () => true,
+      insets: () => ({ l: 0, t: 0, r: 0, b: 0 }) }, opts);
+    // direct manipulation (drag the selection): presented offset springs (paper mm) + snap "detent" pulse
+    this.move = null; this.excluded = null; this.moveSpring = { x: new Spring(0, { restDelta: 1e-4 }), y: new Spring(0, { restDelta: 1e-4 }) };
+    this.snapPulse = new Spring(1, { damping: 0.6, response: 0.22, restDelta: 0.002 }); this.focus = false;
     this.bctx = this.base.getContext('2d'); this.octx = this.overlay.getContext('2d');
     this.scene = null; this.hidden = new Set(); this.selection = new Set(); this.hover = -1; this.diff = null; this.tool = 'select';
     this.cam = { cx: 0, cy: 0, z: 1 }; this.springs = null; this.camLoop = null; this.anchor = null; this.momentum = null;
@@ -120,7 +146,7 @@ export class DrawingView {
   // ---- data ---------------------------------------------------------------------------------------------------------
   setPens(pens, dark) { this.pens = pens; this.dark = dark; this.palette = penPalette(pens, dark); this.invalidate(); }
   setScene(scene, { keepCamera = false } = {}) {
-    this.scene = scene; this.diff = null; this.hover = -1;
+    this.scene = scene; this.diff = null; this.hover = -1; this.move = null; this.excluded = null;
     const n = scene?.ents.length ?? 0;
     this.entPrims = Array.from({ length: n }, () => []);
     scene?.prims.forEach((p, i) => { this.entPrims[p.e]?.push(i); p._b ??= primBounds(p); });
@@ -153,21 +179,8 @@ export class DrawingView {
   invalidate() { this.dirty.base = this.dirty.overlay = true; this.request(); }
 
   buildBatches() {
-    const s = this.scene; this.batches = []; this.texts = []; this.solids = [];
-    if (!s) return;
-    const removed = this.diff?.removedSet, b = this.bbox ?? [0, 0, 1, 1], T = 12;
-    const tw = Math.max((b[2] - b[0]) / T, 1e-6), th = Math.max((b[3] - b[1]) / T, 1e-6), map = new Map();
-    for (const p of s.prims) {
-      if (this.hidden.has(p.l) || removed?.has(p.e)) continue;
-      if (p.t === 4) { this.texts.push(p); continue; }
-      if (p.t === 3) { this.solids.push(p); continue; }
-      const cx = Math.min(T - 1, Math.max(0, Math.floor(((p._b[0] + p._b[2]) / 2 - b[0]) / tw))), cy = Math.min(T - 1, Math.max(0, Math.floor(((p._b[1] + p._b[3]) / 2 - b[1]) / th)));
-      const style = p.s >= 2 && p.s <= 9 ? p.s : 1, key = `${p.c}|${style}|${p.t === 2 ? 'p' : 'l'}|${cx},${cy}`;
-      let batch = map.get(key);
-      if (!batch) { batch = { color: p.c, style, point: p.t === 2, path: new Path2D(), bbox: null, count: 0 }; map.set(key, batch); }
-      tracePrim(batch.path, p); batch.bbox = union(batch.bbox, p._b); batch.count++;
-    }
-    this.batches = [...map.values()].sort((a, b2) => a.style - b2.style || a.color - b2.color);
+    const set = batchScene(this.scene, { hidden: this.hidden, skip: [this.diff?.removedSet, this.excluded], bbox: this.bbox });
+    this.batches = set.batches; this.texts = set.texts; this.solids = set.solids;
   }
   buildIndex() {
     const s = this.scene; this.grid = null;
@@ -308,6 +321,8 @@ export class DrawingView {
     this.cameraChanged();
     clearTimeout(this.settleTimer); this.settleTimer = setTimeout(() => this.settleLimits(), 160);
   }
+  /** Put paper point (cx, cy) at the screen centre immediately (minimap drag: 1:1). */
+  centerOn(cx, cy) { this.stopCamera(); this.stopMomentum(); this.cam.cx = cx; this.cam.cy = cy; this.cameraChanged(); }
   panBy(dxPx, dyPx, { rubber = true } = {}) {
     this.stopCamera();
     const raw = { cx: this.cam.cx - dxPx / this.cam.z, cy: this.cam.cy + dyPx / this.cam.z };
@@ -387,7 +402,13 @@ export class DrawingView {
     }
     if (this.pointers.size > 2) return;
     const pan = e.button === 1 || e.button === 2 || this.space || this.tool === 'pan' || e.pointerType === 'touch';
-    this.drag = { mode: pan ? 'pan' : 'press', x0: x, y0: y, x, y, last: [x, y], shift: e.shiftKey, toggle: e.ctrlKey || e.metaKey, moved: false, vt: new VelocityTracker() };
+    this.drag = { mode: pan ? 'pan' : 'press', button: e.button, x0: x, y0: y, x, y, last: [x, y], shift: e.shiftKey, toggle: e.ctrlKey || e.metaKey, moved: false, vt: new VelocityTracker() };
+    if (this.move && this.move.phase !== 'drag') this.clearMove(); // a new gesture supersedes a settled/committed drag preview
+    if (!pan && e.button === 0 && !e.shiftKey && !this.drag.toggle && this.selection.size && this.canMove()) {
+      // pressing on an already-selected entity grabs the selection (1:1 move); elsewhere it stays a click/marquee
+      const [px, py] = this.toPaper(x, y), hit = this.hitTest(px, py, 6 / this.cam.z);
+      if (hit >= 0 && this.selection.has(hit)) { const g = this.grabInfo(px, py); if (g) Object.assign(this.drag, { mode: 'grab', grab: [px, py], ...g }); }
+    }
     this.drag.vt.add(x, y, e.timeStamp);
     this.updateCursor();
   }
@@ -405,7 +426,12 @@ export class DrawingView {
       d.dist = dist; d.mid = mid; return;
     }
     d.vt.add(x, y, e.timeStamp);
-    if (!d.moved && Math.hypot(x - d.x0, y - d.y0) > 4) { d.moved = true; if (d.mode === 'press') d.mode = 'marquee'; this.setHover(-1); }
+    if (!d.moved && Math.hypot(x - d.x0, y - d.y0) > 4) {
+      d.moved = true; this.setHover(-1);
+      if (d.mode === 'press') d.mode = 'marquee';
+      if (d.mode === 'grab') { d.mode = 'move'; this.startMove(d); }
+    }
+    if (d.mode === 'move') this.dragMove(x, y, e);
     if (d.mode === 'pan' && d.moved) { this.panBy(x - d.last[0], y - d.last[1]); }
     d.last = [x, y]; d.x = x; d.y = y;
     if (d.mode === 'marquee') { this.dirty.overlay = true; this.request(); }
@@ -415,8 +441,14 @@ export class DrawingView {
     if (!d) return;
     if (d.mode === 'pinch') { if (this.pointers.size === 0) { this.drag = null; this.settleLimits(); } return; }
     this.drag = null; this.updateCursor();
+    if (d.mode === 'move') { if (cancelled) this.cancelMove(); else this.releaseMove(d, e); return; }
     if (cancelled) { this.dirty.overlay = true; this.request(); this.settleLimits(); return; }
     const [x, y] = this.local(e);
+    if (d.mode === 'pan' && !d.moved && d.button === 2) { // right-click (no drag) → context menu at the pointer
+      const [px, py] = this.toPaper(x, y), hit = this.hitTest(px, py, 6 / this.cam.z);
+      if (hit >= 0 && !this.selection.has(hit)) this.onSelect([hit], 'replace');
+      this.onContext(e.clientX, e.clientY, hit); return;
+    }
     if (d.mode === 'pan') { if (d.moved) { const v = d.vt.velocity(e.timeStamp); this.fling(v.x, v.y); } else this.click(x, y, d); return; }
     if (d.mode === 'marquee') {
       const a = this.toPaper(d.x0, d.y0), b = this.toPaper(x, y), rect = [Math.min(a[0], b[0]), Math.min(a[1], b[1]), Math.max(a[0], b[0]), Math.max(a[1], b[1])];
@@ -430,6 +462,86 @@ export class DrawingView {
     const [px, py] = this.toPaper(x, y), hit = this.hitTest(px, py, 6 / this.cam.z);
     if (hit < 0) { if (!d.shift && !d.toggle) this.onSelect([], 'replace'); return; }
     this.onSelect([hit], d.shift || d.toggle ? 'toggle' : 'replace');
+  }
+  // ---- direct manipulation: drag the selection ----------------------------------------------------------------------
+  /** One layer scale for the whole selection (Patch translate is model mm per entity) + the grabbed vertex, or null. */
+  grabInfo(px, py) {
+    const s = this.scene, scales = new Set([...this.selection].map(i => s.layers[s.ents[i].l]?.scale || 1));
+    if (scales.size !== 1) return null;
+    let ref = null, best = 12 / this.cam.z;
+    for (const i of this.selection) for (const pi of this.entPrims[i] ?? []) {
+      const p = s.prims[pi]; if (p.t === 3 || p.t === 4) continue;
+      const q = p.p, ends = q.length === 2 ? [[q[0], q[1]]] : [[q[0], q[1]], [q[q.length - 2], q[q.length - 1]]];
+      for (const v of ends) { const dd = Math.hypot(v[0] - px, v[1] - py); if (dd < best) { best = dd; ref = v; } }
+    }
+    return { scale: [...scales][0], ref };
+  }
+  /** Endpoints of visible, unselected entities within r paper mm of (x, y) (spatial grid lookup). */
+  endpointsNear(x, y, r) {
+    const g = this.grid, s = this.scene, out = []; if (!g) return out;
+    const x1 = Math.max(0, Math.floor((x - r - g.b[0]) / g.cw)), x2 = Math.min(g.N - 1, Math.floor((x + r - g.b[0]) / g.cw));
+    const y1 = Math.max(0, Math.floor((y - r - g.b[1]) / g.ch)), y2 = Math.min(g.N - 1, Math.floor((y + r - g.b[1]) / g.ch));
+    const seen = new Set();
+    for (let cx = x1; cx <= x2; cx++) for (let cy = y1; cy <= y2; cy++) for (const i of g.cells.get(cx * g.N + cy) ?? []) {
+      if (seen.has(i)) continue; seen.add(i);
+      const p = s.prims[i]; if (p.t === 3 || p.t === 4 || this.hidden.has(p.l) || this.selection.has(p.e) || this.diff?.removedSet.has(p.e)) continue;
+      const q = p.p;
+      for (const v of q.length === 2 ? [[q[0], q[1]]] : [[q[0], q[1]], [q[q.length - 2], q[q.length - 1]]]) if (Math.abs(v[0] - x) <= r && Math.abs(v[1] - y) <= r) out.push(v);
+      if (out.length > 400) return out;
+    }
+    return out;
+  }
+  startMove(d) {
+    this.move = { phase: 'drag', grab: d.grab, scale: d.scale, ref: d.ref, ids: [...this.selection], result: null, engaged: false };
+    this.moveSpring.x.jump(0); this.moveSpring.y.jump(0);
+    this.excluded = new Set(this.selection); this.buildBatches(); this.invalidate(); this.updateCursor();
+  }
+  dragMove(x, y, e) {
+    const m = this.move; if (!m) return;
+    const [px, py] = this.toPaper(x, y), raw = [px - m.grab[0], py - m.grab[1]], R = 10 / this.cam.z;
+    // endpoints right next to where the grabbed vertex started (the other face of a double wall line, a joint) would
+    // yank the first pixels of the drag sideways: they only become snap targets once the drag has left them behind
+    const endpoints = m.ref ? this.endpointsNear(m.ref[0] + raw[0], m.ref[1] + raw[1], R).filter(v => Math.hypot(v[0] - m.ref[0], v[1] - m.ref[1]) > R * 1.5 || Math.hypot(raw[0], raw[1]) > R * 3) : [];
+    const r = moveSnap({ raw, ref: m.ref, endpoints, scale: m.scale, zoom: this.cam.z, free: e.altKey });
+    const engagedTarget = r.engaged ? JSON.stringify(r.snap?.target?.map(v => v.toFixed(5))) : null;
+    if (engagedTarget && engagedTarget !== m.engaged && !prefersReducedMotion()) { this.snapPulse.jump(1.8); this.snapPulse.setTarget(1); this.animateOverlay(); } // the detent "click"
+    m.engaged = engagedTarget ?? false; m.result = r;
+    this.moveSpring.x.jump(r.d[0]); this.moveSpring.y.jump(r.d[1]); // 1:1 while the finger is down
+    this.onMoveDrag({ clientX: e.clientX, clientY: e.clientY, model: r.model, snap: r.snap, engaged: r.engaged, free: e.altKey });
+    this.dirty.overlay = true; this.request();
+  }
+  releaseMove(d, e) {
+    const m = this.move; if (!m?.result) { this.cancelMove(); return; }
+    const target = releaseTarget(m.result, m.scale), model = target.map(v => Math.round(v * m.scale * 10) / 10);
+    if (!model[0] && !model[1]) { this.cancelMove(); return; }
+    m.phase = 'settle'; m.target = target; m.model = model;
+    const v = d.vt.velocity(e.timeStamp), vel = { x: v.x / this.cam.z, y: -v.y / this.cam.z }; // velocity handoff (paper mm/s)
+    if (prefersReducedMotion()) { this.moveSpring.x.jump(target[0]); this.moveSpring.y.jump(target[1]); }
+    else { this.moveSpring.x.setTarget(target[0], { velocity: vel.x, damping: 0.86, response: 0.28 }); this.moveSpring.y.setTarget(target[1], { velocity: vel.y, damping: 0.86, response: 0.28 }); }
+    this.animateOverlay();
+  }
+  /** Esc during a drag: the selection springs back home. */
+  abortMove() { if (this.drag?.mode !== 'move') return; this.drag = null; this.cancelMove(); this.updateCursor(); }
+  cancelMove() {
+    const m = this.move; if (!m) return;
+    if (prefersReducedMotion() || m.phase === 'committed') { this.clearMove(); return; }
+    m.phase = 'cancel';
+    this.moveSpring.x.setTarget(0, { damping: 1, response: 0.3 }); this.moveSpring.y.setTarget(0, { damping: 1, response: 0.3 });
+    this.onMoveDrag(null); this.animateOverlay();
+  }
+  /** Drop the drag preview (the proposal's diff takes over, or the user cancelled). */
+  clearMove() {
+    if (!this.move) return;
+    this.move = null; this.excluded = null; this.buildBatches(); this.invalidate(); this.onMoveDrag(null); this.updateCursor();
+  }
+  stepMove(dt) {
+    const m = this.move; if (!m || m.phase === 'drag' || m.phase === 'committed') return true;
+    this.moveSpring.x.step(dt); this.moveSpring.y.step(dt);
+    if (!(this.moveSpring.x.settled() && this.moveSpring.y.settled())) return false;
+    if (m.phase === 'cancel') { this.clearMove(); return true; }
+    m.phase = 'committed'; this.onMoveDrag(null);
+    this.onMoveCommit({ ids: m.ids, dx: m.model[0], dy: m.model[1] });
+    return true;
   }
   onDouble(e) {
     if (!this.scene) return;
@@ -450,7 +562,8 @@ export class DrawingView {
   setHover(i) { if (i === this.hover) return; this.hover = i; this.onHover(i); this.updateCursor(); this.dirty.overlay = true; this.request(); }
   setSpace(down) { this.space = down; this.updateCursor(); }
   updateCursor() {
-    const c = this.drag?.mode === 'pan' ? 'grabbing' : this.space || this.tool === 'pan' ? 'grab' : this.hover >= 0 ? 'pointer' : 'crosshair';
+    const c = this.drag?.mode === 'pan' || this.drag?.mode === 'move' ? 'grabbing' : this.space || this.tool === 'pan' ? 'grab'
+      : this.hover >= 0 && this.selection.has(this.hover) && this.canMove() ? 'move' : this.hover >= 0 ? 'pointer' : 'crosshair';
     if (this.overlay.style.cursor !== c) this.overlay.style.cursor = c;
   }
 
@@ -459,8 +572,10 @@ export class DrawingView {
   animateOverlay() {
     if (this.overlayLoop?.running) return;
     this.overlayLoop = frameLoop(dt => {
-      this.halo.step(dt); this.diffT.step(dt); this.dirty.overlay = true; this.request();
-      return !(this.halo.settled() && this.diffT.settled());
+      this.halo.step(dt); this.diffT.step(dt); this.snapPulse.step(dt);
+      const moveDone = this.stepMove(dt);
+      this.dirty.overlay = true; this.request();
+      return !(this.halo.settled() && this.diffT.settled() && this.snapPulse.settled() && moveDone);
     });
   }
   render() {
@@ -487,16 +602,41 @@ export class DrawingView {
     const ctx = this.bctx, d = this.dpr;
     ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, this.base.width, this.base.height);
     if (!this.scene) return;
+    this.drawSet(ctx, this);
+    void d;
+    for (const layer of this.compares ?? []) if (layer.set) this.renderCompare(layer);
+  }
+  /**
+   * History scrub: other scenes drawn into their own canvases (cross-faded with CSS opacity, redrawn only when the
+   * camera or the scene changes — never per scrub frame). `sets` caches batches per scene object.
+   */
+  setCompareLayer(i, scene) {
+    const layer = this.compares?.[i]; if (!layer) return;
+    if (layer.scene === scene) return;
+    layer.scene = scene;
+    if (!scene) { layer.set = null; const c = layer.canvas.getContext('2d'); c.setTransform(1, 0, 0, 1, 0, 0); c.clearRect(0, 0, layer.canvas.width, layer.canvas.height); return; }
+    this.setCache ??= new WeakMap();
+    let set = this.setCache.get(scene);
+    if (!set || set.hiddenKey !== [...this.hidden].join()) { set = { ...batchScene(scene, { hidden: this.hidden, bbox: scene.bbox ?? this.bbox }), hiddenKey: [...this.hidden].join() }; this.setCache.set(scene, set); }
+    layer.set = set; this.renderCompare(layer);
+  }
+  renderCompare(layer) {
+    const c = layer.canvas, ctx = c.getContext('2d');
+    if (c.width !== this.base.width || c.height !== this.base.height) { c.width = this.base.width; c.height = this.base.height; }
+    ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, c.width, c.height);
+    this.drawSet(ctx, layer.set);
+  }
+  drawSet(ctx, set) {
     const view = this.viewRect(8), pal = this.palette;
     this.paperTransform(ctx);
     ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-    for (const s of this.solids) {
+    for (const s of set.solids) {
       if (!touches(s._b, view)) continue;
       ctx.fillStyle = s.rgb !== undefined ? solidColor(s.rgb) : pal.rgb[s.c] ?? pal.fg; ctx.globalAlpha = 0.9;
       const path = new Path2D(); tracePrim(path, s); ctx.fill(path);
     }
     ctx.globalAlpha = 1;
-    for (const b of this.batches) {
+    for (const b of set.batches) {
       if (!touches(b.bbox, view)) continue;
       const color = pal.rgb[b.color] ?? pal.fg;
       if (b.point) { ctx.fillStyle = color; ctx.fill(b.path); continue; }
@@ -504,8 +644,7 @@ export class DrawingView {
       ctx.stroke(b.path);
     }
     ctx.globalAlpha = 1; ctx.setLineDash([]);
-    this.drawTexts(ctx, this.texts, view, t => pal.rgb[t.c] ?? pal.fg);
-    void d;
+    this.drawTexts(ctx, set.texts, view, t => pal.rgb[t.c] ?? pal.fg);
   }
   drawTexts(ctx, texts, view, colorOf, dx = 0, dy = 0, alpha = 1) {
     const z = this.cam.z, d = this.dpr; let drawn = 0;
@@ -566,12 +705,22 @@ export class DrawingView {
     // selection halo (expands into place once) + crisp stroke
     if (this.selection.size) {
       const h = this.halo.value, list = [...this.selection].filter(i => !this.diff?.removedSet.has(i)).slice(0, 4000);
-      for (const i of list) this.strokeEntity(ctx, i, { color: accent, width: 10 - 4 * h, alpha: 0.22 * h });
+      const mv = this.move, ox = mv ? this.moveSpring.x.value : 0, oy = mv ? this.moveSpring.y.value : 0;
+      if (mv) { // where it was: a faint dashed ghost (the originals are lifted out of the base layer while moving)
+        ctx.setLineDash([3 / this.cam.z, 3 / this.cam.z]);
+        for (const i of list) this.strokeEntity(ctx, i, { color: accent, width: 1, alpha: 0.4 });
+        ctx.setLineDash([]); this.paperTransform(ctx);
+      }
+      for (const i of list) this.strokeEntity(ctx, i, { color: accent, width: mv ? 6 : 10 - 4 * h, alpha: mv ? 0.16 : 0.22 * h, dx: ox, dy: oy });
       this.paperTransform(ctx);
-      for (const i of list) this.strokeEntity(ctx, i, { color: accent, width: 1.75, alpha: 1 });
+      for (const i of list) {
+        const texts = this.strokeEntity(ctx, i, { color: accent, width: 1.75, alpha: 1, dx: ox, dy: oy });
+        if (mv && texts.length) { this.drawTexts(ctx, texts, this.viewRect(8), () => accent, ox, oy); this.paperTransform(ctx); }
+      }
       this.paperTransform(ctx);
+      if (mv) this.drawMoveGuides(ctx, ox, oy, accent);
     }
-    if (this.hover >= 0 && !this.selection.has(this.hover)) {
+    if (this.hover >= 0 && !this.selection.has(this.hover) && !this.move) {
       this.strokeEntity(ctx, this.hover, { color: accent, width: 5, alpha: 0.16 });
       this.paperTransform(ctx);
       this.strokeEntity(ctx, this.hover, { color: accent, width: 1.4, alpha: 0.85 });
@@ -586,6 +735,28 @@ export class DrawingView {
       ctx.setLineDash(crossing ? [5, 4] : []);
       ctx.beginPath(); ctx.roundRect(x + 0.5, y + 0.5, w, hgt, 3); ctx.fill(); ctx.stroke(); ctx.setLineDash([]);
     }
+  }
+  /** Snap indicator: endpoint ring (pulses on the detent), module guide lines, and the trail from the grabbed vertex. */
+  drawMoveGuides(ctx, ox, oy, accent) {
+    const m = this.move, r = m.result, d = this.dpr, snap = m.phase === 'drag' ? r?.snap : null, pulse = this.snapPulse.value;
+    ctx.save(); ctx.setTransform(d, 0, 0, d, 0, 0); ctx.lineWidth = 1;
+    const anchor = m.ref ?? m.grab, [ax, ay] = this.toScreen(anchor[0], anchor[1]), [bx, by] = this.toScreen(anchor[0] + ox, anchor[1] + oy);
+    ctx.strokeStyle = accent; ctx.globalAlpha = 0.55; ctx.setLineDash([2, 3]);
+    ctx.beginPath(); ctx.moveTo(ax, ay); ctx.lineTo(bx, by); ctx.stroke(); ctx.setLineDash([]);
+    ctx.globalAlpha = 0.9; ctx.fillStyle = accent; ctx.beginPath(); ctx.arc(ax, ay, 2, 0, Math.PI * 2); ctx.fill();
+    if (snap?.kind === 'grid') {
+      ctx.setLineDash([4, 4]);
+      if (snap.axes.x) { ctx.globalAlpha = snap.major.x ? 0.7 : 0.4; ctx.beginPath(); ctx.moveTo(bx, 0); ctx.lineTo(bx, this.H); ctx.stroke(); }
+      if (snap.axes.y) { ctx.globalAlpha = snap.major.y ? 0.7 : 0.4; ctx.beginPath(); ctx.moveTo(0, by); ctx.lineTo(this.W, by); ctx.stroke(); }
+      ctx.setLineDash([]);
+    }
+    if (snap?.kind === 'endpoint' || (snap && r.engaged)) {
+      const [sx, sy] = snap.kind === 'endpoint' ? this.toScreen(snap.point[0], snap.point[1]) : [bx, by];
+      ctx.globalAlpha = r.engaged ? 1 : 0.5; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.arc(sx, sy, 5.5 * (r.engaged ? pulse : 1), 0, Math.PI * 2); ctx.stroke();
+      if (r.engaged) { ctx.globalAlpha = 0.18 * Math.min(1, pulse); ctx.beginPath(); ctx.arc(sx, sy, 9 * pulse, 0, Math.PI * 2); ctx.fill(); }
+    }
+    ctx.restore(); this.paperTransform(ctx);
   }
   destroy() { this.resize.disconnect(); this.stopCamera(); this.stopMomentum(); this.overlayLoop?.stop(); }
 }

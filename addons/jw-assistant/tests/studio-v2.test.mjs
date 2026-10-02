@@ -128,3 +128,50 @@ test('v2 real JWW: open scene -> mock edit -> preview diff -> accept new file ->
   const listed = await get('v2/files');
   assert.ok(listed.files.some(f => f.working && f.name.startsWith('sample-edit-01')));
 });
+
+// ---- wave 2: streaming edit endpoint ---------------------------------------------------------------------------------
+import { emptyProgress, reduceProgress } from '../ui/studio/progress.mjs';
+async function streamEvents(origin, token, data, headers = {}) {
+  const r = await fetch(`${origin}/api/v2/edit-stream`, { method: 'POST', headers: { Origin: origin, 'Content-Type': 'application/json', 'X-Fresco-Token': token, ...headers }, body: JSON.stringify(data) });
+  const text = await r.text();
+  return { status: r.status, type: r.headers.get('content-type'), events: r.status === 200 ? text.trim().split('\n').map(l => JSON.parse(l)) : [], body: r.status === 200 ? null : JSON.parse(text) };
+}
+
+test('v2 edit-stream: guards, NDJSON error event, wave-2 assets whitelisted', async t => {
+  const { origin, boot: b } = await boot(t, { fixture: null });
+  assert.equal((await fetch(`${origin}/api/v2/edit-stream`)).status, 405);
+  assert.equal((await streamEvents(origin, 'wrong', { sessionId: 'x' })).status, 403);
+  assert.equal((await streamEvents(origin, b.token, { sessionId: 'x' }, { Origin: 'http://evil.example' })).status, 403);
+  const missing = await streamEvents(origin, b.token, { sessionId: 'nope', instruction: 'x' });
+  assert.equal(missing.status, 200); assert.match(missing.type, /ndjson/u);
+  assert.deepEqual(missing.events, [{ t: 'error', code: 'E_SESSION_MISSING' }]);
+  for (const name of ['progress', 'odometer', 'morph', 'scrub', 'minimap', 'history', 'menu', 'tooltip', 'pill', 'strings2', 'dragmove']) {
+    const r = await fetch(`${origin}/ui/studio/${name}.mjs`); assert.equal(r.status, 200, name); assert.match(r.headers.get('content-security-policy'), /script-src 'self'/u);
+  }
+});
+
+test('v2 edit-stream real JWW: ordered progress events then the same result body as /edit; clarification; key missing',
+  { skip: !process.env.FRESCO_JWW_FIXTURE, timeout: 240000 }, async t => {
+  const { origin, post, boot: b } = await boot(t);
+  const opened = await post('v2/open', { fileId: b.files[0].id });
+  const line = opened.scene.ents.find(e => e.k === 'line'), base = { sessionId: opened.sessionId, baseHash: opened.hash };
+  const s = await streamEvents(origin, b.token, { ...base, instruction: 'この線を910右へ', selection: [line.id], provider: 'mock' });
+  assert.equal(s.status, 200);
+  const kinds = s.events.map(e => (e.t === 'step' ? `${e.id}:${e.state}` : e.t));
+  assert.deepEqual(kinds, ['load:run', 'load:ok', 'search:run', 'tool', 'search:ok', 'propose:ok', 'l1:run', 'l1:ok', 'l2:run', 'l2:ok', 'result']);
+  assert.equal(s.events[3].name, 'entity_details'); assert.equal(s.events[1].info.entities > 0, true);
+  const result = s.events.at(-1).result;
+  assert.equal(result.status, 'applied'); assert.equal(result.ops[0].op, 'translate'); assert.ok(result.previewId); assert.equal(result.diff.moves.length, 1);
+  const p = s.events.reduce(reduceProgress, emptyProgress());
+  assert.equal(p.status, 'applied'); assert.ok(p.steps.every(x => x.state === 'ok'));
+  // the preview from the stream is a normal pending preview: accept saves it
+  const accepted = await post('v2/accept', { sessionId: opened.sessionId, previewId: result.previewId });
+  assert.equal(accepted.status, 200); assert.equal(accepted.hash, result.outputHash);
+  const clar = await streamEvents(origin, b.token, { sessionId: opened.sessionId, baseHash: accepted.hash, instruction: '거실 창문 넓혀줘', selection: [], provider: 'mock' });
+  assert.deepEqual(clar.events.filter(e => e.t === 'step' && e.id === 'propose').map(e => e.state), ['ask']);
+  assert.equal(clar.events.at(-1).result.status, 'clarification');
+  const noKey = await streamEvents(origin, b.token, { sessionId: opened.sessionId, baseHash: accepted.hash, instruction: '910右へ', provider: 'claude' });
+  assert.deepEqual(noKey.events.map(e => e.t), ['result']); assert.equal(noKey.events[0].result.error.code, 'E_AI_KEY_REQUIRED');
+  const stale = await streamEvents(origin, b.token, { ...base, instruction: 'x' });
+  assert.deepEqual(stale.events, [{ t: 'error', code: 'E_JWW_EXTERNAL_CHANGE' }]);
+});

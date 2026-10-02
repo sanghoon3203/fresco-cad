@@ -222,3 +222,55 @@ export function frameLoop(fn) {
   schedule(anim);
   return { stop() { active.delete(anim); anim.done = true; }, get running() { return !anim.done; } };
 }
+
+// ---- snapping & scrubbing (pure; used by canvas drag, minimap, history scrubber, number fields) -------------------------
+/**
+ * Soft magnetic detent. Inside `radius` of `target` the presented value is pulled toward the target with a sticky core
+ * (d·(|d|/r)^power): continuous at the boundary, monotone, and exactly the target at the centre — a detent you can feel
+ * and still push through. Outside the radius the value is untouched (1:1 tracking).
+ */
+export function detent(raw, target, radius, power = 2) {
+  const d = raw - target, a = Math.abs(d);
+  if (!(radius > 0) || a >= radius) return raw;
+  return target + d * Math.pow(a / radius, power);
+}
+/** Nearest multiple of `step` (offset by `origin`). */
+export function nearestStep(value, step, origin = 0) { return step > 0 ? origin + Math.round((value - origin) / step) * step : value; }
+/**
+ * Magnetic snap of one axis. candidates: numbers; step: optional regular grid. Returns { value, target, engaged }:
+ * value is the presented (detented) value, target the attracting snap (or null), engaged = visually locked on it.
+ */
+export function magneticSnap(raw, { candidates = [], step = 0, origin = 0, radius = 1, power = 2, lock = 0.12 } = {}) {
+  let target = null, best = radius;
+  const consider = c => { const d = Math.abs(raw - c); if (d < best) { best = d; target = c; } };
+  for (const c of candidates) consider(c);
+  if (step > 0) consider(nearestStep(raw, step, origin));
+  if (target === null) return { value: raw, target: null, engaged: false };
+  const value = detent(raw, target, radius, power);
+  return { value, target, engaged: Math.abs(value - target) <= radius * lock };
+}
+/**
+ * Where a released gesture should come to rest: project the momentum (Apple decay), then choose the snap point
+ * nearest the *projected* position (grid steps around it + explicit candidates) if it lies within `reach`; otherwise
+ * the projection itself (clamped). Returns { value, projected, snapped }.
+ */
+export function projectSnap(position, velocity, { step = 0, origin = 0, candidates = [], rate = 0.998, reach = Infinity, min = -Infinity, max = Infinity } = {}) {
+  const projected = Math.min(max, Math.max(min, position + project(velocity, rate)));
+  let best = null, bestD = reach;
+  const consider = c => { if (c < min || c > max) return; const d = Math.abs(c - projected); if (d <= bestD) { bestD = d; best = c; } };
+  for (const c of candidates) consider(c);
+  if (step > 0) { const s = nearestStep(projected, step, origin); consider(s); consider(s - step); consider(s + step); }
+  return best === null ? { value: projected, projected, snapped: false } : { value: best, projected, snapped: true };
+}
+/** Scrub rate from modifier keys: Shift = ×10 (coarse), Alt = ×0.1 (fine). */
+export function scrubRate(base, { shift = false, alt = false } = {}) { return base * (shift ? 10 : 1) * (alt ? 0.1 : 1); }
+/**
+ * Value for a horizontal scrub of `dx` px from `start` at `perPx` units/px, rubber-banded past [min, max]
+ * (resistance measured in px against `dimension`). Returns { value, raw, over } — over is the overshoot sign.
+ */
+export function scrubValue(start, dx, { perPx = 1, min = -Infinity, max = Infinity, dimension = 160, constant = 0.55 } = {}) {
+  const raw = start + dx * perPx;
+  if (raw > max) return { value: max + rubberband((raw - max) / perPx, dimension, constant) * perPx, raw, over: 1 };
+  if (raw < min) return { value: min + rubberband((raw - min) / perPx, dimension, constant) * perPx, raw, over: -1 };
+  return { value: raw, raw, over: 0 };
+}
