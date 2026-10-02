@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "id": "office-foundation-1-50",
+  "title": "木造在来 ベタ基礎 基礎伏図 1/50・基礎詳細図 1/25 作図ルール (社内練習データ 住宅A から抽出)",
+  "derivedFrom": {
+    "drawings": ["住宅A 基礎伏図 (練習用)", "住宅A 基礎詳細図 (練習用)"],
+    "environment": "住宅A 1/50 基礎伏・アンカー図 JWF, 基礎断面詳細 JWF",
+    "method": "codec decode + per-layer montage (group 1 = 基礎伏, group C = traced plan) + offsets relative to X1/Y1; FG1 detail measured at 1/25 (2026-10-02)",
+    "privacy": "Rules only. No client names, addresses, staff, company or logo data are stored here."
+  },
+  "sheets": {
+    "plan": { "paper": "A3", "groups": { "0": "図枠", "1": "基礎伏図 1/50" }, "practiceExtra": "group C = 1/50 floor plan traced underneath (reference), group 3 = 1/25 床下AC detail, group 9 = memos" },
+    "details": { "paper": "A3", "groups": { "0": "図枠", "1": "基礎詳細図 1/25 (generator: all panels)" }, "practice": "group 2 at 1/25 = FG1 / porch details, group 1 at 1/10 = column post detail" }
+  },
+  "textStyles": { "plan": { "3": 3.2, "4": 4.0, "7": 4.5, "grid": "3.5 free size", "use": "texts and dimensions 3.2 (style 3), title 4.0" }, "details": { "3": 3.2, "4": 4.0 } },
+  "layers": {
+    "1:0": "910 grid (+455 lines used by foundation lines), chain pen 4 style 5, clipped to the footprint",
+    "1:1": "立上り: faces ±75 pen 2 (union outline, clean T junctions), EPS face -175 pen 7, mortar face -200 pen 1, footing inner edge +200 pen 3 style 3 (hidden)",
+    "1:2": "地中梁 FG (under the slab): faces ±300 pen 1 style 4 (dashed)",
+    "1:3": "鋼製束: circle R50 + cross ±100, pen 6 (practice block 鋼製束, 86 posts)",
+    "1:4": "アンカーボルト (generator; practice draws them on the 1/25 details only)",
+    "1:5": "人通口: dashed closing lines across the riser opening",
+    "1:6": "耐圧版 mark: triple 45° lines pen 4",
+    "1:7": "床下点検口 (dashed rect), floor grilles in practice",
+    "1:8": "ハッチ: 地中梁 45° hatch pen 7",
+    "1:A": "grid bubbles R150 + 3.5 mm labels, stubs pen 7 style 5",
+    "1:B": "色塗: riser fill E0E0E0, EPS band pink",
+    "1:D": "文字: 耐圧版180t / -400, 土間, legend, title",
+    "1:E": "寸法: foundation-line tier + overall on all four sides, 実点"
+  },
+  "measured": {
+    "method": "Practice house A foundation plan, model mm (file x 50) relative to X1/Y1",
+    "riser": { "width": 150, "faces": [-75, 75], "top": "GL+400 (基礎天端 ±0)", "epsOuterFace": -175, "mortarFace": -200, "footingInnerEdge": 200 },
+    "footing": { "width": 400, "thickness": 150, "bottomBelowGL": 660, "gravel": "500 x 100" },
+    "slab": { "thickness": 180, "top": "GL±0 = 基礎天端-400 (label '-400')", "insulationBelow": "EPS 100", "gravel": 100, "label": ["耐圧版180t", "-400"] },
+    "interior": { "practice": "地中梁 (grade beams) 600 wide under the slab instead of interior risers: FG2 4-D13, FG3 (上下各)3-D13, STP D10@300; the floor void is one compartment heated by an underfloor AC", "gradeBeamLines": "x 5005 / 7280 / 8190, y 2730 / 3640 / 5460 / 6370 (all on the 455 lattice)", "generatorDefault": "riser under every interior (bearing) wall of the plan spec; building.foundation.interior = 'grade-beam' reproduces house A" },
+    "doma": { "riser": "own riser rectangle around the 玄関土間", "slab": "土間コンクリート 150t" },
+    "posts": { "pitch": 910, "symbol": "circle R50 + cross ±100 pen 6", "positions": "910 grid (some 455 offsets near walls)" },
+    "anchors": { "practice": "アンカーボルト M12 (L=400) in the column-post detail", "rule": "standard (フラット35 / 公庫仕様, not measured on the plan): within 200 of corner, junction and opening-jamb columns on each riser, spacing <= 2,730 (3 modules), not inside 人通口" },
+    "manholes": { "width": 600, "rule": "standard (not in practice A): link every floor-void compartment to the 床下点検口 compartment; prefer positions under interior doorways (no bearing wall above), else mid-span between columns, >= 300 clear of columns" },
+    "dimensions": { "firstTier": 1000, "pitch": 250, "tiers": "foundation lines (riser / beam centres) and overall", "text": 3.2 },
+    "notes": ["基礎天端 = ±0 (設計GL+400)", "地業: ランマー締め固め", "コンクリート Fc=21N/mm² スランプ18cm", "鉄筋 SD295A", "地盤調査: スクリューウエイト貫入試験 / 地盤改良は調査の上決定"],
+    "fg1Detail": {
+      "scale": "1/25",
+      "riser": "150 wide, total 1,060 = 400 above GL + 660 below",
+      "chainsLeft": ["1,060", "400 + 660", "100 + 150 + 910"],
+      "chainsRight": ["100 + 150 + 230 + 100 + 180 (= 760)", "660"],
+      "bottom": ["200 + 200", "400"],
+      "top": "150",
+      "insulation": "外側 EPS 100 (-175) GL-510..+400, 内側 EPS 50 footing top..slab bottom, skirt EPS 50 x 450 at about GL-230 falling 5 %",
+      "rebar": "上端 1-D13, 下端 1-D13, タテ D10@200, ヨコ D10@300, 耐圧版 D13@200 タテヨコ, かぶり 60 (土に接する底)",
+      "layers": { "2:1": "outline", "2:2": "rebar sections (D13 ○, D10 ●)", "2:4": "砕石 zigzag", "2:5": "rebar lines pen 3", "2:6": "EPS hatch pen 5", "2:9": "levels 基礎天端 ▽ / 設計GL ▼, 土台 dashed", "2:B": "riser fill", "2:D": "callouts with leaders", "2:E": "dimensions" }
+    }
+  },
+  "evaluation": {
+    "implementation": "addons/jw-assistant/generator/evaluate-foundation.mjs (evaluateFoundationPlan, evaluateFoundationDetails)",
+    "checks": ["layer-role-purity", "pen-per-layer", "text-style-sizes", "fits-sheet", "origin-found", "risers-under-bearing-walls", "perimeter-insulation", "dimension-sum-equals-overall", "grid-bubbles", "foundation-module", "anchors-at-column-ends", "anchor-spacing", "anchors-on-risers", "posts-on-grid", "slab-labels", "manholes-not-under-walls", "void-compartments-reachable", "inspection-opening", "post-spacing"],
+    "detailChecks": ["layer-role-purity", "pen-per-layer", "text-style-sizes", "fits-sheet", "panels-present", "dimension-sum-equals-overall", "section-dimensions-match", "rebar-notes", "foundation-minimums"],
+    "textHeights": [2.5, 3.2, 3.5, 4.0],
+    "detailTextHeights": [3.2, 4.0],
+    "planning": { "minRiserAboveGL": 300, "minRiserWidth": 120, "minSlab": 150, "minEmbed": 240 },
+    "pens": {
+      "1:0": { "line": [[4], [5]] },
+      "1:1": { "line": [[1, 2, 3, 7], [1, 3]] },
+      "1:2": { "line": [[1], [4]] },
+      "1:3": { "arc": [[6], [1]], "line": [[6], [1]] },
+      "1:4": { "arc": [[2], [1]], "solid": [[10], null] },
+      "1:5": { "line": [[1], [2]] },
+      "1:6": { "line": [[4], [1]] },
+      "1:7": { "line": [[2], [2]] },
+      "1:8": { "line": [[7], [1]] },
+      "1:A": { "line": [[7], [5]], "arc": [[1], [1]], "text": [[2], null] },
+      "1:B": { "solid": [[10], null] },
+      "1:D": { "line": [[1, 6], [1]], "arc": [[2, 6], [1]], "solid": [[10], null], "text": [[2], null] },
+      "1:E": { "line": [[1, 4], [1, 5]], "point": [[1], null], "text": [[2], null] }
+    },
+    "detailPens": {
+      "1:1": { "line": [[1, 2], [1]] },
+      "1:2": { "arc": [[2], [1]], "solid": [[10], null] },
+      "1:4": { "line": [[1], [1]] },
+      "1:5": { "line": [[3], [1]] },
+      "1:6": { "line": [[5], [1]] },
+      "1:7": { "line": [[1], [1]] },
+      "1:9": { "line": [[1, 2], [1, 2, 5]], "solid": [[10], null], "text": [[2], null] },
+      "1:B": { "solid": [[10], null] },
+      "1:D": { "line": [[1], [1]], "text": [[2], null] },
+      "1:E": { "line": [[1], [1]], "point": [[1], null], "text": [[2], null] }
+    }
+  }
+}

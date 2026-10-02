@@ -59,5 +59,10 @@
     { "type": "table-dining", "at": [3800, 1700] },
     { "type": "bed-single", "at": [8700, 7125], "rotation": 180 },
     { "type": "bed-single", "at": [9900, 7125], "rotation": 180 }
-  ]
+  ],
+  "building": {
+    "note": "practice house A: shed roof falling to the south (3.5/10), eaves 600 / 270 / gable 450, grade beams (地中梁 FG2/FG3 600) under the slab instead of interior risers",
+    "roof": { "type": "shed", "slope": 0.35, "low": "S", "eaves": { "low": 600, "high": 270, "gable": 450 } },
+    "foundation": { "interior": "grade-beam", "interiorLines": [[5005, 0, 5005, 8190], [7280, 3640, 7280, 8190], [8190, 0, 8190, 5460], [8190, 2730, 10920, 2730], [0, 3640, 10920, 3640], [7280, 5460, 10920, 5460], [0, 6370, 10920, 6370]] }
+  }
 }

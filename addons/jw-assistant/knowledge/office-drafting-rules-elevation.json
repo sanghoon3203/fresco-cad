@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "id": "office-elevation-1-100",
+  "title": "木造在来 1/100 立面図 作図ルール (社内練習データ 住宅A から抽出)",
+  "derivedFrom": {
+    "drawings": ["住宅A 立面図 (4面)"],
+    "environment": "住宅A 1/100 立面図 JWF (LAYSCALE, pens, text styles)",
+    "method": "codec decode + per-layer raster montage + line/level measurement relative to GL and grid lines (2026-10-02)",
+    "privacy": "Rules only. No client names, addresses, staff, company or logo data are stored here."
+  },
+  "sheet": { "paper": "A3", "widthMm": 420, "heightMm": 297, "frameGroup": "0", "layout": "2 x 2: 東 (top-left), 南 (top-right), 西 (bottom-left), 北 (bottom-right); left column chains on the left, right column chains on the right" },
+  "groups": { "0": { "role": "図枠・表題欄 (scale 1)", "scale": 1 }, "1": { "role": "立面図 4面 1/100", "scale": 100 } },
+  "layerNames": "same as plan: n-0..n-7, n-9, n-A, n-C numbered; 8=ハッチ, B=色塗, D=文字, E=寸法, F=補助線",
+  "pens": {
+    "printWidth_hundredthMm": { "1": 8, "2": 12, "3": 5, "4": 7, "5": 16, "6": 14, "7": 7, "8": 14 },
+    "screenRgb": { "3": [120, 120, 120], "7": [100, 100, 100] },
+    "lineTypes": { "1": "実線", "2": "点線", "4": "一点鎖線 (細)", "5": "一点鎖線 (レベル・通り芯)", "31": "SXF 破線 (隠れ部材)" }
+  },
+  "textStyles": { "1": 2.1, "2": 2.5, "3": 3.2, "4": 4.0, "5": 5.0, "6": 6.0, "7": "3.1x3.0 (spacing -0.6)", "8": 3.0, "9": 2.1, "10": 2.1, "font": "ＭＳ ゴシック", "unit": "paper mm" },
+  "layers": {
+    "1:0": "レベルライン: label zone solid pen 1, then chain pen 4 style 5 across the building; level chains GL-FL-軒-最高 (pen 2, 実点)",
+    "1:1": "外形: wall faces + roof edges pen 6, roof underside pen 1, roofing pen 3, fascia mid pen 4, GL line pen 2 (thick), foundation top/drip pen 1",
+    "1:2": "隠れ部材: 土台 105x105 and 桁 105x180 boxes with diagonal at corner columns (SXF pen 113, type 31)",
+    "1:3": "出隅役物: vertical line 57 inside each facade end (pen 1)",
+    "1:5": "開口部: windows/doors pen 7 nested rectangles, glass solid RGB 999999, handle pen 2",
+    "1:6": "設備 (排気塔等, not generated)",
+    "1:8": "ハッチ: 縦張りサイディング vertical lines pen 3",
+    "1:9": "勾配表示 10 / 3.5 triangle + 2.1 mm texts",
+    "1:B": "色塗: ground band E6E6E6 (GL-660..GL-12), foundation F5F5F5, soffit ECECEC, roof plane (low side view), GL ▼ black",
+    "1:D": "文字: level labels + ▽ marks, grid bubbles R240 + chain stubs, view titles in boxes",
+    "1:E": "寸法: structure chain 400/105/2,720/180, 40, 天井高 2,430, top tiers (eave + grid spans / overall), extension lines"
+  },
+  "measured": {
+    "method": "Practice house A east elevation, model mm (file x 100) relative to design GL and grid line Y1",
+    "levels": { "GL": 0, "foundationTop": 400, "sillTop": 505, "FL": 545, "beamBottom": 3225, "eaveBeamTop": 3405, "ceiling": 2975, "maxHeight": 6452.877, "maxLabel": 6455, "note": "max height label rounded up to 5 mm (図面上精密高さ 6,452.877 shown as 6,455)" },
+    "levelChains": { "overall": [6455], "main": [545, 2860, 3050], "structure": [400, 105, 2720, 180], "floor": [40], "ceiling": [2430], "columnsFromEaveEdgeMm": [3043, 2643, 2243, 1843, 1443] },
+    "levelLines": { "labelStartFromEaveEdge": 5210, "solidEndFromEaveEdge": 785, "markFromEaveEdge": 3543, "chainBeyondFarEdge": 2415, "markTriangleMm": "200 wide x 200 tall (apex on the level), GL mark filled", "labelGapToMark": 150 },
+    "wallBase": { "foundationFace": -190, "dripFlashing": "GL+395..425, projects to -212", "sidingBottom": 425, "foundationBand": "F5F5F5 GL..395" },
+    "siding": { "direction": "縦張り", "pitchMm": 50.3, "layer": "1:8", "pen": 3 },
+    "roof": { "type": "片流れ (shed)", "slope": "3.5/10 (0.35)", "lowSide": "south (Y1)", "eaves": { "low": 600, "high": 270, "gable": 450 }, "topAboveBeamPlaneVertical": 86.9, "buildUpPerpendicular": 82, "roofingBelowTop": 7, "undersideBelowTop": 58.3, "soffitBelowTop": 245.8, "fasciaFromLowView": "top, -9.4 (pen 4), -48.6 (pen 1), fascia face to -205.8" },
+    "wallTop": "siding runs up to the soffit line (roof top - 245.8 at the wall face)",
+    "openings": { "outerFrame": "rough opening (plan width - 130)", "frameInset": 25, "glassInset": "50 (85 on the 1,000 square window)", "headAboveFL": 2000, "highWindowsHeadAboveFL": "about 2,430 (glass top 2,380)", "patioDoor": "FL-30 .. FL+2,060 (W1/W2 1,820 module)" },
+    "topDimensions": { "tier1AboveMax": 2055, "tierGap": 400, "bubbleAboveTier2": 1200, "bubbleR": 240, "extensionTop": "max + 800", "tier1": "eave edge | grid points (corners + interior walls meeting the facade) | eave edge", "tier2": "overall wall-centre width" },
+    "title": { "text": "東立面図 etc.", "style": 4, "boxTopBelowGL": 1082, "boxHeight": 460, "boxPadding": 69 },
+    "groundBand": { "fromGL": [-660, -12], "rgb": "E6E6E6" }
+  },
+  "evaluation": {
+    "implementation": "addons/jw-assistant/generator/evaluate-elevation.mjs",
+    "checks": ["layer-role-purity", "pen-per-layer", "text-style-sizes", "fits-sheet", "views-present", "level-lines-match-building", "level-chains-sum", "dimension-sum-equals-overall", "openings-match-plan", "roof-slope", "roof-drains-to-low-side", "siding-pitch", "grid-bubbles", "top-tiers-sum", "window-heads-aligned", "heads-below-lintel", "height-limit", "eaves-overhang", "entrance-not-under-drip"],
+    "textHeights": [2.1, 2.3, 2.5, 3.0, 3.2, 4.0],
+    "sidingPitch": 50.3,
+    "planning": { "maxHeightMm": 10000, "minLowEave": 450, "minHighEave": 200, "minGableEave": 300 },
+    "pens": {
+      "1:0": { "line": [[1, 2, 4], [1, 5]], "point": [[1], null], "text": [[2], null] },
+      "1:1": { "line": [[1, 2, 3, 4, 6], [1]] },
+      "1:2": { "line": [[113], [31]] },
+      "1:3": { "line": [[1], [1]] },
+      "1:5": { "line": [[2, 7], [1]], "solid": [[10], null] },
+      "1:8": { "line": [[3], [1]] },
+      "1:9": { "line": [[1], [1]], "text": [[2], null] },
+      "1:B": { "solid": [[10], null] },
+      "1:D": { "line": [[1, 2, 4], [1, 5]], "arc": [[1], [1]], "text": [[2], null] },
+      "1:E": { "line": [[1, 2, 7], [1]], "point": [[1], null], "text": [[2], null] }
+    }
+  }
+}

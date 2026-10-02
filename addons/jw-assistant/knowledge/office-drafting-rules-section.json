@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "id": "office-section-1-50",
+  "title": "木造在来 1/50 断面詳細図 作図ルール (社内練習データ 住宅A から抽出)",
+  "derivedFrom": {
+    "drawings": ["住宅A 断面詳細図"],
+    "environment": "住宅A 1/50 断面詳細 JWF",
+    "method": "codec decode + per-layer raster montage + offsets measured relative to grid Y1 and design GL (2026-10-02)",
+    "privacy": "Rules only. No client names, addresses, staff, company or logo data are stored here."
+  },
+  "sheet": { "paper": "A3", "frameGroup": "0", "layout": "one section centred; build-up boxes top-left (屋根, 室内 壁・天井) and top-right (外壁); floor/foundation list bottom-right with a leader; title box under the bottom tiers" },
+  "groups": { "0": { "role": "図枠・表題欄", "scale": 1 }, "1": { "role": "断面詳細図 1/50", "scale": 50 } },
+  "pens": { "printWidth_hundredthMm": { "1": 8, "2": 12, "3": 6, "4": 7, "5": 10, "6": 16, "7": 7, "8": 7 }, "screenRgb": { "3": [118, 219, 118], "8": [255, 136, 136] } },
+  "textStyles": { "1": 2.0, "2": 2.5, "3": 3.2, "4": 4.0, "5": 5.0, "6": 6.0, "7": 3.0, "8": 2.1, "9": 2.2, "10": 2.8, "font": "ＭＳ ゴシック", "unit": "paper mm", "use": "callouts 3.2 (style 3), dims + level labels 3.0 (style 7), small labels 2.8, title 4.0, grid labels 4.0 free size" },
+  "layers": {
+    "1:0": "GL line outside the building (pen 6)",
+    "1:1": "構造体: foundation, slab layers, floor, wall assembly lines, roof layers, fascia/soffit, roof framing (pen 2 faces, pen 1 thin, pen 4 battens)",
+    "1:2": "切断部材: 土台 / 大引 105, 桁 105x180 (low) / 105x105 (high), 母屋 105 with diagonals (pen 2 + pen 1)",
+    "1:3": "床仕上げ線 (practice); generator draws the floor on 1:1",
+    "1:4": "見え掛り建具・サッシ (window section in the cut wall)",
+    "1:7": "見え掛り: 鋼製束 beyond, furniture (pen 4)",
+    "1:8": "ハッチ: gravel slashes, ceiling insulation top",
+    "1:A": "断熱: wall GW wave (pen 8, ±35, 17.5 pitch), ceiling BGW 400 ±45° cross hatch 70.7, EPS slashes",
+    "1:B": "色塗: foundation pink (practice FFE6E6), GL ▼",
+    "1:C": "付加断熱 ±45° hatch in the -152..-62 band (pen 3)",
+    "1:D": "文字: callout boxes, level labels, room boxes, grid bubbles R250 + 4 mm labels, title",
+    "1:E": "寸法: vertical chains both sides, top tiers (eaves + grid / overall), bottom tiers, footing widths"
+  },
+  "measured": {
+    "method": "Practice house A section at 1/50, model mm relative to grid Y1 (u) and design GL (h)",
+    "levels": { "foundationTop": 400, "sillTop": 505, "subfloorTop": 533, "FL": 545, "ceiling": 2975, "beamBottom": 3225, "eave": 3405, "highBeamTop": 6271.5, "max": 6452.9 },
+    "floor": { "sill": "105x105 GL+400..505", "subfloor": "ネダレス合板 28 (505..533)", "finish": "フローリング 12 (533..545)", "joists": "大引 105 @910 on 鋼製束" },
+    "wallAssembly": { "sidingOuter": -185, "sidingInner": -170, "battenOuter": -152, "battenInner": -62, "core": 52.5, "interiorFace": 65, "note": "identical to the plan assembly; wall lines stop at the window head/sill" },
+    "ceiling": { "board": "2975..2987.5", "joists": "2987.5..3032.5 (45)", "insulation": "BGW 400 (2987.5..3387.5) ±45° hatch" },
+    "roof": { "topLine": "eave beam top + 0.35 s + 86.9", "roofingBase": 10.6, "sheathingBottom": 23.4, "rafterBottom": 86.9, "rafter": "45x60 @455", "lowEaveEdge": -600, "highEaveEdge": "+270 beyond the high wall", "soffit": "roof top - 245.8", "fascia": "perpendicular board at the low eave, vertical at the high eave" },
+    "foundation": { "riser": "150 (±75) GL-510..+400", "footing": "400 x 150 (GL-660..-510)", "gravelUnderFooting": "500 x 100 (GL-760..-660)", "slab": "180, top GL±0 (基礎天端-400)", "slabInsulation": "EPS 100 (GL-280..-180)", "slabGravel": "100 (GL-380..-280)", "edgeInsulation": "EPS 100 outside the riser (-175)", "mortar": "15 (-190) from GL-182", "skirt": "EPS 50 x 450, falling ~5 %" },
+    "chains": { "left": "6,455 | 545 / 2,860 / 3,050 | 400 / 105 / 2,720 / 180 | 40 / 2,430 (天井高) | below GL 760 = 100 + 150 + 510", "columnPitch": 400, "fromEaveEdge": 2700 },
+    "levelLabels": ["最高の高さ GL+6,455", "軒高 GL+3,405", "1FL GL+545", "設計GL"],
+    "topTiers": "600 | 3,640 | 2,730 | 1,820 | 270 and 8,190; bubbles for every grid line; bottom 3,640 / 2,730 / 1,820 and 8,190, footing 400 under each wall",
+    "buildUps": {
+      "roof": ["ガルバリウム鋼板横葺き 厚0.35", "アスファルトルーフィング 23kg", "構造用合板(野地板) 厚12", "垂木 45×60 @455"],
+      "wall": ["金属サイディング 厚15 (縦張り)", "横胴縁 18×45 @455 (通気層)", "透湿防水シート", "付加断熱 フェノールフォーム 厚90", "石膏板 厚9.5", "充填断熱 GW 厚105"],
+      "interior": ["防湿気密シート 厚0.2", "石膏ボード 厚12.5", "ビニルクロス"],
+      "floor": ["フローリング 厚12", "構造用合板(ネダレス) 厚28"],
+      "foundation": ["耐圧版コンクリート 厚180", "土間下断熱 EPS 厚100", "防湿シート 厚0.2", "砕石 厚100"]
+    }
+  },
+  "evaluation": {
+    "implementation": "addons/jw-assistant/generator/evaluate-section.mjs",
+    "checks": ["layer-role-purity", "pen-per-layer", "text-style-sizes", "fits-sheet", "gl-and-grid-found", "heights-match-building", "level-labels", "dimension-sum-equals-overall", "heights-add-up", "wall-assembly", "foundation-layers", "roof-slope", "insulation-drawn", "build-up-callouts", "rooms-labelled", "ceiling-height", "floor-height", "foundation-minimums", "head-clearance"],
+    "textHeights": [2.5, 2.8, 3.0, 3.2, 4.0],
+    "planning": { "minCeiling": 2400, "minFloorHeight": 450, "minRiserAboveGL": 300, "minRiserWidth": 120, "minSlab": 150, "minEmbed": 240 },
+    "pens": {
+      "1:0": { "line": [[6], [1]] },
+      "1:1": { "line": [[1, 2, 4], [1]] },
+      "1:2": { "line": [[1, 2], [1]] },
+      "1:4": { "line": [[1], [1]] },
+      "1:7": { "line": [[4], [1]] },
+      "1:8": { "line": [[1], [1]] },
+      "1:A": { "line": [[8], [1]] },
+      "1:B": { "solid": [[10], null] },
+      "1:C": { "line": [[3], [1]] },
+      "1:D": { "line": [[1, 2, 4], [1, 5]], "arc": [[1], [1]], "text": [[2], null] },
+      "1:E": { "line": [[1, 2, 4, 7], [1, 5]], "point": [[1], null], "text": [[2], null] }
+    }
+  }
+}
