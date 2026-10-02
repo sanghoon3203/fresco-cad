@@ -61,5 +61,6 @@
     { "type": "washer", "at": [385, 5760], "rotation": 270 },
     { "type": "toilet", "at": [2275, 7745], "rotation": 180 },
     { "type": "shoe-cabinet", "at": [2970, 7720], "rotation": 270, "size": [800, 350] }
-  ]
+  ],
+  "building": { "roof": { "low": "S", "slope": 0.35 }, "foundation": { "minCompartment": 2500000 } }
 }

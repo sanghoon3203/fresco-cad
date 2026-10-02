@@ -72,6 +72,9 @@ export function fitsSheetCheck(items, frame) {
   const fr = frame.filter(f => f.kind === 'line' && f.layer === '0:0');
   const xs = fr.flatMap(l => [l.a[0], l.b[0]]), ys = fr.flatMap(l => [l.a[1], l.b[1]]);
   const box = { x1: Math.min(...xs), y1: Math.min(...ys), x2: Math.max(...xs), y2: Math.max(...ys) }, bad = [];
+  // the title strip is the lowest horizontal frame line above the bottom edge: drawings must stay above it
+  const strip = fr.filter(l => Math.abs(l.a[1] - l.b[1]) < 0.01 && l.a[1] > box.y1 + 1 && l.a[1] < box.y1 + 40).map(l => l.a[1]).sort((p, q) => p - q)[0] ?? box.y1;
+  box.y1 = strip;
   for (const it of items) {
     const pts = it.kind === 'line' ? [it.a, it.b] : it.kind === 'arc' ? [it.c] : it.kind === 'solid' ? it.pts : it.kind === 'text' ? [[it.box.x1, it.box.y1], [it.box.x2, it.box.y2]] : it.at ? [it.at] : [];
     for (const p of pts) { const q = [p[0] / it.scale, p[1] / it.scale]; if (q[0] < box.x1 - 0.5 || q[0] > box.x2 + 0.5 || q[1] < box.y1 - 0.5 || q[1] > box.y2 + 0.5) { bad.push(`${it.kind} on ${it.layer} at ${q.map(v => round(v, 10))} outside the frame`); break; } }

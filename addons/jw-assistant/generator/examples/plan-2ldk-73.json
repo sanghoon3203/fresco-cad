@@ -61,5 +61,6 @@
     { "type": "ub1616", "at": [9100, 6370], "rotation": 180 },
     { "type": "washbasin", "at": [6815, 6940], "rotation": 180 },
     { "type": "washer", "at": [7700, 6875], "rotation": 180 }
-  ]
+  ],
+  "building": { "roof": { "low": "S", "slope": 0.3 }, "levels": { "ceiling": 2400 } }
 }

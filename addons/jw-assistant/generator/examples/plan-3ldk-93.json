@@ -75,5 +75,6 @@
     { "type": "washbasin", "at": [7735, 6940], "rotation": 180 },
     { "type": "washer", "at": [8620, 6875], "rotation": 180 },
     { "type": "desk", "at": [11285, 6760], "rotation": 270, "size": [900, 600] }
-  ]
+  ],
+  "building": { "roof": { "low": "S", "slope": 0.3, "eaves": { "low": 600, "high": 300, "gable": 450 } } }
 }

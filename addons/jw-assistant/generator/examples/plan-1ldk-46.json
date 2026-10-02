@@ -49,5 +49,6 @@
     { "type": "washer", "at": [3250, 5980], "rotation": 180 },
     { "type": "toilet", "at": [4095, 5925], "rotation": 180 },
     { "type": "shoe-cabinet", "at": [4790, 5880], "rotation": 270, "size": [800, 350] }
-  ]
+  ],
+  "building": { "roof": { "low": "S", "slope": 0.35, "eaves": { "low": 600, "high": 300, "gable": 450 } } }
 }

@@ -21,7 +21,7 @@
     "1:7": "見え掛り: 鋼製束 beyond, furniture (pen 4)",
     "1:8": "ハッチ: gravel slashes, ceiling insulation top",
     "1:A": "断熱: wall GW wave (pen 8, ±35, 17.5 pitch), ceiling BGW 400 ±45° cross hatch 70.7, EPS slashes",
-    "1:B": "色塗: foundation pink (practice FFE6E6), GL ▼",
+    "1:B": "色塗: EPS pink COLORREF e5e5ff (= RGB 255,229,229), concrete efefef, GL ▼",
     "1:C": "付加断熱 ±45° hatch in the -152..-62 band (pen 3)",
     "1:D": "文字: callout boxes, level labels, room boxes, grid bubbles R250 + 4 mm labels, title",
     "1:E": "寸法: vertical chains both sides, top tiers (eaves + grid / overall), bottom tiers, footing widths"

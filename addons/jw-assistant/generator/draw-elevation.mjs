@@ -98,7 +98,7 @@ function drawView(B, side, chainSide) {
     S.line(LAYER.outline, PEN.outline, P(sA, b.roof.soffitDrop), P(sB, b.roof.soffitDrop));
     // slope mark 10 / 3.5 above the roof, 1/3 from the high end
     const sm = roof.sMin + (roof.sMax - roof.sMin) * 0.55, base = P(sm), run = 1278, rise = run * roof.slope, dir = Math.sign(uOfS(sB) - uOfS(sA));
-    const p0 = [base[0] - dir * run / 2, base[1] + 1300], p1 = [p0[0] + dir * run, p0[1]], p2 = [p0[0], p0[1] - rise];
+    const p0 = [base[0] - dir * run / 2, base[1] + 900], p1 = [p0[0] + dir * run, p0[1]], p2 = [p0[0], p0[1] - rise];
     S.poly(LAYER.slope, PEN.slope, [p1, p0, p2], false); S.line(LAYER.slope, PEN.slope, p2, p1);
     S.atext(LAYER.slope, [(p0[0] + p1[0]) / 2 + dir * 100, p0[1] + 20], '10', TEXT.slope, { ax: 0.5, ay: 0 });
     S.atext(LAYER.slope, [p0[0] - dir * 90, (p0[1] + p2[1]) / 2], String(roof.slope * 10), TEXT.slope, { ax: dir > 0 ? 1 : 0, ay: 0.5 });
@@ -236,9 +236,11 @@ export function drawElevations(input, { building: prebuilt } = {}) {
   const wL = Math.max(bb.E[2] - bb.E[0], bb.W[2] - bb.W[0]) / SCALE, wR = Math.max(bb.S[2] - bb.S[0], bb.N[2] - bb.N[0]) / SCALE;
   const [ax1, ay1, ax2, ay2] = PAPER.area, gap = Math.max(4, (ax2 - ax1 - wL - wR) / 3);
   if (wL + wR > ax2 - ax1) warnings.push(`elevations ${Math.round(wL + wR)} mm wide exceed the A3 drawing area at 1/${SCALE}`);
-  const hTop = Math.max(bb.E[3], bb.S[3]) / SCALE, hBot = Math.max(-bb.E[1], -bb.S[1], -bb.W[1], -bb.N[1]) / SCALE, rowH = (ay2 - ay1) / 2;
-  const glTop = ay2 - 3 - hTop, glBot = glTop - rowH - 2;
-  if (glBot - hBot < ay1 || Math.max(bb.W[3], bb.N[3]) / SCALE + glBot > glTop - hBot) warnings.push('elevation rows overlap vertically');
+  // rows: top row hangs from the top of the drawing area, bottom row stands on its bottom; the gap between is shared
+  const up1 = Math.max(bb.E[3], bb.S[3]) / SCALE, dn1 = Math.max(-bb.E[1], -bb.S[1]) / SCALE, up2 = Math.max(bb.W[3], bb.N[3]) / SCALE, dn2 = Math.max(-bb.W[1], -bb.N[1]) / SCALE;
+  const free = (ay2 - ay1) - (up1 + dn1 + up2 + dn2);
+  const glTop = ay2 - up1 - Math.max(0, free) / 3, glBot = ay1 + dn2 + Math.max(0, free) / 3;
+  if (free < 0) warnings.push(`elevation rows overlap vertically by ${Math.round(-free)} mm (building too tall for 2 rows at 1/${SCALE})`);
   const colX = { L: ax1 + gap, R: ax1 + gap * 2 + wL };
   const placement = { E: ['L', glTop], S: ['R', glTop], W: ['L', glBot], N: ['R', glBot] };
   const doc = newSheetDocument('elevation', { 1: { name: '立面図', scale: SCALE } }, 'fresco set-generator elevation scale=100');

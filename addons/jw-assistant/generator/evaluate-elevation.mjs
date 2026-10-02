@@ -7,8 +7,8 @@ import { round } from './geometry.mjs';
 
 const WEIGHTS = { 'layer-role-purity': 2, 'pen-per-layer': 2, 'text-style-sizes': 1, 'fits-sheet': 2, 'views-present': 3, 'level-lines-match-building': 3, 'level-chains-sum': 3,
   'dimension-sum-equals-overall': 3, 'openings-match-plan': 3, 'roof-slope': 3, 'roof-drains-to-low-side': 2, 'siding-pitch': 1, 'grid-bubbles': 1, 'top-tiers-sum': 2,
-  'window-heads-aligned': 2, 'heads-below-lintel': 2, 'height-limit': 2, 'eaves-overhang': 1, 'entrance-not-under-drip': 1 };
-const PLANNING = new Set(['window-heads-aligned', 'heads-below-lintel', 'height-limit', 'eaves-overhang', 'entrance-not-under-drip']);
+  'window-heads-aligned': 2, 'heads-below-lintel': 2, 'height-limit': 2, 'eaves-overhang': 1, 'entrance-not-under-drip': 1, 'roof-spans-short-side': 2 };
+const PLANNING = new Set(['window-heads-aligned', 'heads-below-lintel', 'height-limit', 'eaves-overhang', 'entrance-not-under-drip', 'roof-spans-short-side']);
 
 /** u-range of the roof silhouette for a view (left -> right as seen). */
 export function roofExtentU(B, side) {
@@ -125,6 +125,9 @@ export function evaluateElevations(bytes, spec, rules = {}) {
     if (e.gable < (R.planning?.minGableEave ?? 300)) bad.push(`gable eave ${e.gable} < ${R.planning?.minGableEave ?? 300}`);
     C.add('eaves-overhang', 3, bad.length, 'warn', bad);
     const ent = B.model.openings.filter(o => o.type === 'entrance-door'), lowSide = roof.low, drip = ent.filter(o => B.facades[lowSide].openings.some(x => x.o.id === o.id) && !(b.openings.byId?.[o.id]?.canopy));
+    { const d = a => { const v = B.model.poly.map(p => a === 'x' ? p[0] : p[1]); return Math.max(...v) - Math.min(...v); }, other = roof.axis === 'x' ? 'y' : 'x', rise = roof.maxHeight - L.eave, long = d(roof.axis) > d(other) + 1;
+      const msg = long && rise > (R.planning?.maxShedRise ?? 3000) ? [`shed roof falls along the long side (${d(roof.axis)} > ${d(other)}): rise ${Math.round(rise)} - turn the slope across the short span`] : [];
+      C.add('roof-spans-short-side', 1, msg.length, 'warn', msg); }
     C.add('entrance-not-under-drip', ent.length, drip.length, 'warn', drip.map(o => `entrance ${o.id} is under the low eave drip line (add a canopy/gutter or move it)`)); }
   return C.result({ views: Object.fromEntries(Object.entries(views).map(([k, v]) => [k, { cx: round(v.cx, 10), gl: round(v.gy, 10) }])) });
 }

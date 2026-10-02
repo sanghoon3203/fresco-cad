@@ -45,12 +45,12 @@ export function evaluateFoundationPlan(bytes, spec, rules = {}) {
         if (model.openings.some(op => op.wall === w.id && distToSeg(p, op.jambs[0], op.jambs[1]) < 5) && w.kind === 'int') continue;   // door: no wall above
         n++;
         const ok = faceAt(risLines, W(p), d, h) || (F.interior === 'grade-beam' && w.kind === 'int' && faceAt(beamLines, W(p), d, F.gradeBeamWidth / 2));
-        if (!ok && F.interior === 'grade-beam' && w.kind === 'int') { unsupported.push(`wall ${w.id} at ${p.map(v => round(v))}: carried by the floor framing (大引/鋼製束), no grade beam below`); n--; continue; }
+        if (!ok && w.kind === 'int' && (F.interior === 'grade-beam' || (FD.dropped ?? []).some(s => pointOnSegment(p, s[0], s[1], 1)))) { unsupported.push(`wall ${w.id} at ${p.map(v => round(v))}: carried by the floor framing (大引/鋼製束)`); n--; continue; }
         if (!ok) { bad.push(`wall ${w.id} at ${p.map(v => round(v))}: no riser${F.interior === 'grade-beam' ? '/grade beam' : ''} below`); }
       }
     }
     C.add('risers-under-bearing-walls', n, bad.length, 'error', bad.slice(0, 12));
-    if (F.interior === 'grade-beam') { const walls = new Set(unsupported.map(s => s.split(' ')[1])); C.add('interior-walls-supported', model.walls.filter(w => w.kind === 'int').length, walls.size, 'warn', [...walls].map(id => `wall ${id}: carried by the floor framing only (no grade beam below) - check 大引/束 sizing`)); } }
+    if (F.interior === 'grade-beam' || unsupported.length) { const walls = new Set(unsupported.map(s => s.split(' ')[1])); C.add('interior-walls-supported', model.walls.filter(w => w.kind === 'int').length, walls.size, 'warn', [...walls].map(id => `wall ${id}: carried by the floor framing only (no riser / grade beam below) - check 大引/束 sizing`)); } }
   { const eps = items.filter(i => i.kind === 'line' && i.layer === '1:1' && i.color === 7), per = model.poly.length;
     C.add('perimeter-insulation', per, Math.max(0, per - eps.length), 'warn', eps.length >= per ? [] : ['EPS outline (pen 7) incomplete']); }
   const dc = dimensionChainCheck(items, ['1:E']); C.add('dimension-sum-equals-overall', dc.total, dc.bad.length, 'error', dc.bad);
@@ -81,9 +81,10 @@ export function evaluateFoundationPlan(bytes, spec, rules = {}) {
   { const posts = items.filter(i => i.kind === 'arc' && i.layer === '1:3').map(a => [a.c[0] - o[0], a.c[1] - o[1]]);
     const bad = posts.filter(p => !onModule(p[0], g.x[0]) || !onModule(p[1], g.y[0]) || risersAll.some(r => distToSeg(p, r.a, r.b) < F.riser / 2 + 50)).map(p => `post at ${p.map(v => round(v))} off-grid or on a riser`);
     C.add('posts-on-grid', posts.length, bad.length, 'error', bad);
-    // every void compartment >= 1.5 m² gets posts no farther than pitch*sqrt(2) apart from a neighbour
-    const lonely = posts.filter(p => posts.length > 1 && !posts.some(q => q !== p && Math.hypot(q[0] - p[0], q[1] - p[1]) <= F.postPitch * 1.5 + 1));
-    C.add('post-spacing', posts.length, lonely.length, 'warn', lonely.map(p => `post at ${p.map(v => round(v))} has no neighbour within ${F.postPitch * 1.5}`)); }
+    // floor joists (大引) span riser to riser: a void compartment whose short side exceeds 2 modules needs posts
+    const need = FD.comps.filter(c => !c.doma && Math.min(c.box[2] - c.box[0], c.box[3] - c.box[1]) > F.postPitch * 2 + 1);
+    const bare = need.filter(c => !posts.some(p => FD.compAt([p[0] + 1, p[1] + 1]) === c.id));
+    C.add('post-spacing', need.length, bare.length, 'warn', bare.map(c => `void at ${c.center.map(v => round(v))} spans > ${F.postPitch * 2} without 鋼製束`)); }
   { const want = FD.comps.filter(c => !c.doma && c.area >= 1.5e6 && FD.compAt(c.center) === c.id).length, got = items.filter(t => t.kind === 'text' && /^耐圧版\d+t$/u.test(t.text)).length;
     C.add('slab-labels', want, Math.max(0, want - got), 'warn', got >= want ? [] : [`${got}/${want} slab labels`]); }
   // planning

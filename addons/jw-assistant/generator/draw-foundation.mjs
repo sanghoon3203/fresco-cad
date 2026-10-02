@@ -21,7 +21,7 @@ export const TEXT = { note: 3, dim: 3, title: 4 };
 export const GRID_TEXT = { h: 3.5, w: 3.5, sp: -0.2 };
 export const MEASURED = { epsFace: 175, mortarFace: 200, footingInner: 200, postR: 50, postArm: 100, slabLabel: ['耐圧版180t', '-400'], dimFirst: 1000, dimPitch: 250, bubbleR: 150 };
 
-const RGB = { riser: 0xe0e0e0, eps: 0xffe0e0, black: 0x000000, white: 0xffffff };
+const RGB = { riser: 0xe2e2e2, eps: 0xe5e5ff, black: 0x000000, white: 0xffffff };   // COLORREF (0xBBGGRR), practice values
 
 function riserBodies(B) {
   const { model, foundation: FD, building: b } = B, F = b.foundation, half = F.riser / 2;
@@ -74,7 +74,7 @@ export function drawFoundationPlan(input, { building: prebuilt } = {}) {
   // slab compartments: triple diagonal marks + "耐圧版180t / -400" labels; doma label
   for (const c of FD.comps) {
     if (c.area < 1.5e6) continue;
-    const [cx, cy] = c.center;
+    const [cx, cy] = c.id === FD.inspect && FD.compAt([c.center[0], c.center[1] + 650]) === c.id && FD.inspectAt?.[1] !== c.center[1] + 650 ? [c.center[0], c.center[1] + 650] : c.center;
     if (c.doma) { S.atext(LAYER.text, [cx, cy + 120], '土間コンクリート', TEXT.note, { ax: 0.5, ay: 0 }); S.atext(LAYER.text, [cx, cy - 120], `${F.domaSlab}t`, TEXT.note, { ax: 0.5, ay: 1 }); info.labels.push('土間'); continue; }
     const at = [cx, cy];
     if (FD.compAt(at) !== c.id) continue;
@@ -94,13 +94,14 @@ export function drawFoundationPlan(input, { building: prebuilt } = {}) {
   for (const m of FD.manholes) {
     const d = m.dir, n = [-d[1], d[0]], w = m.width / 2, h = F.riser / 2;
     for (const s of [-1, 1]) S.line(LAYER.manhole, PEN.manhole, [m.at[0] - d[0] * w + n[0] * h * s, m.at[1] - d[1] * w + n[1] * h * s], [m.at[0] + d[0] * w + n[0] * h * s, m.at[1] + d[1] * w + n[1] * h * s]);
-    const lp = [m.at[0] + n[0] * 380 + d[0] * 0, m.at[1] + n[1] * 380];
+    const area = s => FD.comps.find(c => c.id === FD.compAt([m.at[0] + n[0] * 380 * s, m.at[1] + n[1] * 380 * s]))?.area ?? 0, sl = area(1) >= area(-1) ? 1 : -1;   // label on the roomier side
+    const lp = [m.at[0] + n[0] * 380 * sl, m.at[1] + n[1] * 380 * sl];
     S.atext(LAYER.text, lp, `人通口 W${m.width}`, 0, { ax: 0.5, ay: 0.5, size: { h: 2.5, w: 2.5 }, angle: Math.abs(d[0]) > 0.5 ? 0 : 90 });
     info.manholes.push({ at: m.at, why: m.why });
   }
   // 床下点検口 600x450 in the inspection compartment
   const ic = FD.comps.find(c => c.id === FD.inspect);
-  if (ic) { const [cx, cy] = ic.center; S.rect(LAYER.inspect, PEN.inspect, cx + 300, cy + 300, cx + 900, cy + 750); S.atext(LAYER.text, [cx + 600, cy + 860], '床下点検口', 0, { ax: 0.5, ay: 0, size: { h: 2.5, w: 2.5 } }); info.inspection = [cx + 600, cy + 525]; }
+  if (ic) { const [cx, cy] = FD.inspectAt ?? ic.center; S.rect(LAYER.inspect, PEN.inspect, cx - 300, cy - 225, cx + 300, cy + 225); S.atext(LAYER.text, [cx, cy - 300], '床下点検口', 0, { ax: 0.5, ay: 1, size: { h: 2.5, w: 2.5 } }); info.inspection = [cx, cy]; }
   // dimensions: riser-line tier + overall, both on all four sides; grid bubbles beyond
   const base = {};
   const lines = FD.risers.concat(FD.beams);

@@ -24,7 +24,7 @@
     "1:7": "床下点検口 (dashed rect), floor grilles in practice",
     "1:8": "ハッチ: 地中梁 45° hatch pen 7",
     "1:A": "grid bubbles R150 + 3.5 mm labels, stubs pen 7 style 5",
-    "1:B": "色塗: riser fill E0E0E0, EPS band pink",
+    "1:B": "色塗: riser fill e2e2e2, EPS band pink COLORREF e5e5ff",
     "1:D": "文字: 耐圧版180t / -400, 土間, legend, title",
     "1:E": "寸法: foundation-line tier + overall on all four sides, 実点"
   },

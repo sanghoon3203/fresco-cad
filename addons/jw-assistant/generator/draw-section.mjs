@@ -22,7 +22,7 @@ export const ROOF_LAYERS = { roofingBase: 10.6, sheathingBottom: 23.4, rafterBot
 export const CEIL = { board: 12.5, joist: 45, insulation: 400 };
 export const FOUND = { mortarFace: 190, gravelDepth: 760, footingTop: 510 };
 
-const fill = { conc: 0xeeeeee, eps: 0xffe6e6, white: 0xffffff };
+const fill = { conc: 0xefefef, eps: 0xe5e5ff, white: 0xffffff };   // Jw solid colours are COLORREF (0xBBGGRR): practice EPS pink e5e5ff
 
 function crossings(B) {
   const { model, section: X } = B, along = X.axis === 'y' ? 1 : 0, across = 1 - along, at = X.at;
@@ -91,7 +91,8 @@ function drawCut(B) {
       } else {        // interior riser, monolithic with the slab
         const x0 = r.u - F.riser / 2, x1 = r.u + F.riser / 2;
         S.line(LAYER.body, PEN.body, [x0, F.slabTop], [x0, L.foundationTop]); S.line(LAYER.body, PEN.body, [x1, F.slabTop], [x1, L.foundationTop]); S.line(LAYER.body, PEN.body, [x0, L.foundationTop], [x1, L.foundationTop]);
-        conc(x0, ySlabB, x1, L.foundationTop);
+        S.line(LAYER.body, PEN.body, [x0, yGrvB], [x0, ySlabB]); S.line(LAYER.body, PEN.body, [x1, yGrvB], [x1, ySlabB]); S.line(LAYER.body, PEN.body, [x0, yGrvB], [x1, yGrvB]);   // riser footing below the slab
+        conc(x0, yGrvB, x1, L.foundationTop);
       }
     }
   }
