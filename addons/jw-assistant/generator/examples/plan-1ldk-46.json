@@ -1,0 +1,53 @@
+{
+  "name": "plan-1ldk-46",
+  "title": { "project": "サンプルプラン 1LDK平屋", "drawing": "1階平面図", "scale": "1/50", "date": "2026-10-01", "sheet": "P-03" },
+  "grid": { "x": { "pitch": 910, "count": 9 }, "y": { "pitch": 910, "count": 8 } },
+  "exterior": [[0, 0], [7280, 0], [7280, 6370], [0, 6370]],
+  "walls": [
+    { "id": "x4550", "from": [4550, 0], "to": [4550, 6370] },
+    { "id": "brN", "from": [4550, 3640], "to": [7280, 3640] },
+    { "id": "wetS", "from": [0, 4550], "to": [4550, 4550] },
+    { "id": "sicS", "from": [6370, 4550], "to": [7280, 4550] },
+    { "id": "x1820", "from": [1820, 4550], "to": [1820, 6370] },
+    { "id": "x3640", "from": [3640, 4550], "to": [3640, 6370] },
+    { "id": "x6370", "from": [6370, 4550], "to": [6370, 6370] }
+  ],
+  "openings": [
+    { "id": "W1", "type": "window-sliding", "at": [1365, 0], "width": 1820, "height": 2000 },
+    { "id": "W2", "type": "window-sliding", "at": [3412.5, 0], "width": 1365, "height": 2000 },
+    { "id": "W3", "type": "window-sliding", "at": [0, 2275], "width": 1820, "height": 1100 },
+    { "id": "W4", "type": "window-sliding", "at": [5915, 0], "width": 1820, "height": 1800 },
+    { "id": "W5", "type": "window-sliding", "at": [7280, 2047.5], "width": 1365, "height": 1100 },
+    { "id": "W6", "type": "window-sliding", "at": [0, 5460], "width": 910, "height": 700 },
+    { "id": "W7", "type": "window-sliding", "at": [2730, 6370], "width": 910, "height": 700 },
+    { "id": "W8", "type": "window-sliding", "at": [4095, 6370], "width": 910, "height": 500 },
+    { "id": "D1", "type": "entrance-door", "at": [5687.5, 6370], "width": 1365, "swing": "N", "hinge": "end" },
+    { "id": "D2", "type": "door-swing", "at": [5460, 3640], "width": 910, "swing": "S", "hinge": "start" },
+    { "id": "D3", "type": "door-swing", "at": [4550, 4095], "width": 910, "swing": "W", "hinge": "end" },
+    { "id": "D4", "type": "door-swing", "at": [3185, 4550], "width": 910, "swing": "N", "hinge": "start" },
+    { "id": "D5", "type": "opening", "at": [1820, 5005], "width": 910 },
+    { "id": "D6", "type": "door-swing", "at": [4550, 5005], "width": 910, "swing": "E", "hinge": "end" },
+    { "id": "D7", "type": "door-sliding", "at": [6370, 5005], "width": 910, "swing": "E", "slide": "end" }
+  ],
+  "rooms": [
+    { "name": "LDK", "at": [2600, 2900] },
+    { "name": "洋室", "at": [5915, 2500] },
+    { "name": "ホール", "at": [6200, 4100], "rect": [4550, 3640, 7280, 4550], "kind": "corridor" },
+    { "name": "玄関", "at": [5750, 5000], "rect": [4550, 4550, 6370, 6370], "doma": [4550, 5460, 6370, 6370] },
+    { "name": "収納", "at": [6825, 5460], "kind": "storage" },
+    { "name": "浴室", "at": [600, 5460] },
+    { "name": "洗面脱衣", "at": [2400, 5350], "kind": "wet" },
+    { "name": "トイレ", "at": [4095, 5100] }
+  ],
+  "items": [
+    { "type": "kitchen-i2100", "at": [1765, 4160], "rotation": 180 },
+    { "type": "fridge", "at": [390, 4160], "rotation": 180, "size": [650, 650] },
+    { "type": "table-dining", "at": [2275, 1700] },
+    { "type": "bed-semidouble", "at": [6615, 2575], "rotation": 180 },
+    { "type": "ub1616", "at": [910, 5460], "rotation": 0 },
+    { "type": "washbasin", "at": [2300, 6030], "rotation": 180 },
+    { "type": "washer", "at": [3250, 5980], "rotation": 180 },
+    { "type": "toilet", "at": [4095, 5925], "rotation": 180 },
+    { "type": "shoe-cabinet", "at": [4790, 5880], "rotation": 270, "size": [800, 350] }
+  ]
+}

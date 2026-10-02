@@ -1,0 +1,63 @@
+{
+  "name": "house-a-shell",
+  "title": { "project": "練習住宅A 躯体再現", "drawing": "1階平面図", "scale": "1/50", "date": "2026-10-01", "sheet": "G-00" },
+  "grid": { "x": { "pitch": 910, "count": 13 }, "y": { "pitch": 910, "count": 10 } },
+  "exterior": [[0, 0], [10920, 0], [10920, 8190], [0, 8190]],
+  "walls": [
+    { "id": "y6370", "from": [0, 6370], "to": [7280, 6370] },
+    { "id": "y5460", "from": [7280, 5460], "to": [10920, 5460] },
+    { "id": "y4550", "from": [2275, 4550], "to": [5005, 4550] },
+    { "id": "y3640", "from": [0, 3640], "to": [2275, 3640] },
+    { "id": "y2730", "from": [8190, 2730], "to": [10920, 2730] },
+    { "id": "x1820", "from": [1820, 6370], "to": [1820, 8190] },
+    { "id": "x2275", "from": [2275, 4550], "to": [2275, 6370] },
+    { "id": "x5005", "from": [5005, 4550], "to": [5005, 6370] },
+    { "id": "x6370", "from": [6370, 6370], "to": [6370, 8190] },
+    { "id": "x7280", "from": [7280, 5460], "to": [7280, 8190] },
+    { "id": "x8190", "from": [8190, 0], "to": [8190, 5460] }
+  ],
+  "openings": [
+    { "id": "W1", "type": "window-sliding", "at": [2275, 0], "width": 1820, "height": 2000 },
+    { "id": "W2", "type": "window-sliding", "at": [5915, 0], "width": 1820, "height": 2000 },
+    { "id": "W3", "type": "window-sliding", "at": [7280, 0], "width": 910, "height": 2000 },
+    { "id": "W4", "type": "window-sliding", "at": [9456.5, 0], "width": 1130, "height": 930 },
+    { "id": "W5", "type": "window-sliding", "at": [3397.5, 8190], "width": 1365, "height": 330 },
+    { "id": "W6", "type": "window-sliding", "at": [5687.5, 8190], "width": 1365, "height": 330 },
+    { "id": "W7", "type": "window-sliding", "at": [6825, 8190], "width": 630, "height": 430 },
+    { "id": "W8", "type": "window-sliding", "at": [0, 1577.5], "width": 1365, "height": 500 },
+    { "id": "D1", "type": "entrance-door", "at": [0, 5370], "width": 1216, "hinge": "end", "swing": "W" },
+    { "id": "W9", "type": "window-sliding", "at": [10920, 3996.5], "width": 1130, "height": 930 },
+    { "id": "W10", "type": "window-sliding", "at": [10920, 6726.5], "width": 1130, "height": 930 },
+    { "id": "D2", "type": "opening", "at": [1820, 6825], "width": 910 },
+    { "id": "D3", "type": "opening", "at": [5687.5, 6370], "width": 958 },
+    { "id": "D4", "type": "door-sliding", "at": [6370, 6825], "width": 910, "slide": "end", "swing": "E" },
+    { "id": "D5", "type": "opening", "at": [5005, 5460], "width": 910 },
+    { "id": "D6", "type": "door-swing", "at": [7280, 5915], "width": 910, "hinge": "end", "swing": "W" },
+    { "id": "D7", "type": "door-swing", "at": [8190, 5005], "width": 910, "hinge": "end", "swing": "W" },
+    { "id": "D8", "type": "door-swing", "at": [8190, 1365], "width": 910, "hinge": "start", "swing": "E" }
+  ],
+  "rooms": [
+    { "name": "浴室", "at": [910, 7280] },
+    { "name": "脱衣室", "at": [3412, 7550], "rect": [1820, 6370, 5005, 8190] },
+    { "name": "洗面所", "at": [5687, 7100], "rect": [5005, 6370, 6370, 8190] },
+    { "name": "トイレ", "at": [6825, 7000] },
+    { "name": "主寝室", "at": [9100, 7100] },
+    { "name": "洋室1", "at": [9555, 4400] },
+    { "name": "洋室2", "at": [9555, 1700] },
+    { "name": "ファミリーCL", "at": [3640, 5460], "kind": "storage" },
+    { "name": "玄関", "at": [700, 5000], "rect": [0, 3640, 1365, 6370], "doma": [0, 3640, 1365, 6370] },
+    { "name": "ホール", "at": [6200, 5000], "rect": [1365, 3640, 8190, 6370], "kind": "corridor" },
+    { "name": "LDK", "at": [4400, 1800], "rect": [0, 0, 8190, 3640] }
+  ],
+  "items": [
+    { "type": "ub1616", "at": [910, 7280] },
+    { "type": "washer", "at": [2300, 7700], "rotation": 180 },
+    { "type": "washbasin", "at": [5687, 7840], "rotation": 180 },
+    { "type": "toilet", "at": [6825, 7745], "rotation": 180 },
+    { "type": "kitchen-i2550", "at": [390, 1500], "rotation": 270 },
+    { "type": "fridge", "at": [450, 3150], "rotation": 270 },
+    { "type": "table-dining", "at": [3800, 1700] },
+    { "type": "bed-single", "at": [8700, 7125], "rotation": 180 },
+    { "type": "bed-single", "at": [9900, 7125], "rotation": 180 }
+  ]
+}

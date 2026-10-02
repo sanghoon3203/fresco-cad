@@ -3,75 +3,455 @@
   "id": "office-plan-1-50",
   "title": "木造在来 1/50 平面詳細図 作図ルール (社内練習データ 住宅A から抽出)",
   "derivedFrom": {
-    "drawings": ["住宅A 平面図", "住宅A 立面図", "住宅A 断面詳細図", "住宅A 基礎伏図", "住宅A 基礎詳細図"],
+    "drawings": [
+      "住宅A 平面図",
+      "住宅A 立面図",
+      "住宅A 断面詳細図",
+      "住宅A 基礎伏図",
+      "住宅A 基礎詳細図"
+    ],
     "environment": "住宅A 1/50 平面詳細 JWF",
     "reference": "住宅A 平面・立面・断面詳細 PDF",
     "method": "codec decode + per-layer raster review + line-offset measurement around grid lines (2026-10-01)",
     "privacy": "Rules only. No client names, addresses or drawing contents are stored here."
   },
-  "sheet": { "paper": "A3", "widthMm": 420, "heightMm": 297, "origin": "paper centre", "frameGroup": "0", "frameGroupScale": 1 },
+  "sheet": {
+    "paper": "A3",
+    "widthMm": 420,
+    "heightMm": 297,
+    "origin": "paper centre",
+    "frameGroup": "0",
+    "frameGroupScale": 1
+  },
   "groups": {
-    "0": { "role": "図枠・表題欄・日付 (scale 1)", "scale": 1 },
-    "1": { "role": "平面詳細図 1/50", "scale": 50 }
+    "0": {
+      "role": "図枠・表題欄・日付 (scale 1)",
+      "scale": 1
+    },
+    "1": {
+      "role": "平面詳細図 1/50",
+      "scale": 50
+    }
   },
   "layerNames": "Groups use names n-0..n-7, n-9, n-A, n-C for numbered layers; fixed names: 8=ハッチ, B=色塗, D=文字, E=寸法, F=補助線",
   "pens": {
-    "printWidth_hundredthMm": { "1": 8, "2": 12, "3": 6, "4": 7, "5": 10, "6": 15, "7": 7, "8": 8 },
-    "screenRgb": { "1": [0,192,192], "2": [0,0,0], "3": [171,171,171], "4": [128,128,64], "5": [192,0,192], "6": [0,0,255], "7": [150,150,150], "8": [255,136,136] },
+    "printWidth_hundredthMm": {
+      "1": 8,
+      "2": 12,
+      "3": 6,
+      "4": 7,
+      "5": 10,
+      "6": 15,
+      "7": 7,
+      "8": 8
+    },
+    "screenRgb": {
+      "1": [
+        0,
+        192,
+        192
+      ],
+      "2": [
+        0,
+        0,
+        0
+      ],
+      "3": [
+        171,
+        171,
+        171
+      ],
+      "4": [
+        128,
+        128,
+        64
+      ],
+      "5": [
+        192,
+        0,
+        192
+      ],
+      "6": [
+        0,
+        0,
+        255
+      ],
+      "7": [
+        150,
+        150,
+        150
+      ],
+      "8": [
+        255,
+        136,
+        136
+      ]
+    },
     "meaning": {
-      "2": "太線: 壁の最外面と室内仕上げ面 (切断面の輪郭)",
       "1": "中線: 建具・外装下地の境界",
-      "4": "細線: 壁の中間層境界・家具",
+      "2": "太線: 壁の最外面と室内仕上げ面 (切断面の輪郭)",
       "3": "極細グレー: 補助グリッド",
+      "4": "細線: 壁の中間層境界・家具",
       "7": "グレー: 設備機器・通り芯",
       "8": "ピンク: 断熱材パターン",
       "9": "補助線色 (印刷しない)"
     },
-    "lineTypes": { "1": "実線", "2": "点線 (家具・グリッド)", "4": "一点鎖線 (細)", "5": "一点鎖線 (通り芯)", "9": "補助線" }
+    "lineTypes": {
+      "1": "実線",
+      "2": "点線 (家具・グリッド)",
+      "4": "一点鎖線 (細)",
+      "5": "一点鎖線 (通り芯)",
+      "9": "補助線"
+    }
   },
-  "textStyles": { "1": 2.1, "2": 2.5, "3": 3.2, "4": 4.0, "5": 5.0, "6": 6.0, "7": 2.2, "8": 3.0, "9": 3.5, "10": 2.8, "font": "ＭＳ ゴシック", "unit": "paper mm" },
-  "module": { "base": 910, "half": 455, "auxGrid": 455 },
+  "textStyles": {
+    "1": 2.1,
+    "2": 2.5,
+    "3": 3.2,
+    "4": 4,
+    "5": 5,
+    "6": 6,
+    "7": 2.2,
+    "8": 3,
+    "9": 3.5,
+    "10": 2.8,
+    "font": "ＭＳ ゴシック",
+    "unit": "paper mm"
+  },
+  "module": {
+    "base": 910,
+    "half": 455,
+    "auxGrid": 455,
+    "system": "尺モジュール: 3尺 = 910 (柱芯), 半間 = 455, 1間 = 1,820, 1坪 = 1,820 x 1,820",
+    "allowedGridSpacings": [
+      455,
+      910,
+      1365,
+      1820,
+      2275,
+      2730,
+      3185,
+      3640,
+      4095,
+      4550,
+      5460
+    ],
+    "observedInPracticePlan": {
+      "x": [
+        1820,
+        3185,
+        1365,
+        910,
+        3640
+      ],
+      "y": [
+        1820,
+        2730,
+        3640
+      ],
+      "overall": [
+        10920,
+        8190
+      ]
+    },
+    "rules": [
+      "通り芯 (column centre lines) must sit on multiples of 455 from the first grid line; prefer 910 multiples for main structure.",
+      "Every exterior wall vertex, interior wall end, column and wall junction is on the 455 grid.",
+      "Room sizes are planned centre-to-centre in grid units: 4.5帖 = 2,730 x 2,730, 6帖 = 2,730 x 3,640, 8帖 = 3,640 x 3,640.",
+      "Corridors are 910 centre-to-centre (clear ~780); stairs and toilets use 910 width.",
+      "Grid-to-grid dimension values must be multiples of 455. Non-module values (e.g. 899, 702, 1,130) are only allowed for opening positions/sizes and must be shown in a separate opening-position tier or in parentheses as reference dimensions.",
+      "Opening widths follow the module: 1間 window/sliding door 1,820 centre, 半間 910; sash call sizes (e.g. 16520) are product sizes inside the module opening."
+    ],
+    "severity": {
+      "offGridStructure": "error",
+      "nonModuleGridDimension": "error",
+      "openingOffModule": "warning"
+    }
+  },
   "layers": {
-    "1:0": { "role": "aux-grid", "ja": "455補助グリッド", "kinds": ["line"], "pen": { "color": 3, "style": 2 }, "rule": "Covers the building extent every 455 mm in both directions." },
-    "1:1": { "role": "wall-face", "ja": "壁 仕上げ面 (太線)", "kinds": ["line"], "pen": { "color": 2, "style": 1 }, "rule": "Outermost exterior face and every interior finished face. Cut walls must read as two thick lines." },
-    "1:2": { "role": "column", "ja": "柱", "kinds": ["block", "line"], "pen": { "color": 2, "style": 1 }, "rule": "105x105 square with an X (block 柱1) at wall corners, junctions and opening jambs on the 910 grid." },
-    "1:3": { "role": "wall-core", "ja": "壁 躯体・下地境界 (細線)", "kinds": ["line"], "pen": { "color": 4, "style": 1 }, "rule": "Stud faces (±52.5 from grid) and exterior sheathing face." },
-    "1:4": { "role": "exterior-layers", "ja": "外壁 下地層 (通気胴縁・付加断熱)", "kinds": ["line"], "pen": { "color": 1, "style": 1 }, "rule": "Exterior-only lines at -62 and -152 from grid." },
-    "1:5": { "role": "openings", "ja": "建具 (窓・扉)", "kinds": ["line", "arc"], "pen": { "color": 1, "style": 1 }, "rule": "Sash frames, door leaves and swing arcs. Wall lines stop at the opening." },
-    "1:6": { "role": "equipment", "ja": "設備機器 (UB・便器・キッチン・洗濯機・AC)", "kinds": ["line", "arc"], "pen": { "color": 7, "style": 1 } },
-    "1:7": { "role": "furniture", "ja": "家具 (ベッド・テーブル・ソファ・収納棚)", "kinds": ["line", "arc"], "pen": { "color": 4, "style": 2 }, "rule": "Movable furniture is dashed so it never competes with walls." },
-    "1:8": { "role": "hatch", "ja": "ハッチ (玄関土間タイル等)", "kinds": ["line"], "pen": { "color": 4, "style": 1 } },
-    "1:9": { "role": "symbols", "ja": "記号 (感知器・換気扇・ガラリ・筋交い・方位)", "kinds": ["line", "arc", "block", "text", "solid"] },
-    "1:A": { "role": "grid-and-insulation", "ja": "通り芯 / 断熱材パターン", "kinds": ["line", "arc", "text"], "pen": { "gridColor": 7, "gridStyle": 5, "insulationColor": 8 }, "rule": "通り芯 one-dot chain at 910 pitch labelled X1.. / Y1.. (3.5 mm text) in circle bubbles; insulation wave pattern inside exterior stud cavity, clipped at openings." },
-    "1:B": { "role": "fill", "ja": "色塗 (ソリッド)", "kinds": ["solid"] },
-    "1:C": { "role": "added-insulation", "ja": "付加断熱ハッチ", "kinds": ["line"], "rule": "Hatch between -62 and -152 band (PF 90) on exterior walls only, clipped at openings and corners." },
-    "1:D": { "role": "text", "ja": "文字 (室名・面積・注記・建具番号)", "kinds": ["text", "line"], "textStyle": { "roomName": 3, "area": 2, "note": 2 }, "rule": "Room name boxed in style 3 (3.2 mm) with area in ㎡ (style 2, 2 decimals) below." },
-    "1:E": { "role": "dimension", "ja": "寸法", "kinds": ["dimension", "line", "text", "point"], "textStyle": 8, "rule": "Three tiers outside the building: grid-to-grid (910/455 pieces), groups, overall. Values in mm with thousands separator." },
-    "1:F": { "role": "aux", "ja": "補助線", "pen": { "color": 9 } }
+    "1:0": {
+      "role": "aux-grid",
+      "ja": "455補助グリッド",
+      "kinds": [
+        "line"
+      ],
+      "pen": {
+        "color": 3,
+        "style": 2
+      },
+      "rule": "Covers the building extent every 455 mm in both directions."
+    },
+    "1:1": {
+      "role": "wall-face",
+      "ja": "壁 仕上げ面 (太線)",
+      "kinds": [
+        "line"
+      ],
+      "pen": {
+        "color": 2,
+        "style": 1
+      },
+      "rule": "Outermost exterior face and every interior finished face. Cut walls must read as two thick lines."
+    },
+    "1:2": {
+      "role": "column",
+      "ja": "柱",
+      "kinds": [
+        "block",
+        "line",
+        "solid"
+      ],
+      "pen": {
+        "color": 2,
+        "style": 1
+      },
+      "rule": "105x105 square with an X (block 柱1) at wall corners, junctions and opening jambs on the 910 grid."
+    },
+    "1:3": {
+      "role": "wall-core",
+      "ja": "壁 躯体・下地境界 (細線)",
+      "kinds": [
+        "line"
+      ],
+      "pen": {
+        "color": 4,
+        "style": 1
+      },
+      "rule": "Stud faces (±52.5 from grid) and exterior sheathing face."
+    },
+    "1:4": {
+      "role": "exterior-layers",
+      "ja": "外壁 下地層 (通気胴縁・付加断熱)",
+      "kinds": [
+        "line"
+      ],
+      "pen": {
+        "color": 1,
+        "style": 1
+      },
+      "rule": "Exterior-only lines at -62 and -152 from grid."
+    },
+    "1:5": {
+      "role": "openings",
+      "ja": "建具 (窓・扉)",
+      "kinds": [
+        "line",
+        "arc"
+      ],
+      "pen": {
+        "color": 1,
+        "style": 1
+      },
+      "rule": "Sash frames, door leaves and swing arcs. Wall lines stop at the opening."
+    },
+    "1:6": {
+      "role": "equipment",
+      "ja": "設備機器 (UB・便器・キッチン・洗濯機・AC)",
+      "kinds": [
+        "line",
+        "arc"
+      ],
+      "pen": {
+        "color": 7,
+        "style": 1
+      }
+    },
+    "1:7": {
+      "role": "furniture",
+      "ja": "家具 (ベッド・テーブル・ソファ・収納棚)",
+      "kinds": [
+        "line",
+        "arc"
+      ],
+      "pen": {
+        "color": 4,
+        "style": 2
+      },
+      "rule": "Movable furniture is dashed so it never competes with walls."
+    },
+    "1:8": {
+      "role": "hatch",
+      "ja": "ハッチ (玄関土間タイル等)",
+      "kinds": [
+        "line"
+      ],
+      "pen": {
+        "color": 4,
+        "style": 1
+      }
+    },
+    "1:9": {
+      "role": "symbols",
+      "ja": "記号 (感知器・換気扇・ガラリ・筋交い・方位)",
+      "kinds": [
+        "line",
+        "arc",
+        "block",
+        "text",
+        "solid"
+      ]
+    },
+    "1:A": {
+      "role": "grid-and-insulation",
+      "ja": "通り芯 / 断熱材パターン",
+      "kinds": [
+        "line",
+        "arc",
+        "text"
+      ],
+      "pen": {
+        "gridColor": 7,
+        "gridStyle": 5,
+        "insulationColor": 8
+      },
+      "rule": "通り芯 one-dot chain at 910 pitch labelled X1.. / Y1.. (3.5 mm text) in circle bubbles; insulation wave pattern inside exterior stud cavity, clipped at openings."
+    },
+    "1:B": {
+      "role": "fill",
+      "ja": "色塗 (ソリッド)",
+      "kinds": [
+        "solid"
+      ]
+    },
+    "1:C": {
+      "role": "added-insulation",
+      "ja": "付加断熱ハッチ",
+      "kinds": [
+        "line"
+      ],
+      "rule": "Hatch between -62 and -152 band (PF 90) on exterior walls only, clipped at openings and corners.",
+      "pen": {
+        "color": 112,
+        "style": 1,
+        "note": "SXF colour index 12 (lightgreen) in the office header"
+      }
+    },
+    "1:D": {
+      "role": "text",
+      "ja": "文字 (室名・面積・注記・建具番号)",
+      "kinds": [
+        "text",
+        "line"
+      ],
+      "textStyle": {
+        "roomName": 8,
+        "area": 7,
+        "note": 2,
+        "equipmentLabel": 2
+      },
+      "rule": "Room name in a 1-line box (lines pen 1; text style 8 = 3.0 mm, box height 3.6 mm, 0.5 mm side padding, white solid mask on 1:B behind). Area below as \"N.NN㎡\" in style 7 (2.2 mm), centred, baseline 3.0 mm under the box. Areas are wall-centreline (壁芯) areas."
+    },
+    "1:E": {
+      "role": "dimension",
+      "ja": "寸法",
+      "kinds": [
+        "dimension",
+        "line",
+        "text",
+        "point"
+      ],
+      "textStyle": 8,
+      "rule": "Three tiers outside the building: grid-to-grid (910/455 pieces), groups, overall. Values in mm with thousands separator."
+    },
+    "1:F": {
+      "role": "aux",
+      "ja": "補助線",
+      "pen": {
+        "color": 9
+      }
+    }
   },
   "wallAssemblies": {
     "exterior-wood-sided": {
       "ja": "外壁: 金属サイディング15 / 胴縁18 / 付加断熱PF90 / 石膏板9.5 / 柱105 (GW充填) / 石膏ボード12.5",
       "linesFromGridMm": [
-        { "offset": -185, "layer": "1:1", "color": 2, "what": "サイディング外面 (太線)" },
-        { "offset": -170, "layer": "1:1", "color": 4, "what": "サイディング裏面" },
-        { "offset": -152, "layer": "1:4", "color": 1, "what": "胴縁/通気層境界" },
-        { "offset": -62, "layer": "1:4", "color": 1, "what": "付加断熱内側" },
-        { "offset": -52.5, "layer": "1:3", "color": 4, "what": "柱外面/面材" },
-        { "offset": 52.5, "layer": "1:3", "color": 4, "what": "柱内面" },
-        { "offset": 65, "layer": "1:1", "color": 2, "what": "石膏ボード室内面 (太線)" }
+        {
+          "offset": -185,
+          "layer": "1:1",
+          "color": 2,
+          "what": "サイディング外面 (太線)"
+        },
+        {
+          "offset": -170,
+          "layer": "1:1",
+          "color": 4,
+          "what": "サイディング裏面"
+        },
+        {
+          "offset": -152,
+          "layer": "1:4",
+          "color": 1,
+          "what": "胴縁/通気層境界"
+        },
+        {
+          "offset": -62,
+          "layer": "1:4",
+          "color": 1,
+          "what": "付加断熱内側"
+        },
+        {
+          "offset": -52.5,
+          "layer": "1:3",
+          "color": 4,
+          "what": "柱外面/面材"
+        },
+        {
+          "offset": 52.5,
+          "layer": "1:3",
+          "color": 4,
+          "what": "柱内面"
+        },
+        {
+          "offset": 65,
+          "layer": "1:1",
+          "color": 2,
+          "what": "石膏ボード室内面 (太線)"
+        }
       ],
       "fills": [
-        { "between": [-152, -62], "layer": "1:C", "what": "付加断熱ハッチ" },
-        { "between": [-52.5, 52.5], "layer": "1:A", "color": 8, "what": "充填断熱パターン" }
+        {
+          "between": [
+            -152,
+            -62
+          ],
+          "layer": "1:C",
+          "what": "付加断熱ハッチ"
+        },
+        {
+          "between": [
+            -52.5,
+            52.5
+          ],
+          "layer": "1:A",
+          "color": 8,
+          "what": "充填断熱パターン"
+        }
       ],
       "negativeIsOutside": true
     },
     "interior": {
       "ja": "内壁: 柱/間柱105 + 両面石膏ボード12.5 = 130",
       "linesFromGridMm": [
-        { "offset": -65, "layer": "1:1", "color": 2 }, { "offset": -52.5, "layer": "1:3", "color": 4 },
-        { "offset": 52.5, "layer": "1:3", "color": 4 }, { "offset": 65, "layer": "1:1", "color": 2 }
+        {
+          "offset": -65,
+          "layer": "1:1",
+          "color": 2
+        },
+        {
+          "offset": -52.5,
+          "layer": "1:3",
+          "color": 4
+        },
+        {
+          "offset": 52.5,
+          "layer": "1:3",
+          "color": 4
+        },
+        {
+          "offset": 65,
+          "layer": "1:1",
+          "color": 2
+        }
       ]
     }
   },
@@ -84,6 +464,181 @@
     "Grid and aux grid are drawn first and span the full building with margin; walls are placed on the 910/455 grid."
   ],
   "evaluation": {
-    "checks": ["layer-role-purity", "pen-per-layer", "thick-faces-on-walls", "wall-closure", "openings-cut-walls", "insulation-exterior-only", "room-labels-inside-rooms", "dimension-sum-equals-overall", "text-style-sizes", "furniture-dashed", "renders-without-overlap"]
+    "checks": [
+      "layer-role-purity",
+      "pen-per-layer",
+      "thick-faces-on-walls",
+      "wall-closure",
+      "openings-cut-walls",
+      "insulation-exterior-only",
+      "room-labels-inside-rooms",
+      "dimension-sum-equals-overall",
+      "text-style-sizes",
+      "furniture-dashed",
+      "renders-without-overlap",
+      "columns-at-structure",
+      "grid-bubbles",
+      "fits-sheet",
+      "grid-module",
+      "dimension-module",
+      "room-sizes",
+      "room-module",
+      "corridor-width",
+      "circulation-ratio",
+      "door-swing-clear",
+      "door-approach-clear",
+      "sliding-door-pocket",
+      "wet-core-grouped",
+      "rooms-reachable",
+      "habitable-rooms-have-windows",
+      "entrance-doma",
+      "items-fit-rooms",
+      "items-no-clash"
+    ],
+    "implementation": "addons/jw-assistant/generator/evaluate.mjs (deterministic; drafting checks read the JWW back, planning checks use the resolved spec geometry)",
+    "roomSizesM2": {
+      "bedroom": 7.29,
+      "living": 16.2,
+      "toilet": 1.2,
+      "wet": 2.4,
+      "kitchen": 4,
+      "entrance": 1.6
+    },
+    "planning": {
+      "corridorClearMinMm": 780,
+      "circulationMaxRatio": 0.12,
+      "kitchenAisleMinMm": 800,
+      "doorApproachDepthMm": 600,
+      "bedroomMinSideMm": 2200,
+      "entranceDoorOpens": "outward"
+    }
+  },
+  "measured": {
+    "method": "Codec decode of practice house A plan, coordinates relative to grid X1/Y1 (model mm = file mm x 50). 2026-10-01.",
+    "grid": {
+      "pitchMm": 910,
+      "spans": "X1..X13 x Y1..Y10 = 10,920 x 8,190, all 910",
+      "note": "Long 通り芯 are NOT drawn through the plan; 1:0 aux grid (pen 3 dotted) spans only the building outline at every 910 plus the 455 lines actually used."
+    },
+    "gridBubble": {
+      "layer": "1:A",
+      "circle": {
+        "radiusMm": 150,
+        "pen": 1
+      },
+      "label": {
+        "textStyle": 9,
+        "heightMm": 3.5,
+        "spacingMm": -0.2,
+        "centred": true,
+        "color": 2
+      },
+      "stub": {
+        "layer": "1:A",
+        "pen": {
+          "color": 7,
+          "style": 5
+        },
+        "lengthMm": 350,
+        "from": "outermost dimension line"
+      },
+      "centreFromOutermostDimMm": 500,
+      "sides": "all four sides"
+    },
+    "dimensions": {
+      "layer": "1:E",
+      "line": {
+        "color": 1,
+        "style": 1
+      },
+      "ticks": "実点 (CDataTen, pen 1) at every break point; no arrows",
+      "text": {
+        "style": 8,
+        "heightMm": 3,
+        "baselineAboveLineMm": 1.5,
+        "thousands": ",",
+        "vertical": "angle 90, left of the line"
+      },
+      "tierPitchMm": 230,
+      "firstTierFromGridMm": [
+        1288,
+        1570,
+        2236
+      ],
+      "extension": "solid pen 1 from the tier to (outer face - 801), then chain pen 4 style 5 to (outer face - 101)",
+      "tiers": "opening positions (innermost, only if off-module) / grid-to-grid 455 multiples / overall"
+    },
+    "walls": {
+      "exteriorBand": "union body -185..+65; thick faces (1:1 pen 2) at -185 and +65 meet with mitred corners; -170 siding back (1:1 pen 4); battens -152/-62 (1:4 pen 1); stud faces ±52.5 (1:3 pen 4) broken at every column face",
+      "interior": "faces ±65 (1:1 pen 2), cores ±52.5 (1:3 pen 4) broken at columns",
+      "tJunction": "the through wall face is broken between the joining wall faces; the joining wall faces stop on the through wall face (no overshoot); a column sits on the junction"
+    },
+    "column": {
+      "block": "柱1",
+      "sizeMm": 105,
+      "outline": {
+        "layer": "1:2",
+        "pen": 2
+      },
+      "cross": {
+        "pen": 1,
+        "what": "both diagonals"
+      },
+      "mask": "white solid (pen 10, RGB FFFFFF)",
+      "placement": "every exterior corner, every wall junction and free wall end, both jambs of every opening, and along exterior walls at <= 1,820 (observed 910-1,820)"
+    },
+    "insulation": {
+      "layer": "1:A",
+      "pen": 8,
+      "pattern": "zig-zag between v=-35 and v=+35, vertices every 17.5 along the wall; semicircles R17.5 join every second vertex (bulge to ±52.5)",
+      "limits": "between column faces / opening jambs (-12.5) only; exterior walls only"
+    },
+    "addedInsulationHatch": {
+      "layer": "1:C",
+      "pen": 112,
+      "angleDeg": [
+        45,
+        -45
+      ],
+      "perpendicularSpacingMm": 30,
+      "band": [
+        -152,
+        -62
+      ],
+      "clipped": "at the 45 x 90 batten blocks 45 mm outside each rough opening; continuous round corners"
+    },
+    "windowSliding": {
+      "roughOpening": "width - 130 (column centre span minus 2 x (52.5 + 12.5))",
+      "lines": {
+        "innerTrimJamb": "u = RO + 16.5, v -102..+65 (pen 2)",
+        "windowBoard": "v = +80 across (pen 1)",
+        "frameEnds": "u = RO, v -217..-87 (pen 1)",
+        "frameInner": "v = -102",
+        "outerSill": "v = -217",
+        "sashes": "v = -157 / -136.5 / -116, inset 40 from RO (pen 1)",
+        "battenBlock": "45 x 90 rectangle (pen 5) + diagonal (pen 1) at both ends between -152 and -62"
+      },
+      "wallStops": "outer face/siding stop at RO; inner face stops at RO + 16.5"
+    },
+    "doorSwing": {
+      "roughOpening": "width - 130 (e.g. 910 module -> 780 clear)",
+      "jambBox": "24 deep x (wall + 2 x 12.5) wide, pen 2, at both jambs",
+      "leaf": "33 thick (entrance 45), two long sides pen 5, outer face 2.5 beyond the wall face on the swing side",
+      "arc": "pen 1, centre at hinge, radius = leaf length (clear - 48), from closed leaf end to open position",
+      "openLine": "pen 2 along the hinge jamb from the far jamb box edge to the arc end"
+    },
+    "doorSliding": "jamb boxes as above; leaf 30 thick inside the wall plane at v 3.5..33.5 (pen 5); the generator adds the open position dashed",
+    "passage": "jamb boxes only (24 x 156)",
+    "entranceDoor": "outward opening (radius ~910), frame ~980; tile hatch 300 pitch on 1:8 pen 4 in the 土間, 框 line on 1:8",
+    "equipmentSizesMm": {
+      "UB1616": "~1,661 x 1,634 in a 1,820 module",
+      "toilet": "~750 deep incl. tank",
+      "kitchenI": "2,550 x 650",
+      "washerPan": "640 x 640",
+      "bedSingle": "1,000 x 2,000 dashed",
+      "dining": "W1600 x 900 + 4 chairs dashed"
+    },
+    "furniture": "1:7 pen 4 style 2 (dashed); equipment 1:6 pen 7 solid",
+    "roomAreaCheck": "labelled areas equal centreline areas: 1,820 x 1,820 = 3.31, 1,365 x 1,820 = 2.48, 910 x 1,820 = 1.66, 3,640 x 2,730 = 9.94"
   }
 }
